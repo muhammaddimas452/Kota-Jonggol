@@ -45,11 +45,9 @@ export default function Header() {
                                         <Navbar.Brand className='font-weight-bold ml-3' href="/peta">PETA</Navbar.Brand>
                                         <Navbar.Brand className='font-weight-bold ml-3' href="/galeri">GALERI</Navbar.Brand>  
                                         <NavDropdown className='font-weight-bold ml-3' title="PAGE" id="collasible-nav-dropdown">
-                                            <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-                                            <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-                                            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-                                            <NavDropdown.Divider />
-                                            <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+                                            <NavDropdown.Item href="#action/3.1">Sejarah Desa</NavDropdown.Item>
+                                            <NavDropdown.Item href="#action/3.2">Visi Dan Misi</NavDropdown.Item>
+                                            <NavDropdown.Item href="#action/3.3">Pemerintah Desa</NavDropdown.Item>
                                         </NavDropdown>
                                     </Nav>    
                                 </Navbar.Collapse>

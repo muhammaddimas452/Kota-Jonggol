@@ -8,6 +8,7 @@ import { NavLink } from 'reactstrap'
 import { Link } from 'react-router-dom'
 import swal from 'sweetalert';
 import '../css/main.min.css'
+import '../css/main.css'
 
 
 const api = 'http://127.0.0.1:8000/api'
@@ -127,7 +128,7 @@ class DataKegiatan extends PureComponent {
             // </div>
             <div className='page-wrapper'>
                 <Nav />
-                <Sidebar />
+             
                 <div className="content-wrapper">
                     <div className="page-heading">
                         <h1 className="page-title">DataTables</h1>
@@ -142,18 +143,18 @@ class DataKegiatan extends PureComponent {
                         <div className="ibox">
                             <div className="ibox-head">
                                 <div className="ibox-title">Data Table</div>
-                                <NavLink href="/tambahkegiatan"><button className='btn btn-primary mr-4'>Tambah Data</button></NavLink>
+                                <NavLink href="/tambahkegiatan"><button className='genric-btn info radius mr-4'>Tambah Data</button></NavLink>
                             </div>
                             <div className="ibox-body">
                                 <table className="table table-striped table-bordered table-hover" id="example-table" cellSpacing={0} width="100%">
                                     <thead>
                                         <tr>
                                             {/* <th>No</th> */}
-                                            <th>Tanggal</th>
-                                            <th>Kegiatan</th>
-                                            <th>Foto</th>
-                                            <th>Keterangan</th>
-                                            <th>Action</th>
+                                            <th className=''>Tanggal</th>
+                                            <th className=''>Kegiatan</th>
+                                            <th className=''>Foto</th>
+                                            <th className=''>Keterangan</th>
+                                            <th className=''>Action</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -169,19 +170,20 @@ class DataKegiatan extends PureComponent {
                                     <tbody>
                                         {this.state.kegiatan.map(kegiatan =>
                                             <tr key={kegiatan.id}>
+                                                {/* <td>{kegiatan + 1}</td> */}
                                                 <td>{kegiatan.tanggal}</td>
                                                 <td>{kegiatan.kegiatan}</td>
                                                 <td className='text-center'>
-                                                    <img style={{ width: 150, height: 100 }}
+                                                    <img className='responsive' style={{ width:150, height: 'auto' }}
                                                         src={"http://localhost:8000/" + kegiatan.image} />
                                                 </td>
                                                 <td className='text-center font-weight-bold'>{kegiatan.status == 0 ? "Belum Dilaksanakan" : "Sudah Dilaksakan"}</td>
-                                                <td className=''>
+                                                <td className='text-center'>
                                                     <Link to={`/editkegiatan/${kegiatan.id}`}>
                                                         {/* <Route path='/editartikel/:id' element={<EditArtikel />} id={artikel.id} /> */}
-                                                        <button className="btn btn-success">Edit</button>
+                                                        <button className="genric-btn success radius">Edit</button>
                                                     </Link>
-                                                    <button className="btn btn-danger ml-3" onClick={(e) => deleteKegiatan(e, kegiatan.id)}>Delete</button>
+                                                    <button className="genric-btn danger radius ml-3" onClick={(e) => deleteKegiatan(e, kegiatan.id)}>Delete</button>
                                                 </td>
                                             </tr>
                                         )}

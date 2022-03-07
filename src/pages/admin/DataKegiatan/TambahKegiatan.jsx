@@ -75,7 +75,7 @@ export default function TambahArtikel() {
     return (
         <div className='page-wrapper'>
             <Nav />
-            <Sidebar />
+
             <div className="content-wrapper">
                 <div className="page-heading">
                     <h1 className="page-title">Basic Form</h1>
@@ -92,14 +92,6 @@ export default function TambahArtikel() {
                             <div className="ibox">
                                 <div className="ibox-head">
                                     <div className="ibox-title">Basic form</div>
-                                    <div className="ibox-tools">
-                                        <a className="ibox-collapse"><i className="fa fa-minus" /></a>
-                                        <a className="dropdown-toggle" data-toggle="dropdown"><i className="fa fa-ellipsis-v" /></a>
-                                        <div className="dropdown-menu dropdown-menu-right">
-                                            <a className="dropdown-item">option 1</a>
-                                            <a className="dropdown-item">option 2</a>
-                                        </div>
-                                    </div>
                                 </div>
                                 <div className="ibox-body">
                                     <form onSubmit={submitKegiatan}>
@@ -151,7 +143,7 @@ export default function TambahArtikel() {
                                                         <small className='text-danger'>{error.status}</small>
                                                     </div>
                                                     <button
-                                                        type='submit' className='btn btn-primary btn-user btn-block'>
+                                                        type='submit' className='genric-btn info radius btn-user btn-block'>
                                                         Tambah Data
                                                     </button>
                                                 </div>

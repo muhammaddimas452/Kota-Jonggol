@@ -143,7 +143,8 @@ function EditArtikel(props) {
 
     const [artikelInput, setArtikel] = useState([]);
     const [error, setError] = useState([]);
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
+    const [picture, setPicture] = useState([]);
     const navigate = useNavigate();
 
     const getArtikel = async () => {
@@ -175,32 +176,39 @@ function EditArtikel(props) {
         setArtikel({ ...artikelInput, [e.target.name]: e.target.value });
     }
 
+    const handleImage = (e) => {
+        e.persist();
+        setPicture({ image: e.target.files[0] })
+        console.log(picture.image)
+    }
+
     let editorState = EditorState.createEmpty();
     const [isiArtikel, setIsiArtikel] = useState(editorState);
     const onEditorStateChange = (editorState) => {
         setIsiArtikel(editorState);
     }
 
-    const updateArtikel = (e) => {
+    const updateArtikel = async (e) => {
         e.preventDefault();
+        const formData = new FormData();
+        formData.append('image', picture.image)
+        formData.append('tanggal', artikelInput.tanggal)
+        formData.append('nama_artikel', artikelInput.nama_artikel)
+        formData.append('isi_artikel', artikelInput.isi_artikel.value)
+
         const artikel_id = id;
         const data = artikelInput;
-        axios.put(api + `/artikel/update/${artikel_id}`, {
-            nama_artikel: artikelInput.nama_artikel,
-            isi_artikel: artikelInput.isi_artikel.value
-        })
-            .then(res => {
-                if (res.data.status === 200) {
-                    swal("Success", res.data.message, "success")
-                    setError([]);
-                } else if (res.data.status === 422) {
-                    swal("Data Perlu di Isi", "", "error")
-                    setError(res.data.errors);
-                } else if (res.data.status === 404) {
-                    swal("Error", res.data.message, "error")
-                    return navigate("/artikel")
-                }
-            })
+        const result = await axios.post(api + `/artikel/update/${artikel_id}/?_method=PUT`, formData)
+        if (result.data.status === 200) {
+            swal("Success", result.data.message, "success")
+            setError([]);
+        } else if (result.data.status === 422) {
+            swal("Data Perlu di Isi", "", "error")
+            setError(result.data.errors);
+        } else if (result.data.status === 404) {
+            swal("Error", result.data.message, "error")
+            return navigate("/artikel")
+        }
     }
 
     if (loading === true) {
@@ -211,13 +219,12 @@ function EditArtikel(props) {
         return (
             <div className='page-wrapper'>
                 <Nav />
-                <Sidebar />
                 <div className="content-wrapper">
                     <div className="page-heading">
                         <h1 className="page-title">Basic Form</h1>
                         <ol className="breadcrumb">
                             <li className="breadcrumb-item">
-                                <a href="index.html"><i className="la la-home font-20" /></a>
+                                <a href=""><i className="la la-home font-20" /></a>
                             </li>
                             <li className="breadcrumb-item">Basic Form</li>
                         </ol>
@@ -228,10 +235,20 @@ function EditArtikel(props) {
                                 <div className="ibox">
                                     <div className="ibox-head">
                                         <div className="ibox-title">Basic form</div>
-                                        <NavLink href="/artikel"><button className='btn btn-primary mr-4'>Back</button></NavLink>
+                                        <NavLink href="/artikel"><button className='genric-btn info radius mr-4'>Back</button></NavLink>
                                     </div>
                                     <div className="ibox-body">
                                         <form onSubmit={updateArtikel}>
+                                            <div className="form-group">
+                                                <label>Tanggal</label>
+                                                <input className="form-control" type="date"
+                                                    id="tanggal"
+                                                    name="tanggal"
+                                                    onChange={handleInput}
+                                                    value={artikelInput.tanggal}
+                                                />
+                                                <small className='text-danger'>{error.tanggal}</small>
+                                            </div>
                                             <div className="form-group">
                                                 <label>Judul Artikel</label>
                                                 <input type="text" className="form-control mt-3" placeholder="Judul Artikel"
@@ -241,6 +258,17 @@ function EditArtikel(props) {
                                                     value={artikelInput.nama_artikel}
                                                 />
                                                 <small className='text-danger'>{error.nama_artikel}</small>
+                                            </div>
+                                            <div className="form-group">
+                                                <label>Tambahkan Gambar</label>
+                                                <input type="file"
+                                                    className='form-control'
+                                                    style={{ border: "none" }}
+                                                    name="image"
+                                                    onChange={handleImage}
+                                                />
+                                                <img className='mt-3 ml-3' style={{ width: 150, height: 100 }} src={"http://localhost:8000/" + artikelInput.image} alt="" />
+                                                <small className='text-danger'>{error.image}</small>
                                             </div>
                                             <div className="form-group">
                                                 <label>Isi Artikel</label>
@@ -255,7 +283,7 @@ function EditArtikel(props) {
                                                 <small className='text-danger'>{error.isi_artikel}</small>
                                             </div>
                                             <button
-                                                type='submit' className='btn btn-primary btn-user btn-block'>
+                                                type='submit' className='genric-btn info radius btn-user btn-block'>
                                                 Tambah Data
                                             </button>
                                         </form>
@@ -268,7 +296,6 @@ function EditArtikel(props) {
             </div>
         )
     }
-
 }
 
 export default EditArtikel;

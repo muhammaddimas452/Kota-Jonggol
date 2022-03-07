@@ -62,7 +62,7 @@ function EditJumlahPenduduk(props) {
                     setError(res.data.errors);
                 } else if (res.data.status === 404) {
                     swal("Error", res.data.message, "error")
-                    return navigate("/jumlahpenduduk")
+                    return navigate("/")
                 }
             })
     }
@@ -75,7 +75,6 @@ function EditJumlahPenduduk(props) {
         return (
             <div className='page-wrapper'>
                 <Nav />
-                <Sidebar />
                 <div className="content-wrapper">
                     <div className="page-heading">
                         <h1 className="page-title">Basic Form</h1>

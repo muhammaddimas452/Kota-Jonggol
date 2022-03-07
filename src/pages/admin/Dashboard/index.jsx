@@ -3,71 +3,90 @@ import '../css/main.min.css'
 import axios from 'axios';
 import Nav from '../Nav'
 import Sidebar from '../Sidebar'
+import {
+    Tooltip,
+    BarChart,
+    XAxis,
+    YAxis,
+    Legend,
+    CartesianGrid,
+    Bar,
+} from "recharts";
 
 
 
 export default function Dashboard(props) {
     const api = 'http://127.0.0.1:8000/api';
 
-const [jumlahPendudukInput, setJumlahPenduduk] = useState();
-const [totalArtikel, setTotalArtikel] = useState([]);
-const [totalKegiatanDone, setTotalKegiatanDone] = useState([]);
-const [totalKegiatanNot, setTotalKegiatanNot] = useState([]);
-const [loading, setLoading] = useState(false);
+    const [jumlahPendudukInput, setJumlahPenduduk] = useState();
+    const [totalArtikel, setTotalArtikel] = useState([]);
+    const [totalKegiatanDone, setTotalKegiatanDone] = useState([]);
+    const [totalKegiatanNot, setTotalKegiatanNot] = useState([]);
+    const [loading, setLoading] = useState(false);
 
-const getJumlahPenduduk = async () => {
-    try {
-        setLoading(true)
-        const res = await axios.get(api + `/jumlah-penduduk`)
-        setLoading(false)
-        setJumlahPenduduk(res.data)
+    const getJumlahPenduduk = async () => {
+        try {
+            setLoading(true)
+            const res = await axios.get(api + `/jumlah-penduduk`)
+            setLoading(false)
+            setJumlahPenduduk(res.data)
+        }
+        catch (err) {
+            setLoading(false)
+        }
     }
-    catch (err) {
-        setLoading(false)
+    const getTotalArtikel = async () => {
+        try {
+            setLoading(true)
+            const res = await axios.get(api + `/totalArtikel`)
+            setLoading(false)
+            setTotalArtikel(res.data)
+        }
+        catch (err) {
+            setLoading(false)
+        }
     }
-}
-const getTotalArtikel = async () => {
-    try {
-        setLoading(true)
-        const res = await axios.get(api + `/totalArtikel`)
-        setLoading(false)
-        setTotalArtikel(res.data)
-    }
-    catch (err) {
-        setLoading(false)
-    }
-}
-const getTotalKegiatanDone = async () => {
-    try {
-        setLoading(true)
-        const res = await axios.get(api + `/totalKegiatanDone`)
-        setLoading(false)
+    const getTotalKegiatanDone = async () => {
+        try {
+            setLoading(true)
+            const res = await axios.get(api + `/totalKegiatanDone`)
+            setLoading(false)
 
-        setTotalKegiatanDone(res.data)
+            setTotalKegiatanDone(res.data)
+        }
+        catch (err) {
+            setLoading(false)
+        }
     }
-    catch (err) {
-        setLoading(false)
+    const getTotalKegiatanNot = async () => {
+        try {
+            setLoading(true)
+            const res = await axios.get(api + `/totalKegiatanNot`)
+            setLoading(false)
+            // console.log(res)
+            setTotalKegiatanNot(res.data)
+        }
+        catch (err) {
+            setLoading(false)
+        }
     }
-}
-const getTotalKegiatanNot = async () => {
-    try {
-        setLoading(true)
-        const res = await axios.get(api + `/totalKegiatanNot`)
-        setLoading(false)
-        // console.log(res)
-        setTotalKegiatanNot(res.data)
-    }
-    catch (err) {
-        setLoading(false)
-    }
-}
-const [tombol, setTombol] = useState(true)
-useEffect(() => {
-    getJumlahPenduduk();
-    getTotalArtikel();
-    getTotalKegiatanDone();
-    getTotalKegiatanNot();
-}, [props])
+    const [tombol, setTombol] = useState(true)
+    useEffect(() => {
+        getJumlahPenduduk();
+        getTotalArtikel();
+        getTotalKegiatanDone();
+        getTotalKegiatanNot();
+    }, [props])
+
+
+
+    const data = [
+        { name: "Jumlah Penduduk", users: 2000000000 },
+        { name: "Total Artikel", users: 1500000000 },
+        { name: "Kegiatan Selesai", users: 1000000000 },
+        { name: "Kegiatan", users: 500000000 },
+    ];
+
     return (
         <div>
             <div className="page-wrapper">
@@ -79,8 +98,8 @@ useEffect(() => {
                                 <div className="ibox bg-success color-white widget-stat">
                                     <div className="ibox-body">
                                         <h2 className="m-b-5 font-strong text-white">{jumlahPendudukInput}</h2>
-                                        <div className="m-b-5">Jumlah Penduduk</div><i className="fa fa-users widget-stat-icon" />
-                                        <div><i className="fa fa-level-up m-r-5" /><small>25% higher</small></div>
+                                        <div className="m-b-5 font-weight-bold">Jumlah Penduduk</div><i className="fa fa-users widget-stat-icon" />
+                                        <div><i className="fa fa-level-up m-r-5" /><small></small></div>
                                     </div>
                                 </div>
                             </div>
@@ -88,8 +107,8 @@ useEffect(() => {
                                 <div className="ibox bg-info color-white widget-stat">
                                     <div className="ibox-body">
                                         <h2 className="m-b-5 font-strong text-white">{totalArtikel}</h2>
-                                        <div className="m-b-5">Jumlah Artikel</div><i className="fa fa-book widget-stat-icon" />
-                                        <div><i className="fa fa-level-up m-r-5" /><small>17% higher</small></div>
+                                        <div className="m-b-5 font-weight-bold">Jumlah Artikel</div><i className="fa fa-book widget-stat-icon" />
+                                        <div><i className="fa fa-level-up m-r-5" /><small></small></div>
                                     </div>
                                 </div>
                             </div>
@@ -97,8 +116,8 @@ useEffect(() => {
                                 <div className="ibox bg-warning color-white widget-stat">
                                     <div className="ibox-body">
                                         <h2 className="m-b-5 font-strong text-white">{totalKegiatanNot}</h2>
-                                        <div className="m-b-5">Kegiatan Mendatang</div><i className="far fa-calendar-minus widget-stat-icon" />
-                                        <div><i className="fa fa-level-up m-r-5" /><small>22% higher</small></div>
+                                        <div className="m-b-5 font-weight-bold">Kegiatan Mendatang</div><i className="far fa-calendar-minus widget-stat-icon" />
+                                        <div><i className="fa fa-level-up m-r-5" /><small></small></div>
                                     </div>
                                 </div>
                             </div>
@@ -106,8 +125,8 @@ useEffect(() => {
                                 <div className="ibox bg-danger color-white widget-stat">
                                     <div className="ibox-body">
                                         <h2 className="m-b-5 font-strong text-white">{totalKegiatanDone}</h2>
-                                        <div className="m-b-5">Kegiatan Selesai</div><i className="far fa-calendar-check widget-stat-icon" />
-                                        <div><i className="fa fa-level-down m-r-5" /><small>-12% Lower</small></div>
+                                        <div className="m-b-5 font-weight-bold">Kegiatan Selesai</div><i className="far fa-calendar-check widget-stat-icon" />
+                                        <div><i className="fa fa-level-down m-r-5" /><small></small></div>
                                     </div>
                                 </div>
                             </div>
@@ -116,30 +135,30 @@ useEffect(() => {
                             <div className="col-lg-8">
                                 <div className="ibox">
                                     <div className="ibox-body">
-                                        <div className="flexbox mb-4">
+                                        <div className="mb-4">
                                             <div>
                                                 <h3 className="m-0">Statistics</h3>
                                                 <div>Your shop sales analytics</div>
                                             </div>
-                                            <div className="d-inline-flex">
-                                                <div className="px-3" style={{ borderRight: '1px solid rgba(0,0,0,.1)' }}>
-                                                    <div className="text-muted">WEEKLY INCOME</div>
-                                                    <div>
-                                                        <span className="h2 m-0">$850</span>
-                                                        <span className="text-success ml-2"><i className="fa fa-level-up" /> +25%</span>
-                                                    </div>
-                                                </div>
-                                                <div className="px-3">
-                                                    <div className="text-muted">WEEKLY SALES</div>
-                                                    <div>
-                                                        <span className="h2 m-0">240</span>
-                                                        <span className="text-warning ml-2"><i className="fa fa-level-down" /> -12%</span>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
                                         <div>
-                                            <canvas id="bar_chart" style={{ height: 260 }} />
+                                            <BarChart className='ibox col-lg-12'
+                                                width={500}
+                                                height={270}
+                                                data={data}
+                                                barSize={30}
+                                            >
+                                                <XAxis
+                                                    dataKey="name"
+                                                    scale="point"
+                                                    padding={{ left: 10, right: 10 }}
+                                                />
+                                                <YAxis />
+                                                <Tooltip />
+                                                <Legend />
+                                                <CartesianGrid strokeDasharray="3 3" />
+                                                <Bar dataKey="users" fill="grey" background={{ fill: "#eee" }} />
+                                            </BarChart>
                                         </div>
                                     </div>
                                 </div>
@@ -147,30 +166,18 @@ useEffect(() => {
                             <div className="col-lg-4">
                                 <div className="ibox">
                                     <div className="ibox-head">
-                                        <div className="ibox-title">Statistics</div>
+                                        <div className="ibox-title">Peta Jonggol</div>
                                     </div>
                                     <div className="ibox-body">
-                                        <div className="row align-items-center">
-                                            <div className="col-md-6">
-                                                <canvas id="doughnut_chart" style={{ height: 160 }} />
-                                            </div>
-                                            <div className="col-md-6">
-                                                <div className="m-b-20 text-success"><i className="fa fa-circle-o m-r-10" />Desktop 52%</div>
-                                                <div className="m-b-20 text-info"><i className="fa fa-circle-o m-r-10" />Tablet 27%</div>
-                                                <div className="m-b-20 text-warning"><i className="fa fa-circle-o m-r-10" />Mobile 21%</div>
+                                        <div className="row">
+                                            <div className="col-md-12">
+                                                <div>
+                                                    <iframe className='col-lg-12 col-sm-12' src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d63429.309783856195!2d107.00892233512408!3d-6.4795862499880315!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69bc0d7468736b%3A0x401576d14fed560!2sJonggol%2C%20Kec.%20Jonggol%2C%20Kabupaten%20Bogor%2C%20Jawa%20Barat!5e0!3m2!1sid!2sid!4v1646205215963!5m2!1sid!2sid"
+                                                        style={{ height: 283, border: 0 }} allowFullScreen loading="lazy" />
+                                                </div>
                                             </div>
                                         </div>
-                                        <ul className="list-group list-group-divider list-group-full">
-                                            <li className="list-group-item">Chrome
-                                                <span className="float-right text-success"><i className="fa fa-caret-up" /> 24%</span>
-                                            </li>
-                                            <li className="list-group-item">Firefox
-                                                <span className="float-right text-success"><i className="fa fa-caret-up" /> 12%</span>
-                                            </li>
-                                            <li className="list-group-item">Opera
-                                                <span className="float-right text-danger"><i className="fa fa-caret-down" /> 4%</span>
-                                            </li>
-                                        </ul>
+
                                     </div>
                                 </div>
                             </div>
@@ -566,20 +573,15 @@ useEffect(() => {
                                 </div>
                             </div>
                         </div>
-                        <style dangerouslySetInnerHTML={{ __html: "\n                    .visitors-table tbody tr td:last-child {\n                        display: flex;\n                        align-items: center;\n                    }\n\n                    .visitors-table .progress {\n                        flex: 1;\n                    }\n\n                    .visitors-table .progress-parcent {\n                        text-align: right;\n                        margin-left: 10px;\n                    }\n                " }} />
-                        
+                        <style dangerouslySetInnerHTML={{ __html: "\n                    .visitors-table tbody tr td:last-child {\n                        display: flex;\n                        align-items: center;\n                    }\n\n                    .visitors-table .progress {\n                        flex: 1;\n                    }\n\n                    .visitors-table .progress-parcent {\ntext-align: right;\nmargin-left: 10px;\n}\n" }} />
                     </div>
                     {/* END PAGE CONTENT*/}
                     <footer className="page-footer">
                         <div className="font-13">2018 © <b>AdminCAST</b> - All rights reserved.</div>
-                        
                         <div className="to-top"><i className="fa fa-angle-double-up" /></div>
                     </footer>
                 </div>
             </div>
-            {/* BEGIN THEME CONFIG PANEL*/}
-            
         </div>
-
     )
 }

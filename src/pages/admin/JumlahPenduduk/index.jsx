@@ -58,7 +58,6 @@ export default function JumlahPenduduk(props) {
     return (
         <div className='page-wrapper'>
             <Nav />
-            <Sidebar />
             <div className="content-wrapper">
                 {/* START PAGE CONTENT*/}
                 <div className="page-heading">

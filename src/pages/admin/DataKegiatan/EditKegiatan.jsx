@@ -84,7 +84,7 @@ export default function TambahArtikel() {
         return (
             <div className='page-wrapper'>
                 <Nav />
-                <Sidebar />
+      
                 <div className="content-wrapper">
                     <div className="page-heading">
                         <h1 className="page-title">Basic Form</h1>
@@ -101,7 +101,7 @@ export default function TambahArtikel() {
                                 <div className="ibox">
                                     <div className="ibox-head">
                                         <div className="ibox-title">Basic form</div>
-                                        <NavLink href="/kegiatan"><button className='btn btn-primary mr-4'>Back</button></NavLink>
+                                        <NavLink href="/kegiatan"><button className='genric-btn info radius mr-4'>Back</button></NavLink>
                                     </div>
                                     <div className="ibox-body">
                                         <form onSubmit={updateKegiatan}>
@@ -179,7 +179,7 @@ export default function TambahArtikel() {
                                                             <small className='text-danger'>{error.status}</small>
                                                         </div>
                                                         <button
-                                                            type='submit' className='btn btn-primary btn-user btn-block'>
+                                                            type='submit' className='genric-btn info radius btn-user btn-block'>
                                                             Tambah Data
                                                         </button>
                                                     </div>

@@ -1,28 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Nav from '../Nav'
-import { EditorState, convertToRaw } from 'draft-js';
-import { Editor } from 'react-draft-wysiwyg';
-import draftToHtml from 'draftjs-to-html';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { useNavigate } from "react-router"
-import { NavLink } from "reactstrap"
 import axios from 'axios';
 import swal from 'sweetalert';
-import { tambahArtikel } from "../../../api/artikel";
 import '../css/main.min.css'
 
-export default function TambahArtikel() {
+export default function TambahArtikel(props) {
     const api = "http://127.0.0.1:8000/api"
     const [values, setValues] = useState({
-        nama_artikel: '',
-        isi_artikel: '',
+        nama: '',
+        jabatan_id: ''
     });
 
     const [picture, setPicture] = useState([]);
 
     const handleImage = (e) => {
         e.persist();
-        setPicture({ image: e.target.files[0] })
+        setPicture({ gambar_pemerintah: e.target.files[0] })
     }
 
     const onChangeValue = (e) => {
@@ -32,28 +27,20 @@ export default function TambahArtikel() {
         });
     }
 
-    let editorState = EditorState.createEmpty();
-    const [isiArtikel, setIsiArtikel] = useState(editorState);
-    const onEditorStateChange = (editorState) => {
-        setIsiArtikel(editorState);
-    }
-    // console.log(values.isi_artikel)
-
     const [error, setError] = useState([]);
     const navigate = useNavigate();
     const onSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData();
-        formData.append('image', picture.image)
-        formData.append('tanggal', values.tanggal)
-        formData.append('nama_artikel', values.nama_artikel)
-        formData.append('isi_artikel', values.isi_artikel.value)
+        formData.append('gambar_pemerintah', picture.gambar_pemerintah)
+        formData.append('nama', values.nama)
+        formData.append('jabatan_id', values.jabatan_id)
 
-        const result = await axios.post(api + `/artikel/add`, formData)
+        const result = await axios.post(api + `/pemerintahdesa/add`, formData)
         console.log(result)
         if (result?.data?.status === 200) {
             swal("Success", result.data.message, "success")
-            return navigate("/artikel")
+            return navigate("/pemerintahdesa")
         } else if (result?.data?.status === 422) {
             swal("Data Perlu di Isi", "", "error")
             setError(result.data.errors);
@@ -61,6 +48,20 @@ export default function TambahArtikel() {
             swal("Error", result.data.message, "error")
         }
     }
+    const [jabatan, setJabatan] = useState();
+
+    const getJabatan = async () => {
+        try {
+            const res = await axios.get(api + `/jabatan`)
+            setJabatan(res.data)
+            console.log(res.data)
+        }
+        catch (err) {
+        }
+    }
+    useEffect(() => {
+        getJabatan();
+    }, [props])
     return (
         <div className='page-wrapper'>
             <Nav />
@@ -84,48 +85,38 @@ export default function TambahArtikel() {
                                 <div className="ibox-body">
                                     <form onSubmit={onSubmit}>
                                         <div className="form-group">
-                                            <label>Tanggal</label>
-                                            <input className="form-control" type="date" placeholder="Masukkan Nama Artikel"
-                                                id="tanggal"
-                                                name="tanggal"
+                                            <label>Nama</label>
+                                            <input className="form-control" type="text" placeholder="Masukkan Nama"
+                                                id="nama"
+                                                name="nama"
                                                 onChange={onChangeValue}
-                                                value={values.tanggal}
+                                                value={values.nama}
                                             />
-                                            <small className='text-danger'>{error.tanggal}</small>
+                                            <small className='text-danger'>{error.nama}</small>
                                         </div>
-                                        <div className="form-group">
-                                            <label htmlFor="roundText">Judul Artikel</label>
-                                            <input type="text" className="form-control mt-3" placeholder="Judul Artikel"
-                                                id="nama_artikel"
-                                                name="nama_artikel"
-                                                value={values.nama_artikel}
+                                        <div class="form-group">
+                                            <label>Jabatan</label>
+                                            <select class="form-control" id='jabatan_id' name='jabatan_id' 
                                                 onChange={onChangeValue}
-                                            />
-                                            <small className='text-danger'>{error.nama_artikel}</small>
+                                                value={values.jabatan_id}>
+                                                <option value="">Pilih Jabatan</option>
+                                                {jabatan?.map((jabatans, index) => (   
+                                                <option key={index} value={jabatans.id}>{jabatans.nama_jabatan}</option>
+                                                ))}
+                                            </select>
+                                            <small className='text-danger'>{error.jabatan_id}</small>
                                         </div>
                                         <div className="form-group">
                                             <label>Tambahkan Gambar</label>
                                             <input type="file"
                                                 className='form-control'
                                                 style={{ border: "none" }}
-                                                name="image"
+                                                name="gambar_pemerintah"
                                                 onChange={handleImage}
                                             />
-                                            <small className='text-danger'>{error.image}</small>
+                                            <small className='text-danger'>{error.gambar_pemerintah}</small>
                                         </div>
-                                        <div className="form-group">
-                                            <label>Isi Artikel</label>
-                                            <Editor
-                                                editorState={isiArtikel}
-                                                toolbarClassName="toolbarClassName"
-                                                wrapperClassName="wrapperClassName"
-                                                editorClassName="editorClassName"
-                                                onEditorStateChange={onEditorStateChange}
-                                            />
-                                            <textarea style={{ display: 'none' }} disabled ref={(val) => values.isi_artikel = val} 
-                                            value={draftToHtml(convertToRaw(isiArtikel.getCurrentContent()))} rows="3" />
-                                            <small className='text-danger'>{error.isi_artikel}</small>
-                                        </div>
+
                                         <button
                                             type='submit' className='genric-btn info radius btn-user btn-block'>
                                             Tambah Data

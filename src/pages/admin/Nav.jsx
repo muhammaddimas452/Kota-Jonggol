@@ -1,25 +1,19 @@
 import React, { Component, useEffect, useState } from 'react'
 import jonggol from './assets/img/jonggol.png'
-// import './assets/js/app.min.js'
-// import './assets/vendors/jquery/dist/jquery.min.js'
-// import './assets/vendors/popper.js/dist/umd/popper.min.js'
-// // import './assets/vendors/bootstrap/dist/js/bootstrap.min.js'
-// // import './assets/vendors/metisMenu/dist/metisMenu.min.js'
-// import './assets/vendors/jquery-slimscroll/jquery.slimscroll.min.js'
-// import './assets/vendors/chart.js/dist/Chart.min.js'
-// // import './assets/vendors/jvectormap/jquery-jvectormap-2.0.3.min.js'
-// // import './assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js'
-// // import './assets/vendors/jvectormap/jquery-jvectormap-us-aea-en.js'
-
 import axios from 'axios'
 import swal from 'sweetalert'
-import { useParams } from 'react-router'
+import { Navigate, useParams } from 'react-router'
 import { useNavigate } from "react-router-dom";
 import { Modal, Col, Container, Row, Button } from 'react-bootstrap'
 import './css/main.min.css'
 
 export default function Nav(props) {
     const [modalShow, setModalShow] = useState(false);
+    const navigate = useNavigate();
+    const logOut = () => {
+        localStorage.clear()
+        return navigate("/login")
+    }
     return (
         <div>
             <header className="header">
@@ -77,6 +71,14 @@ export default function Nav(props) {
                                 <span className="nav-label">Pemerintah Desa</span></a>
                         </li>
                         <li>
+                            <a href="/jabatan"><i className="sidebar-item-icon fa fa-table" />
+                                <span className="nav-label">Data Jabatan</span></a>
+                        </li>
+                        <li>
+                            <a href="/datainfowilayah"><i className="sidebar-item-icon fa fa-table" />
+                                <span className="nav-label">Info Wilayah</span></a>
+                        </li>
+                        <li>
                             <a href=''><i className="sidebar-item-icon ti-pencil-alt" />
                                 <span className="nav-label">Menu</span><i className="fa fa-angle-left arrow" /></a>
                             <ul className="nav-2-level collapse">
@@ -87,6 +89,10 @@ export default function Nav(props) {
                                     <a href="javascript:;">?</a>
                                 </li>
                             </ul>
+                        </li>
+                        <li>
+                            <a href="" onClick={logOut}><i className="sidebar-item-icon ti-shift-left" />
+                                <span className="nav-label">Log Out</span></a>
                         </li>
                     </ul>
                 </div>
@@ -102,11 +108,9 @@ function MydModalWithGrid(props) {
     const [jumlahPendudukInput, setJumlahPenduduk] = useState([]);
     const [error, setError] = useState([]);
     const [loading, setLoading] = useState(false)
-    const navigate = useNavigate();
 
     const getJumlahPenduduk = async () => {
         try {
-            const jumlahPenduduk_id = id;
             setLoading(true)
             const res = await axios.get(api + `/jumlah-penduduk/edit/2`)
             setLoading(false)

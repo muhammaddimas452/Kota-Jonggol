@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate } from "react-router-dom";
 import { Carousel } from 'react-bootstrap';
@@ -10,9 +10,9 @@ import {
     Legend,
     CartesianGrid,
     Bar,
-    ResponsiveContainer
 } from "recharts";
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye } from "@fortawesome/free-solid-svg-icons";
 
 export default function Aside(props) {
     const data = [
@@ -25,11 +25,12 @@ export default function Aside(props) {
     const [artikel, setArtikel] = useState();
     const [populer, setPopuler] = useState();
     const [newest, setNewest] = useState();
+    const [acak, setAcak] = useState();
     const navigate = useNavigate();
     const getArtikel = async () => {
         try {
-            const res = await axios.get(api + `/artikel`,)
-            setArtikel(res.data)
+            const res = await axios.get(api + `/artikel?perpage=6`,)
+            setArtikel(res.data.data.data)
         }
         catch (err) {
         }
@@ -37,9 +38,8 @@ export default function Aside(props) {
 
     const getPopuler = async () => {
         try {
-            const res = await axios.get(api + `/artikel/mostview`,)
-            console.log(res.data)
-            setPopuler(res.data)
+            const res = await axios.get(api + `/artikel/mostview?perpage=3`,)
+            setPopuler(res.data.data.data)
         }
         catch (err) {
         }
@@ -47,9 +47,16 @@ export default function Aside(props) {
 
     const getNewest = async () => {
         try {
-            const res = await axios.get(api + `/artikel/newest`,)
-            console.log(res.data)
-            setNewest(res.data)
+            const res = await axios.get(api + `/artikel/newest?perpage=3`,)
+            setNewest(res.data.data.data)
+        }
+        catch (err) {
+        }
+    }
+    const getAcak = async () => {
+        try {
+            const res = await axios.get(api + `/artikel/acak?perpage=3`,)
+            setAcak(res.data.data.data)
         }
         catch (err) {
         }
@@ -59,6 +66,7 @@ export default function Aside(props) {
         getArtikel();
         getPopuler();
         getNewest();
+        getAcak();
     }, [props])
 
     return (
@@ -85,7 +93,7 @@ export default function Aside(props) {
                                 scale="point"
                                 padding={{ left: 10, right: 10 }}
                             />
-                            <YAxis />
+                            <YAxis />   
                             <Tooltip />
                             <Legend />
                             <CartesianGrid strokeDasharray="3 3" />
@@ -94,7 +102,7 @@ export default function Aside(props) {
                     </div>
                 </div>
                 <div className="single_sidebar_widget popular_post_widget">
-                    <h3 class="widget_title">Arsip Artikel</h3>
+                    <h3 className="widget_title">Arsip Artikel</h3>
                     <div className="ibox-body">
                         <ul className="nav nav-tabs">
                             <li className="nav-item">
@@ -113,11 +121,11 @@ export default function Aside(props) {
                                     <div key={index} className="media post_item">
                                         <img src={"http://localhost:8000/" + populer.image} style={{width:120, height:'auto'}} alt="post" />
                                         <div className="media-body">
-                                            <a href="single-blog.html">
+                                            <a href={`/detail/${populer.id}`}>
                                                 <h3>{populer.nama_artikel}</h3>
                                             </a>
                                             <p>{populer.tanggal}</p>
-                                            <p><i classname='fa fa-eye' />{populer.views}</p>
+                                            <p><FontAwesomeIcon icon={faEye} className='mr-2' />{populer.views}</p>
                                         </div>
                                     </div>
                                     ))}
@@ -127,25 +135,25 @@ export default function Aside(props) {
                                     <div key={index} className="media post_item">
                                        <img src={"http://localhost:8000/" + newest.image} style={{width:120, height:'auto'}} alt="post" />
                                         <div className="media-body">
-                                            <a href="single-blog.html">
+                                            <a href={`/detail/${newest.id}`}>
                                                 <h3>{newest.nama_artikel}</h3>
                                             </a>
                                             <p>{newest.tanggal}</p>
-                                            <p><i classname='fa fa-eye' />{newest.views}</p>
+                                            <p><FontAwesomeIcon icon={faEye} className='mr-2' />{newest.views}</p>
                                         </div>
                                     </div>
                                     ))}
                                 </div>
                                 <div className="tab-pane" id="tab-1-3">
-                                {artikel?.map((artikel, index) => (
-                                    <div key={index} className="media post_item">
+                                {acak?.map((artikel, map) => (
+                                    <div key={map} className="media post_item">
                                         <img src={"http://localhost:8000/" + artikel.image} style={{width:120, height:'auto'}} alt="post" />
                                         <div className="media-body">
-                                            <a href="single-blog.html">
+                                            <a href={`/detail/${artikel.id}`}>
                                                 <h3>{artikel.nama_artikel}</h3>
                                             </a>
                                             <p>{artikel.tanggal}</p>
-                                            <p><i classname='fa fa-eye' />{artikel.views}</p>
+                                            <p><FontAwesomeIcon icon={faEye} className='mr-2' />{artikel.views}</p>
                                         </div>
                                     </div>
                                      ))}

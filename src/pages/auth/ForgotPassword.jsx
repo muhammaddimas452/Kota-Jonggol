@@ -2,32 +2,40 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { useSelector } from "react-redux";
 
-const ForgotPassword = () => {
+const ForgotPassword = (props) => {
+    const api = 'http://127.0.0.1:8000/api';
+
     const [email, setEmail] = useState('');
     const [error, setError] = useState('');
+    const [alert, setAlert] = useState('');
 
     const changeEmail = (e) => {
         setEmail(e.target.value)
-        setError("")
+        setError('')
     }
 
-    const isLoading = useSelector((state) => state.auth.isLoading);
-    const kirim = () => {
-        if (!email) {
-            setError("email wajib di isi")
-        } else {
-            axios.put('http://127.0.0.1:8000/api/password/forgot-password', { email: email })
-                .then(res => {
-                    setEmail("")
-                })
+    const kirim = (e) => {
+        e.preventDefault();
+        if(!email){
+            setError('Email wajib diisi');
+        }else{
+            axios.put(api + '/password/forgot-password', {email:email})
+            .then(res => {
+                setEmail('')
+                setAlert('Link Reset Password Telah di Kirim, Silahkan cek Email Anda')
+                setTimeout(() =>{
+                    setAlert('')
+                },3000)
+            })
+            console.log(kirim)
         }
     }
-    console.log(kirim);
 
     const myStyle = {
         marginTop: "120px",
         position: "realtive",
     };
+
     return (
         <div className="container d-mt-5" style={myStyle}>
             <div className="row d-flex justify-content-center align-items-center h-100">
@@ -45,21 +53,32 @@ const ForgotPassword = () => {
                                             <span className="h1 fw-bold mb-0 ml-3">Admin Kota Jonggol</span>
                                         </div>
                                         <h5 className="fw-normal mb-3 pb-3" style={{ letterSpacing: 1 }}>Masukkan Email Untuk Mendapatkan Link Reset Password</h5>
+                                        {
+                                            alert && (
+                                                <p className='text-success'>{alert}</p>
+                                            )
+                                        }
+                                        {
+                                            error && (
+                                                <p className='text-danger'>{error}</p>
+                                            )
+                                        }
                                         <div className="form-outline mb-4">
                                             <input type="email" className="form-control form-control-lg"
                                                 id='email'
                                                 name='email'
                                                 value={email}
-                                                onChange={changeEmail} />
+                                                onChange={changeEmail} 
+                                                />
                                             <label className="form-label" htmlFor="email">Email address</label>
                                         </div>
                                         <div className="pt-1 mb-4">
-                                            <button className="btn btn-dark btn-lg btn-block" type="button">Send Email</button>
-                                        </div>
-                                        <div className='text-center'>
-                                            <p className="pb-lg-2" style={{ color: '#393f81' }}>Punya Akun?<a href="/login" style={{ color: '#393f81' }}> Login</a></p>
+                                        <button className="genric-btn primary btn-lg btn-block" type="submit">Send Email</button>
                                         </div>
                                     </form>
+                                    <div className='text-center'>
+                                        <p className="pb-lg-2" style={{ color: '#393f81' }}>Punya Akun?<a href="/login" style={{ color: '#393f81' }}> Login</a></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>

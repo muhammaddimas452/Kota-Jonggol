@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Formik } from "formik"
 import { useDispatch, useSelector } from "react-redux";
 import { authLogin } from "../../redux/actions/authAction";
@@ -22,6 +22,7 @@ const Login = () => {
         password: "",
     };
 
+    const [error, setError] = useState([]);
     const isLoading = useSelector((state) => state.auth.isLoading);
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -31,6 +32,7 @@ const Login = () => {
         if (result.status === "error") {
             setErrorBE(result);
             alert(result?.msg)
+            setError(result.data.errors);
         }
         if (result.status === "success") {
             return navigate("/dashboard");
@@ -75,6 +77,7 @@ const Login = () => {
                                                 </div>
                                                 <h5 className="fw-normal mb-3 pb-3" style={{ letterSpacing: 1 }}>Sign into your account</h5>
                                                 <div className="form-outline mb-4">
+                                                <label className="form-label ml-1" htmlFor="email">Email Address</label>
                                                     <input type="email" name="email" id="email" className="form-control form-control-lg" placeholder='Email'
                                                         error={errors.email && touched.email}
                                                         onChange={handleChange}
@@ -82,9 +85,10 @@ const Login = () => {
                                                         value={values.email}
                                                         disabled={isSubmitting} 
                                                         />
-                                                    <label className="form-label ml-1" htmlFor="email">Email Address</label>
+                                                    <small className='text-danger'>{error.email}</small>
                                                 </div>
                                                 <div className="form-outline mb-4">
+                                                <label className="form-label ml-1" htmlFor="password">Password</label>
                                                     <input type="password" name="password" id="password" className="form-control form-control-lg" placeholder='Password'
                                                         error={errors.password && touched.password}
                                                         onChange={handleChange}
@@ -92,7 +96,7 @@ const Login = () => {
                                                         value={values.password}
                                                         disabled={isSubmitting}
                                                     />
-                                                    <label className="form-label ml-1" htmlFor="password">Password</label>
+                                                    <small className='text-danger'>{error.password}</small>
                                                 </div>
                                                 <div className="pt-1 mb-4">
                                                     <button className="genric-btn primary btn-lg btn-block" type="submit">Login</button>

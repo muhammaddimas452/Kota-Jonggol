@@ -11,6 +11,8 @@ import "../css/themify-icons.css"
 import "../css/slick.css"
 import "../css/nice-select.css"
 import "../css/style.css"
+import "../css/css/style.css"
+import logo from '../assets/jonggol.png'
 
 import { Nav, Navbar, Container, NavDropdown } from 'react-bootstrap'
 
@@ -23,37 +25,47 @@ export default function Header() {
                     <div className="header-mid gray-bg">
                         <div className="container">
                             <div className="row align-items-center">
-                                <div className="logo d-none d-md-block ml-4">
-                                    <a href="/home"><img src="assets/img/logo/jonggol.png" style={{ width: 80, height: 85 }} alt /></a>
+                                <div className="logo d-md-block ml-5">
+                                    <a href="/home"><img src={logo} style={{ width: 70, height: 80 }} alt /></a>
                                 </div>
                                 <div className="header-banner ml-5 d-md-block">
-                                    <h3>Website Jonggol</h3>
-                                    <h5>Kec. Jonggol Kabupaten Bogor Jawa Barat</h5>
+                                    <h3>Website Desa Jonggol</h3>
+                                    <h5>Kec. Jonggol, Kabupaten Bogor, Jawa Barat</h5>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className='m-1'>
-                        <Navbar collapseOnSelect expand="lg" bg="success" variant="dark">
-                            <Container>
-                                <Navbar.Brand className='sticky-logo ml-2' href="#home"><img src="assets/img/logo/jonggol.png" className='ml-4' style={{ width: 50, height: 50 }} alt /></Navbar.Brand>
-                                <Navbar.Toggle className='ml-4' aria-controls="responsive-navbar-nav" />
-                                <Navbar.Collapse id="responsive-navbar-nav">
-                                    <Nav className="me-auto col-sm-8 col-lg-8 col-xl-8 col-md-8 m-3">
-                                        <Navbar.Brand className='font-weight-bold ml-3' href="/home">BERANDA</Navbar.Brand>
-                                        <Navbar.Brand className='font-weight-bold ml-3' href="/informasi">INFORMASI WILAYAH</Navbar.Brand>
-                                        <Navbar.Brand className='font-weight-bold ml-3' href="/peta">PETA</Navbar.Brand>
-                                        <Navbar.Brand className='font-weight-bold ml-3' href="/galeri">GALERI</Navbar.Brand>  
-                                        <NavDropdown className='font-weight-bold ml-3' title="PAGE" id="collasible-nav-dropdown">
-                                            <NavDropdown.Item href="#action/3.1">Sejarah Desa</NavDropdown.Item>
-                                            <NavDropdown.Item href="#action/3.2">Visi Dan Misi</NavDropdown.Item>
-                                            <NavDropdown.Item href="#action/3.3">Pemerintah Desa</NavDropdown.Item>
-                                        </NavDropdown>
-                                    </Nav>    
-                                </Navbar.Collapse>
-                            </Container>
-                        </Navbar>
-                    </div>
+                    <nav className="navbar navbar-expand-lg navbar-green ftco_navbar bg-green ftco-navbar-light" id="ftco-navbar">
+                        <div className="container">
+                            <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+                                <span className="fa fa-bars" /> Menu
+                            </button>
+                            <form action="#" className="searchform order-lg-last">
+                                <div className="form-group d-flex">
+                                    <input type="text" className="form-control pl-3" placeholder="Search" />
+                                    <button type="submit" placeholder className="form-control search"><span className="fa fa-search" /></button>
+                                </div>
+                            </form>
+                            <div className="collapse navbar-collapse" id="ftco-nav">
+                                <ul className="navbar-nav mr-auto">
+                                    <li className="nav-item font-weight-bold "><a href="/home" className="nav-link"><h6>Beranda</h6></a></li>
+                                    <li className="nav-item font-weight-bold "><a href="/informasi" className="nav-link"><h6>Informasi Wilayah</h6></a></li>
+                                    <li className="nav-item font-weight-bold "><a href="/pemerintah" className="nav-link"><h6>Pemerintah Desa</h6></a></li>
+                                    <li className="nav-item font-weight-bold "><a href="/peta" className="nav-link"><h6>Peta</h6></a></li>
+                                    <li className="nav-item font-weight-bold "><a href="/galeri" className="nav-link"><h6>Galeri</h6></a></li>
+                                    <li className="nav-item dropdown font-weight-bold ">
+                                        <a className="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><h6>Page</h6></a>
+                                        <div className="dropdown-menu" aria-labelledby="dropdown04">
+                                            <a className="dropdown-item font-weight-bold " href="/sejarah">Sejarah Desa</a>
+                                            <a className="dropdown-item font-weight-bold " href="/visimisi">Visi Dan Misi</a>
+                                            <a className="dropdown-item font-weight-bold " href="/pemerintah">Pemerintah Desa</a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+
                 </div>
             </div>
         </header>

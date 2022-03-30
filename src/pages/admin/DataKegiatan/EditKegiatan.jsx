@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Footer from '../Footer'
 import Nav from '../Nav'
-import Sidebar from '../Sidebar'
 import swal from 'sweetalert';
 import { useParams } from 'react-router'
 import { useNavigate } from "react-router-dom";
@@ -24,6 +22,7 @@ export default function TambahArtikel() {
             const kegiatan_id = id;
             setLoading(true)
             const res = await axios.get(api + `/kegiatan/edit/${kegiatan_id}`)
+            console.log(res)
             setLoading(false)
             if (res.data.status === 200) {
                 setKegiatan(res.data.kegiatan);
@@ -60,7 +59,7 @@ export default function TambahArtikel() {
         const formData = new FormData();
         formData.append('image', picture.image)
         formData.append('tanggal', kegiatanInput.tanggal)
-        formData.append('kegiatan', kegiatanInput.kegiatan)
+        formData.append('nama_kegiatan', kegiatanInput.nama_kegiatan)
         formData.append('status', kegiatanInput.status)
 
         const kegiatan_id = id;
@@ -121,12 +120,12 @@ export default function TambahArtikel() {
                                                         <div className="form-group">
                                                             <label>Kegiatan</label>
                                                             <input className="form-control" type="text" row="3" placeholder='Isi Nama Kegiatan'
-                                                                id="kegiatan"
-                                                                name="kegiatan"
+                                                                id="nama_kegiatan"
+                                                                name="nama_kegiatan"
                                                                 onChange={handleInput}
-                                                                value={kegiatanInput.kegiatan}
+                                                                value={kegiatanInput.nama_kegiatan}
                                                             />
-                                                            <small className='text-danger'>{error.kegiatan}</small>
+                                                            <small className='text-danger'>{error.nama_kegiatan}</small>
                                                         </div>
                                                         <div className="form-group">
                                                             <label>Tambahkan Gambar</label>

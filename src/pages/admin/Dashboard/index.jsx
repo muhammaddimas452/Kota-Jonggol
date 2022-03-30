@@ -1,16 +1,9 @@
-import React, { PureComponent, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import '../css/main.min.css'
 import axios from 'axios';
 import Nav from '../Nav'
-import Sidebar from '../Sidebar'
 import {
-    Tooltip,
-    BarChart,
-    XAxis,
-    YAxis,
-    Legend,
-    CartesianGrid,
-    Bar,
+    AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
 } from "recharts";
 
 
@@ -70,7 +63,6 @@ export default function Dashboard(props) {
             setLoading(false)
         }
     }
-    const [tombol, setTombol] = useState(true)
     useEffect(() => {
         getJumlahPenduduk();
         getTotalArtikel();
@@ -81,10 +73,48 @@ export default function Dashboard(props) {
 
 
     const data = [
-        { name: "Jumlah Penduduk", users: 2000000000 },
-        { name: "Total Artikel", users: 1500000000 },
-        { name: "Kegiatan Selesai", users: 1000000000 },
-        { name: "Kegiatan", users: 500000000 },
+        {
+            name: 'Page A',
+            uv: 4000,
+            pv: 2400,
+            amt: 2400,
+        },
+        {
+            name: 'Page B',
+            uv: 3000,
+            pv: 1398,
+            amt: 2210,
+        },
+        {
+            name: 'Page C',
+            uv: 2000,
+            pv: 9800,
+            amt: 2290,
+        },
+        {
+            name: 'Page D',
+            uv: 2780,
+            pv: 3908,
+            amt: 2000,
+        },
+        {
+            name: 'Page E',
+            uv: 1890,
+            pv: 4800,
+            amt: 2181,
+        },
+        {
+            name: 'Page F',
+            uv: 2390,
+            pv: 3800,
+            amt: 2500,
+        },
+        {
+            name: 'Page G',
+            uv: 3490,
+            pv: 4300,
+            amt: 2100,
+        },
     ];
 
     return (
@@ -134,32 +164,32 @@ export default function Dashboard(props) {
                         <div className="row">
                             <div className="col-lg-8">
                                 <div className="ibox">
-                                    <div className="ibox-body">
+                                    <div className="ibox-body col-sm-12">
                                         <div className="mb-4">
                                             <div>
                                                 <h3 className="m-0">Statistics</h3>
                                                 <div>Your shop sales analytics</div>
                                             </div>
                                         </div>
-                                        <div>
-                                            <BarChart className='ibox col-lg-12'
-                                                width={500}
+                                        <div className='col-lg-12'>
+                                            <AreaChart
+                                                width={600}
                                                 height={270}
                                                 data={data}
-                                                barSize={30}
+                                                margin={{
+                                                    top: 10,
+                                                    right: 30,
+                                                    left: 0,
+                                                    bottom: 0,
+                                                }}
                                             >
-                                                <XAxis
-                                                    dataKey="name"
-                                                    scale="point"
-                                                    padding={{ left: 10, right: 10 }}
-                                                />
+                                                <CartesianGrid strokeDasharray="3 3" />
+                                                <XAxis dataKey="name" />
                                                 <YAxis />
                                                 <Tooltip />
-                                                <Legend />
-                                                <CartesianGrid strokeDasharray="3 3" />
-                                                <Bar dataKey="users" fill="grey" background={{ fill: "#eee" }} />
-                                            </BarChart>
-                                        </div>
+                                                <Area type="monotone" dataKey="uv" stroke="#8884d8" fill="#8884d8" />
+                                            </AreaChart>
+                                        </div>    
                                     </div>
                                 </div>
                             </div>

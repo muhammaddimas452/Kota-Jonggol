@@ -1,4 +1,5 @@
 import React from 'react'
+import logo from '../assets/jonggol.png'
 
 export default function Footer() {
     return (
@@ -54,7 +55,7 @@ export default function Footer() {
                                 <div className="col-xl-3 col-lg-3 col-md-4 col-sm-4 col-xs-3">
                                     <div className="single-footer-caption mb-50">
                                         <div className="banner text-center">
-                                            <img src="assets/img/logo/jonggol.png" style={{ width: 200, height: 'auto' }} alt />
+                                            <img src={logo} style={{ width: 200, height: 'auto' }} alt />
                                         </div>
                                     </div>
                                 </div>

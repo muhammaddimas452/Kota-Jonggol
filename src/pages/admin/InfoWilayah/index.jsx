@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { Component, useState, useEffect } from 'react'
+import { useNavigate } from "react-router-dom";
+import Footer from '../Footer'
 import Nav from '../Nav'
 import axios from 'axios'
 import { NavLink } from 'reactstrap'
@@ -7,17 +9,19 @@ import swal from 'sweetalert';
 import '../css/main.min.css'
 import '../vendors/bootstrap/dist/css/bootstrap.min.css'
 import '../vendors/themify-icons/css/themify-icons.css'
+import { Modal, Col, Container, Row, Button, Table } from 'react-bootstrap'
 
 
-export default function PemerintahDesa(props) {
+export default function DataInfoWilayah(props) {
     const api = 'http://127.0.0.1:8000/api'
-    const [pemerintah, setPemerintah] = useState();
-    const deleteCategory = (e, jabatan_id) => {
+    const [infoWilayah, setInfoWilayah] = useState();
+    const navigate = useNavigate();
+    const deleteCategory = (e, infowilayah_id) => {
         e.preventDefault();
 
         const thisClicked = e.currentTarget;
         thisClicked.innerText = "Deleting"
-        axios.delete(api + `/jabatan/delete/${jabatan_id}`).then(res => {
+        axios.delete(api + `/infowilayah/delete/${infowilayah_id}`).then(res => {
             if (res.data.status === 200) {
                 swal("Success", res.data.message, "success");
                 thisClicked.closest("tr").remove()
@@ -27,17 +31,16 @@ export default function PemerintahDesa(props) {
             }
         });
     }
-    const getPemerintah = async () => {
+    const getInfoWilayah = async () => {
         try {
-            const res = await axios.get(api + `/pemerintahdesa`,)
-            console.log(res.data)
-            setPemerintah(res.data)
+            const res = await axios.get(api + `/infowilayah`,)
+            setInfoWilayah(res.data)
         }
         catch (err) {
         }
     }
     useEffect(() => {
-        getPemerintah();
+        getInfoWilayah();
     }, [props])
 
     return (
@@ -59,45 +62,39 @@ export default function PemerintahDesa(props) {
                     <div className="ibox">
                         <div className="ibox-head">
                             <div className="ibox-title">Data Table</div>
-                            <NavLink href="/tambahpemerintah"><button className='genric-btn info radius'>Tambah Data</button></NavLink>
+                            <NavLink href="/tambahdatainfowilayah"><button className='genric-btn info radius'>Tambah Data</button></NavLink>
                         </div>
                         <div className="ibox-body">
-                            <table className="table table-striped table-bordered table-hover" id="example-table" cellSpacing={0} width="100%">
+                            <Table responsive striped bordered hover>
                                 <thead>
                                     <tr>
-                                        <th>No</th>
-                                        <th className="">Nama</th>
-                                        <th className="">Jabatan</th>
-                                        <th className="">Foto</th>
-                                        <th>Action</th>
+                                        {/* <th>No</th> */}
+                                        <th className=''>Nama Desa</th>
+                                        <th className=''>RT</th>
+                                        <th className=''>RW</th>
+                                        <th className=''>Kepala Desa</th>
+                                        <th className=''>Action</th>
                                     </tr>
                                 </thead>
-                                <tfoot>
-                                    <tr>
-                                        <th>No</th>
-                                        <th className="">Nama</th>
-                                        <th className="">Jabatan</th>
-                                        <th className="">Foto</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </tfoot>
                                 <tbody>
-                                    {pemerintah?.map((pemerintah, index) => (
+                                    {infoWilayah?.map((infowilayah, index) => (
                                         <tr key={index}>
-                                            <td>NO</td>
-                                            <td>{pemerintah.nama}</td>
-                                            <td>{pemerintah.jabatan.nama_jabatan}</td>
-                                            <td><img className='responsive' style={{ width: 150, height: 'auto' }} src={"http://localhost:8000/" + pemerintah.gambar_pemerintah} alt="" /></td>
-                                            <td className='text-center'>
-                                                <Link to={`/editpemerintah/${pemerintah.id}`}>
-                                                    <button className="genric-btn success radius">Edit</button>
-                                                </Link>
-                                                <button className="genric-btn danger radius ml-3" onClick={(e) => deleteCategory(e, pemerintah.id)}>Delete</button>
+                                            {/* <th class="text-center">1</th> */}
+                                            <td className="text-center">{infowilayah.nama_desa}</td>
+                                            <td className="text-center">{infowilayah.rt}</td>
+                                            <td className="text-center">{infowilayah.rw}</td>
+                                            <td className="text-center">{infowilayah.kepala_desa}</td>
+                                            <td className="text-center">
+                                                {/* <Link to={`/editartikel/${artikel.id}`}> */}
+                                                    {/* <Route path='/editartikel/:id' element={<EditArtikel />} id={artikel.id} /> */}
+                                                    <a href={`/editdatainfowilayah/${infowilayah.id}`}><button className="genric-btn success radius">Edit</button></a>
+                                                {/* </Link> */}
+                                                <button className="genric-btn danger radius ml-3" onClick={(e) => deleteCategory(e, infowilayah.id)}>Delete</button>
                                             </td>
                                         </tr>
                                     ))}
                                 </tbody>
-                            </table>
+                            </Table>
                         </div>
                     </div>
                 </div>

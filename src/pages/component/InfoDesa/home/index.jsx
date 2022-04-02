@@ -13,6 +13,8 @@ import "../../css/nice-select.css"
 import "../../css/style.css"
 import logo from '../../assets/jonggol.png'
 
+import Artikel from '../Artikel'
+import Pagination from '../Pagination'
 import Header from '../Header';
 import Footer from '../Footer';
 import Aside from '../Aside';
@@ -24,6 +26,10 @@ import { Carousel } from 'react-bootstrap';
 export default function Home(props) {
     const api = 'http://127.0.0.1:8000/api'
     const [artikel, setArtikel] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [artikelPerPage] = useState(10);
+    const [loading, setLoading] = useState(false);
+
     const [kegiatan, setKegiatan] = useState();
     const [kegiatanDone, setKegiatanDone] = useState([]);
     const [kegiatanNot, setKegiatanNot] = useState([]);
@@ -42,6 +48,7 @@ export default function Home(props) {
     const getArtikel = async () => {
         try {
             const res = await axios.get(api + `/artikel/paginate?perpage=6`,)
+            // const res = await axios.get(api + `/artikel`,)
             setArtikel(res.data.data.data)
         }
         catch (err) {
@@ -83,6 +90,11 @@ export default function Home(props) {
         getKegiatanNot();
     }, [props])
 
+    const indexOfLastArtikel = currentPage * artikelPerPage;
+    const indexOfFirstArtikel = indexOfLastArtikel - artikelPerPage;
+    const currentArtikel = artikel.slice(indexOfFirstArtikel, indexOfLastArtikel);
+
+    const paginate = pageNumber => setCurrentPage(pageNumber);
 
     return (
         <div>
@@ -229,6 +241,11 @@ export default function Home(props) {
                                                                             </div>
                                                                         ))}
                                                                     </div>
+                                                                    {/* <Artikel artikels={currentArtikel} loading={loading} />
+                                                                    <Pagination 
+                                                                    artikelsPerPage={artikelPerPage}
+                                                                    totalArtikel={artikel.length}
+                                                                    paginate={paginate} /> */}
                                                                 </div>
                                                                 <div className="tab-pane" id="nav-not" role="tabpanel" aria-labelledby="nav-not-tab">
                                                                     <div className="row">

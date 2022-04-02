@@ -1,19 +1,13 @@
 import React from 'react';
 
-const Artikels = ({ artikels, loading }) => {
+const Artikels = ({ artikel, loading,  search, moment }) => {
     if (loading) {
         return <h2>Loading...</h2>;
     }
 
     return (
         <div className="row">
-            {artikels?.filter((artikel) => {
-                if (search == "") {
-                    return artikel
-                } else if (artikel.nama_artikel.toLowerCase().includes(search.toLowerCase())) {
-                    return artikel
-                }
-            }).map((artikel, index) => (
+            {artikel?.map((artikel, index) => (
                 <div key={index} className="col-xl-6 col-lg-6 col-md-6">
                     <div className="whats-news-single mb-40 mb-40">
                         <div className="whates-img">

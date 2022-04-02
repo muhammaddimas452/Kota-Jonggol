@@ -6,6 +6,11 @@ import { Navigate, useParams } from 'react-router'
 import { useNavigate } from "react-router-dom";
 import { Modal, Col, Container, Row, Button } from 'react-bootstrap'
 import './css/main.min.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faGauge } from "@fortawesome/free-solid-svg-icons";
+import { faTable } from "@fortawesome/free-solid-svg-icons";
+import { faSquarePen } from "@fortawesome/free-solid-svg-icons";
+import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 
 export default function Nav(props) {
     const [modalShow, setModalShow] = useState(false);
@@ -53,33 +58,33 @@ export default function Nav(props) {
                     </div>
                     <ul className="side-menu metismenu">
                         <li>
-                            <a className="active" href="/dashboard"><i className="sidebar-item-icon fa fa-th-large" />
+                            <a className="" href="/dashboard"><FontAwesomeIcon className='sidebar-item-icon' icon={faGauge}  />
                                 <span className="nav-label">Dashboard</span>
                             </a>
                         </li>
                         <li className="heading">Data Desa</li>
                         <li>
-                            <a href="/artikel"><i className="sidebar-item-icon fa fa-table" />
+                            <a href="/artikel"><FontAwesomeIcon className='sidebar-item-icon' icon={faTable}  />
                                 <span className="nav-label">Data Artikel</span></a>
                         </li>
                         <li>
-                            <a href="/kegiatan"><i className="sidebar-item-icon fa fa-table" />
+                            <a href="/kegiatan"><FontAwesomeIcon className='sidebar-item-icon' icon={faTable}  />
                                 <span className="nav-label">Data Kegiatan</span></a>
                         </li>
                         <li>
-                            <a href="/pemerintahdesa"><i className="sidebar-item-icon fa fa-table" />
+                            <a href="/pemerintahdesa"><FontAwesomeIcon className='sidebar-item-icon' icon={faTable}  />
                                 <span className="nav-label">Pemerintah Desa</span></a>
                         </li>
                         <li>
-                            <a href="/jabatan"><i className="sidebar-item-icon fa fa-table" />
+                            <a href="/jabatan"><FontAwesomeIcon className='sidebar-item-icon' icon={faTable}  />
                                 <span className="nav-label">Data Jabatan</span></a>
                         </li>
                         <li>
-                            <a href="/datainfowilayah"><i className="sidebar-item-icon fa fa-table" />
+                            <a href="/datainfowilayah"><FontAwesomeIcon className='sidebar-item-icon' icon={faTable}  />
                                 <span className="nav-label">Info Wilayah</span></a>
                         </li>
                         <li>
-                            <a href=''><i className="sidebar-item-icon ti-pencil-alt" />
+                            <a href=''><FontAwesomeIcon className='sidebar-item-icon' icon={faSquarePen}  />
                                 <span className="nav-label">Menu</span><i className="fa fa-angle-left arrow" /></a>
                             <ul className="nav-2-level collapse">
                                 <li>
@@ -91,7 +96,7 @@ export default function Nav(props) {
                             </ul>
                         </li>
                         <li>
-                            <a href="" onClick={logOut}><i className="sidebar-item-icon ti-shift-left" />
+                            <a href="" onClick={logOut}><FontAwesomeIcon className='sidebar-item-icon' icon={faRightFromBracket}  />
                                 <span className="nav-label">Log Out</span></a>
                         </li>
                     </ul>

@@ -208,6 +208,7 @@ function MydModalWithGrid(props) {
         console.log(result)
         if (result?.data?.status === 200) {
             swal("Success", result.data.message, "success");
+            window.location.reload()
             return navigate("/jabatan");
         }
         else if (result.data?.status === 422) {

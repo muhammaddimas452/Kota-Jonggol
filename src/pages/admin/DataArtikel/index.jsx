@@ -105,7 +105,7 @@ export default function DataArtikel(props) {
                                             {/* <th class="text-center">1</th> */}
                                             <td className="text-center">{artikel.tanggal}</td>
                                             <td className="text-center">{artikel.nama_artikel}</td>
-                                            <td className="text-center"><img className='responsive' style={{ width: 200, height: 'auto' }}
+                                            <td className="text-center"><img className='responsive' style={{ height:'auto', width:200 }}
                                                 src={artikel.image} /></td>
                                             <td dangerouslySetInnerHTML={{ __html: artikel.isi_artikel }} />
                                             <td className="text-center">{artikel.views}</td>
@@ -146,7 +146,7 @@ function MydModalWithGrid(props) {
                         <Container>
                             <div class="card">
                                 <img className='responsive'
-                                    src={"http://localhost:8000/" + props.detail.image} />
+                                    src={props.detail.image} />
                                 <div class="card-body">
                                     <h5 class="card-title">{props.detail.nama_artikel}</h5>
                                     <div class="text-muted card-subtitle"></div>

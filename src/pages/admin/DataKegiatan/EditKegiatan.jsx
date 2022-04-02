@@ -148,7 +148,6 @@ export default function TambahArtikel() {
                                                                                 <input type="radio" name="status" id="status" onChange={handleInput} value="1" checked />Sudah Dilaksanakan
                                                                             </label>
                                                                         )
-
                                                                     } else {
                                                                         return (
                                                                             <label>

@@ -51,7 +51,6 @@ export default function TambahArtikel() {
     const handleImage = (e) => {
         e.persist();
         setPicture({ image: e.target.files[0] })
-        console.log(picture.image)
     }
 
     const updateKegiatan = async (e) => {

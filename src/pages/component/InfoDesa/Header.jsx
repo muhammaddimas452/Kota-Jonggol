@@ -14,6 +14,8 @@ import "../css/style.css"
 import "../css/css/style.css"
 import logo from '../assets/jonggol.png'
 import axios from 'axios'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faFacebook } from "@fortawesome/free-solid-svg-icons";
 
 export default function Header(props) {
     const api = 'http://127.0.0.1:8000/api'
@@ -80,10 +82,10 @@ export default function Header(props) {
                                         <div class="mt-2 ml-5 col d-flex justify-content-end">
                                             <div class="social-media">
                                                 <p class="mb-0 d-flex">
-                                                    <a href="#" class="text-white d-flex align-items-center justify-content-center"><i class="fab fa-facebook-f"></i></a>
-                                                    <a href="#" class="text-white d-flex align-items-center justify-content-center"><i class="fab fa-twitter"></i></a>
-                                                    <a href="#" class="text-white d-flex align-items-center justify-content-center"><i class="fab fa-instagram"></i></a>
-                                                    <a href="#" class="text-white d-flex align-items-center justify-content-center"><i class="fab fa-youtube"></i></a>
+                                                    <a href="#" class="text-white d-flex align-items-center justify-content-center"><i class="ti-facebook"></i></a>
+                                                    <a href="#" class="text-white d-flex align-items-center justify-content-center"><i class="ti-twitter"></i></a>
+                                                    <a href="#" class="text-white d-flex align-items-center justify-content-center"><i class="ti-instagram"></i></a>
+                                                    <a href="#" class="text-white d-flex align-items-center justify-content-center"><i class="ti-youtube"></i></a>
                                                 </p>
                                             </div>
                                         </div>

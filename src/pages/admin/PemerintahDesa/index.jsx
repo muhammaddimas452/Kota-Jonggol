@@ -87,7 +87,7 @@ export default function PemerintahDesa(props) {
                                             <td>NO</td>
                                             <td>{pemerintah.nama}</td>
                                             <td>{pemerintah.jabatan.nama_jabatan}</td>
-                                            <td><img className='responsive' style={{ width: 150, height: 'auto' }} src={"http://localhost:8000/" + pemerintah.gambar_pemerintah} alt="" /></td>
+                                            <td className='text-center'><img className='responsive' style={{ width: 100, height: 'auto' }} src={pemerintah.gambar_pemerintah} alt="" /></td>
                                             <td className='text-center'>
                                                 <Link to={`/editpemerintah/${pemerintah.id}`}>
                                                     <button className="genric-btn success radius">Edit</button>

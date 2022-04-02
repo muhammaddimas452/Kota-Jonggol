@@ -57,9 +57,7 @@ export default function TambahArtikel() {
         } else if (result?.data?.status === 422) {
             swal("Data Perlu di Isi", "", "error")
             setError(result.data.errors);
-        } else if (result?.data?.status === 404) {
-            swal("Error", result.data.message, "error")
-        }
+        } 
     }
     return (
         <div className='page-wrapper'>

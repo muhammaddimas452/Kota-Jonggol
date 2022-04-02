@@ -13,6 +13,8 @@ import {
 } from "recharts";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye } from "@fortawesome/free-solid-svg-icons";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
+
 
 export default function Aside(props) {
     const data = [
@@ -20,17 +22,37 @@ export default function Aside(props) {
         { name: "Perempuan", total: 300 },
         { name: "Total", total: 1000 },
     ];
+    const moment = require('moment');
 
     const api = 'http://127.0.0.1:8000/api'
     const [artikel, setArtikel] = useState();
     const [populer, setPopuler] = useState();
     const [newest, setNewest] = useState();
     const [acak, setAcak] = useState();
+    const [ikegiatan, setIKegiatan] = useState();
+    const [kegiatan, setKegiatan] = useState();
     const navigate = useNavigate();
     const getArtikel = async () => {
         try {
             const res = await axios.get(api + `/artikel?perpage=6`,)
             setArtikel(res.data.data.data)
+        }
+        catch (err) {
+        }
+    }
+
+    const getIKegiatan = async () => {
+        try {
+            const res = await axios.get(api + `/kegiatan`)
+            setIKegiatan(res.data)
+        }
+        catch (err) {
+        }
+    }
+    const getKegiatan = async () => {
+        try {
+            const res = await axios.get(api + `/kegiatan/paginate?perpage=3`)
+            setKegiatan(res.data.data.data)
         }
         catch (err) {
         }
@@ -67,6 +89,8 @@ export default function Aside(props) {
         getPopuler();
         getNewest();
         getAcak();
+        getIKegiatan();
+        getKegiatan();
     }, [props])
 
     return (
@@ -102,7 +126,7 @@ export default function Aside(props) {
                     </div>
                 </div>
                 <div className="single_sidebar_widget popular_post_widget">
-                    <h3 className="widget_title">Arsip Artikel</h3>
+                    <h3 className="widget_title">Arsip Artikel dan Kegiatan</h3>
                     <div className="ibox-body">
                         <ul className="nav nav-tabs">
                             <li className="nav-item">
@@ -114,17 +138,20 @@ export default function Aside(props) {
                             <li className="nav-item">
                                 <a className="nav-link" href="#tab-1-3" data-toggle="tab">Acak</a>
                             </li>
+                            <li className="nav-item">
+                                <a className="nav-link" href="#tab-1-4" data-toggle="tab">Kegiatan Terbaru</a>
+                            </li>
                         </ul>
                         <div className="tab-content mt-3">
                                 <div className="tab-pane fade show active" id="tab-1-1">
                                 {populer?.map((populer, index) => (
                                     <div key={index} className="media post_item">
-                                        <img src={"http://localhost:8000/" + populer.image} style={{width:120, height:'auto'}} alt="post" />
+                                        <img src={populer.image} style={{width:120, height:'auto'}} alt="post" />
                                         <div className="media-body">
                                             <a href={`/detail/${populer.id}`}>
                                                 <h3>{populer.nama_artikel}</h3>
                                             </a>
-                                            <p>{populer.tanggal}</p>
+                                            <p>{moment(populer.created_at).fromNow()}</p>
                                             <p><FontAwesomeIcon icon={faEye} className='mr-2' />{populer.views}</p>
                                         </div>
                                     </div>
@@ -133,12 +160,12 @@ export default function Aside(props) {
                                 <div className="tab-pane" id="tab-1-2">
                                 {newest?.map((newest, index) => (
                                     <div key={index} className="media post_item">
-                                       <img src={"http://localhost:8000/" + newest.image} style={{width:120, height:'auto'}} alt="post" />
+                                       <img src={newest.image} style={{width:120, height:'auto'}} alt="post" />
                                         <div className="media-body">
                                             <a href={`/detail/${newest.id}`}>
                                                 <h3>{newest.nama_artikel}</h3>
                                             </a>
-                                            <p>{newest.tanggal}</p>
+                                            <p>{moment(newest.created_at).fromNow()}</p>
                                             <p><FontAwesomeIcon icon={faEye} className='mr-2' />{newest.views}</p>
                                         </div>
                                     </div>
@@ -147,16 +174,30 @@ export default function Aside(props) {
                                 <div className="tab-pane" id="tab-1-3">
                                 {acak?.map((artikel, map) => (
                                     <div key={map} className="media post_item">
-                                        <img src={"http://localhost:8000/" + artikel.image} style={{width:120, height:'auto'}} alt="post" />
+                                        <img src={artikel.image} style={{width:120, height:'auto'}} alt="post" />
                                         <div className="media-body">
                                             <a href={`/detail/${artikel.id}`}>
                                                 <h3>{artikel.nama_artikel}</h3>
                                             </a>
-                                            <p>{artikel.tanggal}</p>
+                                            <p>{moment(acak.created_at).fromNow()}</p>
                                             <p><FontAwesomeIcon icon={faEye} className='mr-2' />{artikel.views}</p>
                                         </div>
                                     </div>
                                      ))}
+                                </div>
+                                <div className="tab-pane" id="tab-1-4">
+                                {kegiatan?.map((kegiatan, map) => (
+                                    <div key={map} className="media post_item">
+                                        <img src={kegiatan.image} style={{width:120, height:'auto'}} alt="post" />
+                                        <div className="media-body">
+                                            <a href={`/detail/${kegiatan.id}`}>
+                                                <h3>{kegiatan.nama_kegiatan}</h3>
+                                            </a>
+                                            <p>{moment(kegiatan.created_at).fromNow()}</p>
+                                            <p><FontAwesomeIcon icon={faPen} className='mr-2' />{kegiatan.status == 0 ? "Belum Dilaksanakan" : "Sudah Dilaksakan"}</p>
+                                        </div>
+                                    </div>
+                                    ))}
                                 </div>
                             </div>
                     </div>
@@ -165,35 +206,17 @@ export default function Aside(props) {
                     <h4 className="widget_title">Galeri Foto</h4>
                     <div className="col-lg-12">
                         <Carousel fade={true} pause={false} controls={false} indicators={false}>
-                            <Carousel.Item interval={5000}>
+                        {ikegiatan?.map((kegiatan, index) => (
+                            <Carousel.Item interval={5000} key={index.id}>
                                 <div className="single-slider">
                                     <div className="trending-top mb-30">
                                         <div className="trend-top-img">
-                                            <img src="assets/img/trending/trending_top2.jpg" alt />
+                                            <img src={kegiatan.image} alt />
                                         </div>
                                     </div>
                                 </div>
                             </Carousel.Item>
-                            {/* Single */}
-                            <Carousel.Item interval={5000}>
-                                <div className="single-slider">
-                                    <div className="trending-top mb-30">
-                                        <div className="trend-top-img">
-                                            <img src="assets/img/trending/trending_top02.jpg" alt />
-                                        </div>
-                                    </div>
-                                </div>
-                            </Carousel.Item>
-                            {/* Single */}
-                            <Carousel.Item interval={5000}>
-                                <div className="single-slider">
-                                    <div className="trending-top mb-30">
-                                        <div className="trend-top-img">
-                                            <img src="assets/img/trending/trending_top03.jpg" alt />
-                                        </div>
-                                    </div>
-                                </div>
-                            </Carousel.Item>
+                            ))}
                         </Carousel>
                     </div>
                 </aside>

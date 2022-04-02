@@ -106,7 +106,7 @@ export default function DataArtikel(props) {
                                             <td className="text-center">{artikel.tanggal}</td>
                                             <td className="text-center">{artikel.nama_artikel}</td>
                                             <td className="text-center"><img className='responsive' style={{ width: 200, height: 'auto' }}
-                                                src={"http://localhost:8000/" + artikel.image} /></td>
+                                                src={artikel.image} /></td>
                                             <td dangerouslySetInnerHTML={{ __html: artikel.isi_artikel }} />
                                             <td className="text-center">{artikel.views}</td>
                                             <td className="text-center">

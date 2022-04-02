@@ -91,7 +91,7 @@ class DataKegiatan extends PureComponent {
                                                 <td className="text-center">{kegiatan.nama_kegiatan}</td>
                                                 <td className="text-center">
                                                 <img className='responsive' style={{ width:150, height: 'auto' }}
-                                                        src={"http://localhost:8000/" + kegiatan.image} />
+                                                        src={kegiatan.image} />
                                                 </td>
                                                 <td className="text-center">{kegiatan.status == 0 ? "Belum Dilaksanakan" : "Sudah Dilaksakan"}</td>
                                                 <td className="text-center">

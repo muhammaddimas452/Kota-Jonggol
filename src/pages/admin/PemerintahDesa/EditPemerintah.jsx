@@ -3,6 +3,7 @@ import Nav from '../Nav'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { useNavigate } from "react-router"
 import { useParams } from 'react-router'
+import { NavLink } from "reactstrap"
 import axios from 'axios';
 import swal from 'sweetalert';
 import '../css/main.min.css'
@@ -106,6 +107,7 @@ export default function EditPemerintah(props) {
                             <div className="ibox">
                                 <div className="ibox-head">
                                     <div className="ibox-title">Basic form</div>
+                                    <NavLink href="/pemerintahdesa"><button className='genric-btn info radius mr-4'>Back</button></NavLink>
                                 </div>
                                 <div className="ibox-body">
                                     <form onSubmit={updatePemerintah}>
@@ -139,7 +141,7 @@ export default function EditPemerintah(props) {
                                                 name="gambar_pemerintah"
                                                 onChange={handleImage}
                                             />
-                                            <img className='mt-3 ml-3' style={{ width: 150, height: 100 }} src={"http://localhost:8000/" + values.gambar_pemerintah} alt="" />
+                                            <img className='mt-3 ml-3' style={{ width: 150, height: 150 }} src={values.gambar_pemerintah} alt="" />
                                             <small className='text-danger'>{error.gambar_pemerintah}</small>
                                         </div>
 

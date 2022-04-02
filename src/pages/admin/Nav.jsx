@@ -112,7 +112,7 @@ function MydModalWithGrid(props) {
     const getJumlahPenduduk = async () => {
         try {
             setLoading(true)
-            const res = await axios.get(api + `/jumlah-penduduk/edit/2`)
+            const res = await axios.get(api + `/jumlah-penduduk/edit/1`)
             setLoading(false)
             if (res.data.status === 200) {
                 setJumlahPenduduk(res.data.jumlahpenduduk);
@@ -138,7 +138,7 @@ function MydModalWithGrid(props) {
         e.preventDefault();
         const jumlahPenduduk_id = id;
         const data = jumlahPendudukInput;
-        axios.put(api + `/jumlah-penduduk/update/2`, {
+        axios.put(api + `/jumlah-penduduk/update/1`, {
             jumlah_penduduk: jumlahPendudukInput.jumlah_penduduk,
         })
             .then(res => {

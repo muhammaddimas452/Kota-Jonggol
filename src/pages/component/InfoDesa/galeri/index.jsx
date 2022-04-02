@@ -59,7 +59,7 @@ export default function Galeri(props) {
                     <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6" key={index}>
                         <a href="" className="img-pop-up">
                             <div className="single-gallery-image" >
-                                <img style={{ height:200, width:450 }} src={"http://localhost:8000/" + kegiatan.image} alt="" />
+                                <img style={{ height:200, width:450 }} src={kegiatan.image} alt="" />
                             </div>
                         </a>
                     </div>
@@ -68,7 +68,7 @@ export default function Galeri(props) {
                     <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6" key={index}>
                         <a href="" className="img-pop-up">
                             <div className="single-gallery-image">
-                                <img style={{ height:200, width:450 }} src={"http://localhost:8000/" + artikel.image} alt="" />
+                                <img style={{ height:200, width:450 }} src={artikel.image} alt="" />
                             </div>
                         </a>
                     </div>

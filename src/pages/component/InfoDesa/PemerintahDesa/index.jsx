@@ -66,45 +66,43 @@ export default function (props) {
         <div>
             <Header />
             <main>
-                <div className="blog_area single-post-area gray-bg section-padding">
+                <div className="team-area section-padding30">
                     <div className="container">
                         <div className="row">
                             <div className="col-lg-8">
-                                <div className="container">
-                                    <div className="row">
-                                        <div className="">
-                                            {/* Section Tittle */}
-                                            <div className="section-tittles mb-70">
-                                                <span>Pemerintah Kota Jonggol</span>
-                                                <h2>Struktur Organisasi</h2>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="row">
-                                        {/* single Tem */}
-                                        {pemerintah?.map((pemerintah, index) => (
-                                        <div className="col-xl-4 col-lg-4 col-md-6 col-sm-6" key={index}>
-                                            <div className="single-team mb-30">
-                                                <div className="team-img">
-                                                    <img style={{ height:200, width:450 }} src={"http://localhost:8000/" + pemerintah.gambar_pemerintah} />
-                                                </div>
-                                                <div className="team-caption text-center" >
-                                                    <h3><a onClick={() => detail(pemerintah.id)}>{pemerintah.nama}</a></h3>
-                                                    <span>{pemerintah.jabatan.nama_jabatan}</span>
+                                    <div className="container">
+                                        <div className="row">
+                                            <div className="">
+                                                {/* Section Tittle */}
+                                                <div className="section-tittles mb-70">
+                                                    <span className='text-success'>Pemerintah Desa Jonggol </span>
+                                                    <h2>Struktur Organisasi</h2>
                                                 </div>
                                             </div>
                                         </div>
-                                        ))}
+                                        <div className="row">
+                                            {pemerintah?.map((pemerintah, index) => (
+                                            <div key={index} className="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                                <div className="single-team mb-30">
+                                                    <div className="team-img">
+                                                        <img style={{ height:200, width:450 }} src={pemerintah.gambar_pemerintah} alt />
+                                                    </div>
+                                                    <div className="team-caption">
+                                                        <h3><a onClick={() => detail(pemerintah.id)}>{pemerintah.nama}</a></h3>
+                                                        <span className='text-dark font-weight-bold'>{pemerintah.jabatan.nama_jabatan}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            ))}
+                                        </div>
                                     </div>
                                 </div>
-
-                            </div>
-                            <div className='col-lg-4'>
-                                <Aside />
+                                <div className='col-lg-4'>
+                                    <Aside />
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
             </main>
             <Footer />
             <MydModalWithGrid show={detailModal} detail={detailPemerintah} onHide={() => setDetailModal(false)} />
@@ -127,13 +125,13 @@ function MydModalWithGrid(props) {
                         <Container>
                             <div className="card text-center">
                                 <img className='responsive'
-                                     src={"http://localhost:8000/" + props.detail.gambar_pemerintah} /> 
+                                    src={"http://localhost:8000/" + props.detail.gambar_pemerintah} />
                                 <div className="card-body">
                                     <h5 className="card-title">{props.detail.nama}</h5>
                                     <div className="text-muted card-subtitle"></div>
                                 </div>
                                 <div className="card-footer">
-                                {props.detail.nama_jabatan}
+                                    {props.detail.nama_jabatan}
                                 </div>
                             </div>
                         </Container>

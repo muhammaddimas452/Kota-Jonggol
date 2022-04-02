@@ -96,7 +96,7 @@ export default function TambahArtikel() {
                                             <div className="row">
                                                 <div className="col-lg-12 col-6">
                                                     <div className="form-group">
-                                                        <label>Tanggal</label>
+                                                        <label>Pelaksanaan Kegiatan</label>
                                                         <input className="form-control" type="date" placeholder="Masukkan Nama Artikel"
                                                             id="tanggal"
                                                             name="tanggal"
@@ -106,7 +106,7 @@ export default function TambahArtikel() {
                                                         <small className='text-danger'>{error.tanggal}</small>
                                                     </div>
                                                     <div className="form-group">
-                                                        <label>Kegiatan</label>
+                                                        <label>Nama Kegiatan</label>
                                                         <input className="form-control" type="text" row="3" placeholder='Isi Nama Kegiatan'
                                                             id="nama_kegiatan"
                                                             name="nama_kegiatan"

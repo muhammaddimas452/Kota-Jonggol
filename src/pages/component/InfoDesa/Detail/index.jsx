@@ -56,22 +56,17 @@ export default function Detail(props) {
                         <div className="col-lg-8 mt-5">
                             <div className="single-post">
                                 <div className="feature-img">
-                                    <img className="img-fluid" src={"http://localhost:8000/" + artikel.image} alt />
+                                    <img className="img-fluid" src={artikel.image} alt />
                                 </div>
                                 <div className="blog_details">
                                     <h2>{artikel.nama_artikel}
                                     </h2>
                                     <ul className="blog-info-link mt-3 mb-4">
-                                        <li><a href="#"><i className="fa fa-user" />{artikel.tanggal}</a></li>
+                                        <li><a href="#"><i className="fa fa-user" />Admin</a></li>
+                                        <li><a href="#"><i className="fa fa-pen" />{artikel.tanggal}</a></li>
                                         <li><a href="#"><i className="fa fa-eye" />{artikel.views}</a></li>
                                     </ul>
                                     <p className="excert" dangerouslySetInnerHTML={{ __html: artikel.isi_artikel }} />
-                                    <p>
-                                        MCSE boot camps have its supporters and its detractors. Some people do not understand why you
-                                        should have to spend money on boot camp when you can get the MCSE study materials yourself at a
-                                        fraction of the camp price. However, who has the willpower to actually sit through a
-                                        self-imposed MCSE training. who has the willpower to actually
-                                    </p>
                                     <div className="quote-wrapper">
                                         <div className="quotes">
                                             MCSE boot camps have its supporters and its detractors. Some people do not understand why you

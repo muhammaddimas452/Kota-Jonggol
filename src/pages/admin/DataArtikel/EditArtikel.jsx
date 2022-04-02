@@ -142,7 +142,7 @@ function EditArtikel(props) {
                                                     name="image"
                                                     onChange={handleImage}
                                                 />
-                                                <img className='mt-3 ml-3' style={{ width: 150, height: 100 }} src={"http://localhost:8000/" + artikelInput.image} alt="" />
+                                                <img className='mt-3 ml-3' style={{ width: 150, height: 100 }} src={artikelInput.image} alt="" />
                                                 <small className='text-danger'>{error.image}</small>
                                             </div>
                                             <div className="form-group">

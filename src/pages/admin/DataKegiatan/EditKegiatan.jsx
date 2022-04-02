@@ -177,7 +177,7 @@ export default function TambahArtikel() {
                                                         </div>
                                                         <button
                                                             type='submit' className='genric-btn info radius btn-user btn-block'>
-                                                            Tambah Data
+                                                            Update Data
                                                         </button>
                                                     </div>
                                                 </div>

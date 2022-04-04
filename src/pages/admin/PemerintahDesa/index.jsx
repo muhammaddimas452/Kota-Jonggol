@@ -74,7 +74,6 @@ export default function PemerintahDesa(props) {
                                 </thead>
                                 <tfoot>
                                     <tr>
-                                        <th>No</th>
                                         <th className="">Nama</th>
                                         <th className="">Jabatan</th>
                                         <th className="">Foto</th>
@@ -84,7 +83,6 @@ export default function PemerintahDesa(props) {
                                 <tbody>
                                     {pemerintah?.map((pemerintah, index) => (
                                         <tr key={index}>
-                                            <td>NO</td>
                                             <td>{pemerintah.nama}</td>
                                             <td>{pemerintah.jabatan.nama_jabatan}</td>
                                             <td className='text-center'><img className='responsive' style={{ width: 100, height: 'auto' }} src={pemerintah.gambar_pemerintah} alt="" /></td>

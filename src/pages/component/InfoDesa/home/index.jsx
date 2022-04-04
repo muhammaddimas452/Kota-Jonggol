@@ -13,8 +13,8 @@ import "../../css/nice-select.css"
 import "../../css/style.css"
 import logo from '../../assets/jonggol.png'
 
-import Artikel from '../Artikel'
-import Pagination from '../Pagination'
+import { MdOutlineNavigateBefore, MdOutlineNavigateNext } from "react-icons/md";
+
 import Header from '../Header';
 import Footer from '../Footer';
 import Aside from '../Aside';
@@ -26,10 +26,11 @@ import { Carousel } from 'react-bootstrap';
 export default function Home(props) {
     const api = 'http://127.0.0.1:8000/api'
     const [artikel, setArtikel] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [artikelPerPage] = useState(10);
+    const [paginate, setPaginate] = useState([]);
     const [loading, setLoading] = useState(false);
-
+    const [page, setPage] = useState(1);
+    const [lastPage, setLastPage] = useState();
+    const [totalPage, setTotalPage] = useState([]);
     const [kegiatan, setKegiatan] = useState();
     const [kegiatanDone, setKegiatanDone] = useState([]);
     const [kegiatanNot, setKegiatanNot] = useState([]);
@@ -47,9 +48,11 @@ export default function Home(props) {
 
     const getArtikel = async () => {
         try {
-            const res = await axios.get(api + `/artikel/paginate?perpage=6`,)
-            // const res = await axios.get(api + `/artikel`,)
-            setArtikel(res.data.data.data)
+            const res = await axios.get(api + `/artikel/paginate?perpage=1&page=${page}`,)
+            setPaginate(res.data.data.data)
+            setLastPage(res.data.data.last_page)
+            setPage(res.data.data.current_page)
+            setTotalPage(res.data.data.links.label)
         }
         catch (err) {
         }
@@ -89,12 +92,6 @@ export default function Home(props) {
         getKegiatanDone();
         getKegiatanNot();
     }, [props])
-
-    const indexOfLastArtikel = currentPage * artikelPerPage;
-    const indexOfFirstArtikel = indexOfLastArtikel - artikelPerPage;
-    const currentArtikel = artikel.slice(indexOfFirstArtikel, indexOfLastArtikel);
-
-    const paginate = pageNumber => setCurrentPage(pageNumber);
 
     return (
         <div>
@@ -221,7 +218,7 @@ export default function Home(props) {
                                                             <div className="tab-content" id="nav-tabContent">
                                                                 <div className="tab-pane fade show active" id="nav-artikel" role="tabpanel" aria-labelledby="nav-artikel-tab">
                                                                     <div className="row">
-                                                                        {artikel?.filter((artikel) => {
+                                                                        {paginate?.filter((artikel) => {
                                                                             if (search == "") {
                                                                                 return artikel
                                                                             } else if (artikel.nama_artikel.toLowerCase().includes(search.toLowerCase())) {
@@ -241,11 +238,62 @@ export default function Home(props) {
                                                                             </div>
                                                                         ))}
                                                                     </div>
-                                                                    {/* <Artikel artikels={currentArtikel} loading={loading} />
-                                                                    <Pagination 
-                                                                    artikelsPerPage={artikelPerPage}
-                                                                    totalArtikel={artikel.length}
-                                                                    paginate={paginate} /> */}
+                                                                    <div className="single-wrap">
+                                                                        <nav aria-label="Page navigation example">
+                                                                            <ul className="pagination justify-content-start">
+                                                                                {/* <li className="page-item"><a className="page-link" href="#">
+                                                                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="24px" height="15px">
+                                                                                                        <path fillRule="evenodd" fill="rgb(221, 221, 221)" d="M8.142,13.118 L6.973,14.135 L0.127,7.646 L0.127,6.623 L6.973,0.132 L8.087,1.153 L2.683,6.413 L23.309,6.413 L23.309,7.856 L2.683,7.856 L8.142,13.118 Z" />
+                                                                                                    </svg>
+                                                                                                </a></li> */}
+                                                                                <li className="page-item"><a className="page-link" href="#">{page}</a></li>
+                                                                                {/* <li className="page-item"><a className="page-link" href="#">
+                                                                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="40px" height="15px">
+                                                                                                        <path fillRule="evenodd" fill="rgb(255, 11, 11)" d="M31.112,13.118 L32.281,14.136 L39.127,7.646 L39.127,6.624 L32.281,0.132 L31.167,1.154 L36.571,6.413 L0.491,6.413 L0.491,7.857 L36.571,7.857 L31.112,13.118 Z" />
+                                                                                                    </svg>
+                                                                                                </a></li> */}
+                                                                            </ul>
+                                                                        </nav>
+                                                                    </div>
+                                                                    {/* {(() => {
+                                                            if (lastPage === 4) {
+                                                                return (
+                                                                    <div className="flex justify-center items-center sm-max:mt-5">
+                                                                        <div className="text-2xl text-gray-400 mx-3">
+                                                                            <MdOutlineNavigateBefore />
+                                                                        </div>
+                                                                        <div className="bg-gray-200 p-3 w-12 h-12 text-center shadow-inner shadow-slate-300 font-bahnschrift rounded-md">{page}</div>
+                                                                        <div className="text-2xl text-gray-400 font-bold mx-3">
+                                                                            <MdOutlineNavigateNext />
+                                                                        </div>
+                                                                    </div>
+                                                                )
+                                                            } else {
+                                                                return (
+                                                                    <div className="flex justify-center items-center sm-max:mt-5">
+                                                                        {page === 1 ? (
+                                                                            <div className="text-2xl text-gray-400 mx-3">
+                                                                                <MdOutlineNavigateBefore />
+                                                                            </div>
+                                                                        ) : (
+                                                                            <div className="text-2xl text-blue-400 mx-3">
+                                                                                <MdOutlineNavigateBefore />
+                                                                            </div>
+                                                                        )}
+                                                                        <div className="bg-gray-200 p-3 w-12 h-12 text-center  font-bahnschrift rounded-md">{page}</div>
+                                                                        {lastPage === page ? (
+                                                                            <div className="text-2xl text-gray-400 font-bold mx-3">
+                                                                                <MdOutlineNavigateNext />
+                                                                            </div>
+                                                                        ) : (
+                                                                            <div className="text-2xl text-blue-400 font-bold mx-3">
+                                                                                <MdOutlineNavigateNext />
+                                                                            </div>
+                                                                        )}
+                                                                    </div>
+                                                                )
+                                                            }
+                                                        })()} */}
                                                                 </div>
                                                                 <div className="tab-pane" id="nav-not" role="tabpanel" aria-labelledby="nav-not-tab">
                                                                     <div className="row">
@@ -285,14 +333,12 @@ export default function Home(props) {
                                                                 </div>
                                                             </div>
                                                         </div>
-
                                                     </div>
                                                     <div className='justify-content-center d-flex'>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>

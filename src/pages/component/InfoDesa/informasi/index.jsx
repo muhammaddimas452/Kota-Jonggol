@@ -58,7 +58,6 @@ export default function Informasi(props) {
                                     <Table responsive striped bordered hover>
                                         <thead>
                                             <tr>
-                                                <th>No</th>
                                                 <th>Nama Desa</th>
                                                 <th>RT</th>
                                                 <th>RW</th>
@@ -68,7 +67,6 @@ export default function Informasi(props) {
                                         <tbody>
                                             {infoWilayah?.map((infowilayah, index) => (
                                             <tr>
-                                                <th className="text-center">1</th>
                                                 <td className="text-center">{infowilayah.nama_desa}</td>
                                                 <td className="text-center">{infowilayah.rt}</td>
                                                 <td className="text-center">{infowilayah.rw}</td>

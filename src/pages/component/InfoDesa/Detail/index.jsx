@@ -15,15 +15,19 @@ import "../../css/style.css"
 import Header from '../Header';
 import Footer from '../Footer';
 import Aside from '../Aside';
-import { Table } from 'react-bootstrap'
 import { useNavigate } from "react-router-dom";
 import { useParams } from 'react-router';
 import axios from '../../../../api/axiosClient'
 import swal from 'sweetalert'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye } from "@fortawesome/free-solid-svg-icons";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
+import { faUser } from "@fortawesome/free-solid-svg-icons";
 
 export default function Detail(props) {
     const { id } = useParams()
 
+    const moment = require('moment');
     const [artikel, setArtikel] = useState([]);
     const navigate = useNavigate();
     const getArtikel = async () => {
@@ -61,9 +65,9 @@ export default function Detail(props) {
                                     <h2>{artikel.nama_artikel}
                                     </h2>
                                     <ul className="blog-info-link mt-3 mb-4">
-                                        <li><a href="#"><i className="fa fa-user" />Admin</a></li>
-                                        <li><a href="#"><i className="fa fa-pen" />{artikel.tanggal}</a></li>
-                                        <li><a href="#"><i className="fa fa-eye" />{artikel.views}</a></li>
+                                        <li><a href="#"><FontAwesomeIcon icon={faUser} className='mr-2' />Admin</a></li>
+                                        <li><a href="#"><FontAwesomeIcon icon={faPen} className='mr-2' />{moment(artikel.created_at).fromNow()}</a></li>
+                                        <li><a href="#"><FontAwesomeIcon icon={faEye} className='mr-2' />{artikel.views}</a></li>
                                     </ul>
                                     <p className="excert" dangerouslySetInnerHTML={{ __html: artikel.isi_artikel }} />
                                     <div className="quote-wrapper">

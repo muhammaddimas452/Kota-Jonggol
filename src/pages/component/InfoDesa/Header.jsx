@@ -13,18 +13,17 @@ import "../css/nice-select.css"
 import "../css/style.css"
 import "../css/css/style.css"
 import logo from '../assets/jonggol.png'
-import axios from 'axios'
+import axios from '../../../api/axiosClient'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFacebook } from "@fortawesome/free-solid-svg-icons";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 export default function Header(props) {
-    const api = 'http://127.0.0.1:8000/api'
     const [artikel, setArtikel] = useState([]);
 
     const getArtikel = async () => {
         try {
-            const res = await axios.get(api + `/artikel/paginate?perpage=6`,)
-            setArtikel(res.data.data.data)
+            const res = await axios.get(`/artikel`,)
+            setArtikel(res.data)
         }
         catch (err) {
         }
@@ -55,7 +54,7 @@ export default function Header(props) {
                         <nav className="navbar navbar-expand-lg navbar-green ftco_navbar bg-green ftco-navbar-light" id="ftco-navbar">
                             <div className="container">
                                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-                                    <span className="fa fa-bars" /> Menu
+                                <FontAwesomeIcon icon={faBars} className='mr-2' /> Menu
                                 </button>
                                 <form action="#" className="searchform order-lg-last">
                                     <div className="form-group d-flex">
@@ -69,7 +68,7 @@ export default function Header(props) {
                                         <li className="nav-item font-weight-bold "><a href="/peta" className="nav-link"><h6>Peta</h6></a></li>
                                         <li className="nav-item font-weight-bold "><a href="/galeri" className="nav-link"><h6>Galeri</h6></a></li>
                                         <li className="nav-item dropdown font-weight-bold ">
-                                            <a className="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><h6>Page</h6></a>
+                                            <a className="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><h6>Info Desa</h6></a>
                                             <div className="dropdown-menu" aria-labelledby="dropdown04">
                                                 {artikel?.map((artikel, index) => (
                                                     <a key={index} className="dropdown-item font-weight-bold " href={`/detail/${artikel.id}`}>{artikel.nama_artikel}</a>

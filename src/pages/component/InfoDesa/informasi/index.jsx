@@ -16,16 +16,15 @@ import Header from '../Header';
 import Footer from '../Footer';
 import Aside from '../Aside';
 import { Table } from 'react-bootstrap'
-import axios from 'axios'
+import axios from '../../../../api/axiosClient'
 
 export default function Informasi(props) {
-    const api = 'http://127.0.0.1:8000/api';
     const [jumlahPenduduk, setJumlahPenduduk] = useState();
     const [infoWilayah, setInfoWilayah] = useState();
 
     const getJumlahPenduduk = async () => {
         try{
-            const res = await axios.get(api + `/jumlah-penduduk`)
+            const res = await axios.get(`/jumlah-penduduk`)
             setJumlahPenduduk(res.data)
         }
         catch (err) {
@@ -33,7 +32,7 @@ export default function Informasi(props) {
     }
     const getInfoWilayah = async () => {
         try {
-            const res = await axios.get(api + `/infowilayah`,)
+            const res = await axios.get(`/infowilayah`,)
             setInfoWilayah(res.data)
         }
         catch (err) {

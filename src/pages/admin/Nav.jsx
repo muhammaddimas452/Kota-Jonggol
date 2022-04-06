@@ -1,6 +1,6 @@
 import React, { Component, useEffect, useState } from 'react'
 import jonggol from './assets/img/jonggol.png'
-import axios from 'axios'
+import axios from '../../api/axiosClient'
 import swal from 'sweetalert'
 import { Navigate, useParams } from 'react-router'
 import { useNavigate } from "react-router-dom";
@@ -108,7 +108,6 @@ export default function Nav(props) {
 }
 
 function MydModalWithGrid(props) {
-    const api = 'http://127.0.0.1:8000/api';
     const { id } = useParams()
     const [jumlahPendudukInput, setJumlahPenduduk] = useState([]);
     const [error, setError] = useState([]);
@@ -117,7 +116,7 @@ function MydModalWithGrid(props) {
     const getJumlahPenduduk = async () => {
         try {
             setLoading(true)
-            const res = await axios.get(api + `/jumlah-penduduk/edit/1`)
+            const res = await axios.get(`/jumlah-penduduk/edit/1`)
             setLoading(false)
             if (res.data.status === 200) {
                 setJumlahPenduduk(res.data.jumlahpenduduk);
@@ -141,9 +140,7 @@ function MydModalWithGrid(props) {
 
     const updateJumlahPenduduk = (e) => {
         e.preventDefault();
-        const jumlahPenduduk_id = id;
-        const data = jumlahPendudukInput;
-        axios.put(api + `/jumlah-penduduk/update/1`, {
+        axios.put(`/jumlah-penduduk/update/1`, {
             jumlah_penduduk: jumlahPendudukInput.jumlah_penduduk,
         })
             .then(res => {

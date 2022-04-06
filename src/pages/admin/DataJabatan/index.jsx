@@ -1,9 +1,7 @@
-import React, { Component, useState, useEffect, useDebugValue } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
-import Footer from '../Footer'
 import Nav from '../Nav'
-import axios from 'axios'
-import { useParams } from 'react-router'
+import axios from '../../../api/axiosClient'
 import { NavLink } from 'reactstrap'
 import swal from 'sweetalert';
 import '../css/main.min.css'
@@ -12,14 +10,13 @@ import '../vendors/themify-icons/css/themify-icons.css'
 import { Modal, Col, Container, Row, Button, Table } from 'react-bootstrap'
 
 export default function Jabatan(props) {
-    const api = 'http://127.0.0.1:8000/api';
     const [jabatan, setJabatan] = useState();
     const navigate = useNavigate();
     const deleteCategory = (e, jabatan_id) => {
         e.preventDefault();
         const thisClicked = e.currentTarget;
         thisClicked.innerText = "Deleting"
-        axios.delete(api + `/jabatan/delete/${jabatan_id}`).then(res => {
+        axios.delete(`/jabatan/delete/${jabatan_id}`).then(res => {
             if (res.data.status === 200) {
                 swal("Success", res.data.message, "success");
                 thisClicked.closest("tr").remove()
@@ -32,7 +29,7 @@ export default function Jabatan(props) {
 
     const getJabatan = async () => {
         try {
-            const res = await axios.get(api + `/jabatan`)
+            const res = await axios.get(`/jabatan`)
             setJabatan(res.data)
         }
         catch (err) {
@@ -48,7 +45,7 @@ export default function Jabatan(props) {
     const readJabatan = async (id) => {
         try {
             const jabatan_id = id;
-            const res = await axios.get(api + `/jabatan/edit/${jabatan_id}`)
+            const res = await axios.get(`/jabatan/edit/${jabatan_id}`)
             if (res.data.status === 200) {
                 setDetailJabatan(res.data.jabatan);
             } else if (res.data.status === 404) {
@@ -124,14 +121,13 @@ export default function Jabatan(props) {
 }
 
 function UpdateModal(props) {
-    const api = 'http://127.0.0.1:8000/api';
     const [nama, setNama] = useState();
     const [error, setError] = useState([]);
 
     const updateJabatan = (e) => {
         e.preventDefault();
         const jabatan_id = props.detail.id;
-        axios.put(api + `/jabatan/update/${jabatan_id}`, {
+        axios.put(`/jabatan/update/${jabatan_id}`, {
             nama_jabatan: nama
         })
             .then(res => {
@@ -186,7 +182,6 @@ function UpdateModal(props) {
     }
 
 function MydModalWithGrid(props) {
-    const api = 'http://127.0.0.1:8000/api';
     const [jabatan, setJabatan] = useState({
         nama_jabatan: '',
 
@@ -202,7 +197,7 @@ function MydModalWithGrid(props) {
 
     const TambahJabatan = async (e) => {
         e.preventDefault();
-        const result = await axios.post(api + `/jabatan/add`, {
+        const result = await axios.post(`/jabatan/add`, {
             nama_jabatan: jabatan.nama_jabatan,
         })
         console.log(result)

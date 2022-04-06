@@ -1,18 +1,12 @@
 import React, { useState } from 'react';
 import Nav from '../Nav'
-import { EditorState, convertToRaw } from 'draft-js';
-import { Editor } from 'react-draft-wysiwyg';
-import draftToHtml from 'draftjs-to-html';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { useNavigate } from "react-router"
-import { NavLink } from "reactstrap"
-import axios from 'axios';
+import axios from '../../../api/axiosClient'
 import swal from 'sweetalert';
-import { tambahArtikel } from "../../../api/artikel";
 import '../css/main.min.css'
 
 export default function TambahArtikel() {
-    const api = "http://127.0.0.1:8000/api"
     
     const [infoWilayah, setInfoWilayah] = useState({
         nama_desa: '',
@@ -29,7 +23,7 @@ export default function TambahArtikel() {
 
     const TambahInfoWilayah = async (e) => {
         e.preventDefault();
-        const result = await axios.post(api + `/infowilayah/add`, {
+        const result = await axios.post(`/infowilayah/add`, {
             nama_desa: infoWilayah.nama_desa,
             rt: infoWilayah.rt,
             rw: infoWilayah.rw,

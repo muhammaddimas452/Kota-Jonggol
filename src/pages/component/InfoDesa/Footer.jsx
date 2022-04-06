@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import logo from '../assets/jonggol.png'
-import axios from 'axios'
+import axios from '../../../api/axiosClient'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
@@ -8,11 +8,10 @@ import { faPhone } from "@fortawesome/free-solid-svg-icons";
 
 
 export default function Footer(props) {
-    const api = 'http://127.0.0.1:8000/api'
     const [populer, setPopuler] = useState();
     const getPopuler = async () => {
         try {
-            const res = await axios.get(api + `/artikel/mostview?perpage=3`,)
+            const res = await axios.get(`/artikel/mostview?perpage=3`,)
             setPopuler(res.data.data.data)
         }
         catch (err) {
@@ -91,6 +90,7 @@ export default function Footer(props) {
                         </div>
                     </div>
                 </div>
+                <div className="to-top mr-5"><i className="fa fa-angle-double-up" /></div>
             </footer>
         </div>
     )

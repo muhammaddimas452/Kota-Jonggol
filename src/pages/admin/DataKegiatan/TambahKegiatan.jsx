@@ -1,15 +1,11 @@
 import React, { useState } from 'react';
 import Nav from '../Nav'
-import { Formik } from 'formik'
 import swal from 'sweetalert';
-import { tambahKegiatan } from '../../../api/kegiatan'
 import { useNavigate } from "react-router-dom";
-import { NavLink } from "reactstrap"
-import axios from 'axios';
+import axios from '../../../api/axiosClient'
 import '../css/main.min.css'
 
 export default function TambahArtikel() {
-    const api = "http://127.0.0.1:8000/api"
 
     const [kegiatanInput, setKegiatan] = useState({
         tanggal: "",
@@ -38,7 +34,7 @@ export default function TambahArtikel() {
         formData.append('nama_kegiatan', kegiatanInput.nama_kegiatan)
         formData.append('status', kegiatanInput.status)
 
-        const res = await axios.post(api + `/kegiatan/add`, formData)
+        const res = await axios.post(`/kegiatan/add`, formData)
         if (res.data.status === 200) {
             swal("Success", res.data.message, "success");
             setError([]);
@@ -49,26 +45,6 @@ export default function TambahArtikel() {
             setError(res.data.errors);
         }
     }
-
-    // const [error, setError] = useState([]);
-    // const navigate = useNavigate();
-    // const onSubmit = async (values) => {
-    //     const result = await tambahKegiatan(values);
-    //     console.log("result", result);
-    //     if (result?.data?.status === 200) {
-    //         swal("Success", result.data.status, "success");
-    //         return navigate("/kegiatan");
-    //     }
-    //     else if (result.data?.status === 422) {
-    //         swal("Data Perlu di Isi", "", "error");
-    //         setError(result.data.errors);
-    //     }
-    //     else if (result?.data?.status === 404) {
-    //         swal("Error", result.data.status, "error");
-    //     }
-
-    // };
-
 
     return (
         <div className='page-wrapper'>

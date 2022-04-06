@@ -4,12 +4,11 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { useNavigate } from "react-router"
 import { useParams } from 'react-router'
 import { NavLink } from "reactstrap"
-import axios from 'axios';
+import axios from '../../../api/axiosClient'
 import swal from 'sweetalert';
 import '../css/main.min.css'
 
 export default function EditPemerintah(props) {
-    const api = "http://127.0.0.1:8000/api";
 
     const [values, setValues] = useState([]);
     const [jabatan, setJabatan] = useState();
@@ -21,7 +20,7 @@ export default function EditPemerintah(props) {
         try {
             const pemerintah_id = id;
             setLoading(true)
-            const res = await axios.get(api + `/pemerintahdesa/edit/${pemerintah_id}`)
+            const res = await axios.get(`/pemerintahdesa/edit/${pemerintah_id}`)
             setLoading(false)
             if (res.data.status === 200) {
                 setValues(res.data.pemerintahdesa);
@@ -37,7 +36,7 @@ export default function EditPemerintah(props) {
     }
     const getJabatan = async () => {
         try {
-            const res = await axios.get(api + `/jabatan`)
+            const res = await axios.get(`/jabatan`)
             setJabatan(res.data)
         }
         catch (err) {
@@ -70,7 +69,7 @@ export default function EditPemerintah(props) {
         formData.append('jabatan_id', values.jabatan_id)
 
         const pemerintah_id = id;
-        const result = await axios.post(api + `/pemerintahdesa/update/${pemerintah_id}/?_method=PUT`, formData)
+        const result = await axios.post(`/pemerintahdesa/update/${pemerintah_id}/?_method=PUT`, formData)
         // console.log(result)
         if (result?.data?.status === 200) {
             swal("Success", result.data.message, "success")

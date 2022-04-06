@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+import axios from '../../../api/axiosClient'
 import { useNavigate } from "react-router-dom";
 import { Carousel } from 'react-bootstrap';
 import {
@@ -24,7 +24,6 @@ export default function Aside(props) {
     ];
     const moment = require('moment');
 
-    const api = 'http://127.0.0.1:8000/api'
     const [artikel, setArtikel] = useState();
     const [populer, setPopuler] = useState();
     const [newest, setNewest] = useState();
@@ -34,7 +33,7 @@ export default function Aside(props) {
     const navigate = useNavigate();
     const getArtikel = async () => {
         try {
-            const res = await axios.get(api + `/artikel?perpage=6`,)
+            const res = await axios.get(`/artikel?perpage=6`,)
             setArtikel(res.data.data.data)
         }
         catch (err) {
@@ -43,7 +42,7 @@ export default function Aside(props) {
 
     const getIKegiatan = async () => {
         try {
-            const res = await axios.get(api + `/kegiatan`)
+            const res = await axios.get(`/kegiatan`)
             setIKegiatan(res.data)
         }
         catch (err) {
@@ -51,7 +50,7 @@ export default function Aside(props) {
     }
     const getKegiatan = async () => {
         try {
-            const res = await axios.get(api + `/kegiatan/paginate?perpage=3`)
+            const res = await axios.get(`/kegiatan/paginate?perpage=3`)
             setKegiatan(res.data.data.data)
         }
         catch (err) {
@@ -60,7 +59,7 @@ export default function Aside(props) {
 
     const getPopuler = async () => {
         try {
-            const res = await axios.get(api + `/artikel/mostview?perpage=3`,)
+            const res = await axios.get(`/artikel/mostview?perpage=3`,)
             setPopuler(res.data.data.data)
         }
         catch (err) {
@@ -69,7 +68,7 @@ export default function Aside(props) {
 
     const getNewest = async () => {
         try {
-            const res = await axios.get(api + `/artikel/newest?perpage=3`,)
+            const res = await axios.get(`/artikel/newest?perpage=3`,)
             setNewest(res.data.data.data)
         }
         catch (err) {
@@ -77,8 +76,8 @@ export default function Aside(props) {
     }
     const getAcak = async () => {
         try {
-            const res = await axios.get(api + `/artikel/acak?perpage=3`,)
-            setAcak(res.data.data.data)
+            const res = await axios.get(`/artikel`,)
+            setAcak(res.data)
         }
         catch (err) {
         }
@@ -172,6 +171,7 @@ export default function Aside(props) {
                                     ))}
                                 </div>
                                 <div className="tab-pane" id="tab-1-3">
+                                <div className="scroller" data-height="260">
                                 {acak?.map((artikel, map) => (
                                     <div key={map} className="media post_item">
                                         <img src={artikel.image} style={{width:120, height:'auto'}} alt="post" />
@@ -184,6 +184,7 @@ export default function Aside(props) {
                                         </div>
                                     </div>
                                      ))}
+                                </div>     
                                 </div>
                                 <div className="tab-pane" id="tab-1-4">
                                 {kegiatan?.map((kegiatan, map) => (

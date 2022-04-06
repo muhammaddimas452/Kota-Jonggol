@@ -5,14 +5,11 @@ import { Editor } from 'react-draft-wysiwyg';
 import draftToHtml from 'draftjs-to-html';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { useNavigate } from "react-router"
-import { NavLink } from "reactstrap"
-import axios from 'axios';
+import axios from '../../../api/axiosClient'
 import swal from 'sweetalert';
-import { tambahArtikel } from "../../../api/artikel";
 import '../css/main.min.css'
 
 export default function TambahArtikel() {
-    const api = "http://127.0.0.1:8000/api"
     const [values, setValues] = useState({
         nama_artikel: '',
         isi_artikel: '',
@@ -37,7 +34,6 @@ export default function TambahArtikel() {
     const onEditorStateChange = (editorState) => {
         setIsiArtikel(editorState);
     }
-    // console.log(values.isi_artikel)
 
     const [error, setError] = useState([]);
     const navigate = useNavigate();
@@ -49,7 +45,7 @@ export default function TambahArtikel() {
         formData.append('nama_artikel', values.nama_artikel)
         formData.append('isi_artikel', values.isi_artikel.value)
 
-        const result = await axios.post(api + `/artikel/add`, formData)
+        const result = await axios.post(`/artikel/add`, formData)
         console.log(result)
         if (result?.data?.status === 200) {
             swal("Success", result.data.message, "success")

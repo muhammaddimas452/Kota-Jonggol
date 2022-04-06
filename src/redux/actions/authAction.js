@@ -1,5 +1,5 @@
-import axios from "axios";
-import { login , authme, resetpassword, tambahartikel } from "../../api/auth";
+import axios from "../../api/axiosClient";
+import { login, authme } from "../../api/auth";
 import { syncToken } from "../../api/axiosClient";
 var bcrypt = require('bcryptjs');
 

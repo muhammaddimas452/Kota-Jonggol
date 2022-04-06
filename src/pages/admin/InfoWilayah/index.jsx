@@ -1,10 +1,8 @@
 import React, { Component, useState, useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
-import Footer from '../Footer'
 import Nav from '../Nav'
-import axios from 'axios'
+import axios from '../../../api/axiosClient'
 import { NavLink } from 'reactstrap'
-import { Link } from 'react-router-dom'
 import swal from 'sweetalert';
 import '../css/main.min.css'
 import '../vendors/bootstrap/dist/css/bootstrap.min.css'
@@ -13,7 +11,6 @@ import { Modal, Col, Container, Row, Button, Table } from 'react-bootstrap'
 
 
 export default function DataInfoWilayah(props) {
-    const api = 'http://127.0.0.1:8000/api'
     const [infoWilayah, setInfoWilayah] = useState();
     const navigate = useNavigate();
     const deleteCategory = (e, infowilayah_id) => {
@@ -21,7 +18,7 @@ export default function DataInfoWilayah(props) {
 
         const thisClicked = e.currentTarget;
         thisClicked.innerText = "Deleting"
-        axios.delete(api + `/infowilayah/delete/${infowilayah_id}`).then(res => {
+        axios.delete(`/infowilayah/delete/${infowilayah_id}`).then(res => {
             if (res.data.status === 200) {
                 swal("Success", res.data.message, "success");
                 thisClicked.closest("tr").remove()
@@ -33,7 +30,7 @@ export default function DataInfoWilayah(props) {
     }
     const getInfoWilayah = async () => {
         try {
-            const res = await axios.get(api + `/infowilayah`,)
+            const res = await axios.get(`/infowilayah`,)
             setInfoWilayah(res.data)
         }
         catch (err) {

@@ -2,12 +2,11 @@ import React, { useState, useEffect } from 'react';
 import Nav from '../Nav'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { useNavigate } from "react-router"
-import axios from 'axios';
+import axios from '../../../api/axiosClient'
 import swal from 'sweetalert';
 import '../css/main.min.css'
 
 export default function TambahArtikel(props) {
-    const api = "http://127.0.0.1:8000/api"
     const [values, setValues] = useState({
         nama: '',
         jabatan_id: ''
@@ -36,8 +35,7 @@ export default function TambahArtikel(props) {
         formData.append('nama', values.nama)
         formData.append('jabatan_id', values.jabatan_id)
 
-        const result = await axios.post(api + `/pemerintahdesa/add`, formData)
-        console.log(result)
+        const result = await axios.post(`/pemerintahdesa/add`, formData)
         if (result?.data?.status === 200) {
             swal("Success", result.data.message, "success")
             return navigate("/pemerintahdesa")
@@ -52,9 +50,8 @@ export default function TambahArtikel(props) {
 
     const getJabatan = async () => {
         try {
-            const res = await axios.get(api + `/jabatan`)
+            const res = await axios.get(`/jabatan`)
             setJabatan(res.data)
-            console.log(res.data)
         }
         catch (err) {
         }

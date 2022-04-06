@@ -15,19 +15,18 @@ import "../../css/style.css"
 import Header from '../Header';
 import Footer from '../Footer';
 import Aside from '../Aside';
-import axios from 'axios'
+import axios from '../../../../api/axiosClient'
 import swal from 'sweetalert';
 import { useNavigate } from "react-router-dom";
 import { Modal, Col, Container, Row, Button, Table } from 'react-bootstrap'
 
 export default function (props) {
-    const api = 'http://127.0.0.1:8000/api'
     const [pemerintah, setPemerintah] = useState();
     const [detailModal, setDetailModal] = useState();
     const navigate = useNavigate();
     const getPemerintah = async () => {
         try {
-            const res = await axios.get(api + `/pemerintahdesa`,)
+            const res = await axios.get(`/pemerintahdesa`,)
             setPemerintah(res.data)
         }
         catch (err) {
@@ -41,7 +40,7 @@ export default function (props) {
     const [detailJabatan, setDetailJabatan] = useState([])
     const readPemerintah = async (id) => {
         try {
-            const res = await axios.get(api + `/pemerintahdesa/${id}`)
+            const res = await axios.get(`/pemerintahdesa/${id}`)
             if (res.data.status === 200) {
                 setDetailPemerintah(res.data.pemerintahdesa);
                 setDetailJabatan(res.data.pemerintahdesa.jabatan);
@@ -50,7 +49,6 @@ export default function (props) {
                 return navigate("/pemerintah");
             }
             console.log(res.data.pemerintahdesa)
-            console.log(res.data.pemerintahdesa.jabatan)
         }
         catch (err) {
             return navigate("/pemerintah");
@@ -82,10 +80,10 @@ export default function (props) {
                                         </div>
                                         <div className="row">
                                             {pemerintah?.map((pemerintah, index) => (
-                                            <div key={index} className="col-xl-6 col-lg-6 col-md-6 col-sm-6">
+                                            <div key={index} className="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-xs-6">
                                                 <div className="single-team mb-30">
                                                     <div className="team-img">
-                                                        <img style={{ height:200, width:450 }} src={pemerintah.gambar_pemerintah} alt />
+                                                        <img style={{ height:300 }} src={pemerintah.gambar_pemerintah} alt />
                                                     </div>
                                                     <div className="team-caption">
                                                         <h3><a onClick={() => detail(pemerintah.id)}>{pemerintah.nama}</a></h3>
@@ -125,13 +123,13 @@ function MydModalWithGrid(props) {
                         <Container>
                             <div className="card text-center">
                                 <img className='responsive'
-                                    src={"http://localhost:8000/" + props.detail.gambar_pemerintah} />
+                                    src={props.detail.gambar_pemerintah} />
                                 <div className="card-body">
                                     <h5 className="card-title">{props.detail.nama}</h5>
                                     <div className="text-muted card-subtitle"></div>
                                 </div>
                                 <div className="card-footer">
-                                    {props.detail.nama_jabatan}
+                                    {/* {props.detail.} */}
                                 </div>
                             </div>
                         </Container>

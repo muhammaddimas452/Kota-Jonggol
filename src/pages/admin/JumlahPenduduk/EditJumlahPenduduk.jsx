@@ -1,8 +1,6 @@
-import React, { Component, useEffect, useState } from 'react'
-import axios from 'axios'
-import Footer from '../Footer'
+import React, { useEffect, useState } from 'react'
+import axios from '../../../api/axiosClient'
 import Nav from '../Nav'
-import Sidebar from '../Sidebar'
 import swal from 'sweetalert'
 import { useParams } from 'react-router'
 import { useNavigate } from "react-router-dom";
@@ -10,9 +8,7 @@ import { NavLink } from "reactstrap"
 import '../css/main.min.css'
 
 function EditJumlahPenduduk(props) {
-    const api = 'http://127.0.0.1:8000/api';
     const { id } = useParams()
-    console.log(id)
 
     const [jumlahPendudukInput, setJumlahPenduduk] = useState([]);
     const [error, setError] = useState([]);
@@ -21,9 +17,8 @@ function EditJumlahPenduduk(props) {
 
     const getJumlahPenduduk = async () => {
         try {
-            const jumlahPenduduk_id = id;
             setLoading(true)
-            const res = await axios.get(api + `/jumlah-penduduk/edit/2`)
+            const res = await axios.get(`/jumlah-penduduk/edit/2`)
             setLoading(false)
             if (res.data.status === 200) {
                 setJumlahPenduduk(res.data.jumlahpenduduk);
@@ -50,7 +45,7 @@ function EditJumlahPenduduk(props) {
         e.preventDefault();
         const jumlahPenduduk_id = id;
         const data = jumlahPendudukInput;
-        axios.put(api + `/jumlah-penduduk/update/${jumlahPenduduk_id}`, {
+        axios.put(`/jumlah-penduduk/update/${jumlahPenduduk_id}`, {
             jumlah_penduduk: jumlahPendudukInput.jumlah_penduduk,
         })
             .then(res => {
@@ -123,71 +118,6 @@ function EditJumlahPenduduk(props) {
                     </div>
                 </div>
             </div>
-
-            // <div id="app">
-            //     <Sidebar />
-            //     <div id="main">
-            //         <header className="mb-3">
-            //             <a href="#" className="burger-btn d-block d-xl-none">
-            //                 <i className="bi bi-justify fs-3" />
-            //             </a>
-            //         </header>
-            //         <div className="page-heading">
-            //             <div className="page-title">
-            //                 <div className="row">
-            //                     <div className="col-12 col-md-6 order-md-1 order-last">
-            //                         <h3>Update Page</h3>
-            //                         <p className="text-subtitle text-muted">A page for user to update</p>
-            //                     </div>
-            //                     <div className="col-12 col-md-6 order-md-2 order-first">
-            //                         <nav aria-label="breadcrumb" className="breadcrumb-header float-start float-lg-end">
-            //                             <ol className="breadcrumb">
-            //                                 <li className="breadcrumb-item"><a href="/dashboard">Dashboard</a></li>
-            //                                 <li className="breadcrumb-item active" aria-current="page">EditJumlahPenduduk</li>
-            //                             </ol>
-            //                         </nav>
-            //                     </div>
-            //                 </div>
-            //             </div>
-            //             <section id="input-style">
-            //                 <div className="row">
-            //                     <div className="col-md-12">
-            //                         <div className="card">
-            //                             <div className="card-header d-sm-flex align-items-center justify-content-between">
-            //                                 <h3 className="">Update Jumlah Penduduk</h3>
-            //                                 <NavLink href="/jumlahpenduduk"><button className='btn btn-primary'>Back</button></NavLink>
-            //                             </div>
-            //                             <form onSubmit={updateJumlahPenduduk}>
-            //                                 <div className="card-body">
-            //                                     <div className="row">
-            //                                         <div className="col-lg-12 col-6">
-            //                                             <div className="form-group">
-            //                                                 <label>Jumlah Penduduk</label>
-            //                                                 <input className="form-control" type="number"
-            //                                                     id="jumlah_penduduk"
-            //                                                     name="jumlah_penduduk"
-            //                                                     onChange={changeValue}
-            //                                                     value={jumlahPendudukInput.jumlah_penduduk}
-            //                                                 />
-            //                                                 <small className='text-danger'>{error.jumlah_penduduk}</small>
-            //                                             </div>
-            //                                             <button
-            //                                                 type='submit' className='btn btn-primary btn-user btn-block'>
-            //                                                 Submit
-            //                                             </button>
-            //                                         </div>
-            //                                     </div>
-            //                                 </div>
-            //                             </form>
-            //                         </div>
-            //                     </div>
-            //                 </div>
-            //             </section>
-
-            //         </div>
-
-            //     </div>
-            // </div>
         )
     }
 

@@ -18,11 +18,10 @@ import Aside from '../Aside';
 import { Table } from 'react-bootstrap'
 import { useNavigate } from "react-router-dom";
 import { useParams } from 'react-router';
-import axios from 'axios'
+import axios from '../../../../api/axiosClient'
 import swal from 'sweetalert'
 
 export default function Detail(props) {
-    const api = 'http://127.0.0.1:8000/api';
     const { id } = useParams()
 
     const [artikel, setArtikel] = useState([]);
@@ -30,7 +29,7 @@ export default function Detail(props) {
     const getArtikel = async () => {
         try {
             const artikel_id = id;
-            const res = await axios.get(api + `/artikel/${artikel_id}`)
+            const res = await axios.get(`/artikel/${artikel_id}`)
             if (res.data.status === 200) {
                 setArtikel(res.data.artikel);
             } else if (res.data.status === 404) {

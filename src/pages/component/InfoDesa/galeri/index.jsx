@@ -13,19 +13,17 @@ import "../../css/nice-select.css"
 import "../../css/style.css"
 
 // import { GoogleMap, useJsApiLoader } from '@react-google-maps/api';
-import axios from 'axios'
+import axios from '../../../../api/axiosClient'
 import Header from '../Header'
 import Footer from '../Footer'
 
 export default function Galeri(props) {
-    const api = 'http://127.0.0.1:8000/api'
     const [artikel, setArtikel] = useState();
     const [kegiatan, setKegiatan] = useState();
 
     const getArtikel = async () => {
         try {
-            const res = await axios.get(api + `/artikel`)
-            console.log(res.data)
+            const res = await axios.get(`/artikel`)
             setArtikel(res.data)
         }
         catch (err) {
@@ -35,8 +33,7 @@ export default function Galeri(props) {
 
     const getKegiatan = async () => {
         try {
-            const res = await axios.get(api + `/kegiatan`)
-            console.log(res.data)
+            const res = await axios.get(`/kegiatan`)
             setKegiatan(res.data)
         }
         catch (err) {

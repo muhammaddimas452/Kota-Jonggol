@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import Nav from '../Nav'
-import axios from 'axios'
+import axios from '../../../api/axiosClient'
 import { NavLink } from 'reactstrap'
 import { Link } from 'react-router-dom'
 import swal from 'sweetalert';
@@ -10,7 +10,6 @@ import '../css/main.min.css'
 import '../css/main.css'
 
 
-const api = 'http://127.0.0.1:8000/api'
 
 const deleteKegiatan = (e, kegiatan_id) => {
     e.preventDefault();
@@ -18,7 +17,7 @@ const deleteKegiatan = (e, kegiatan_id) => {
     const thisClicked = e.currentTarget;
     thisClicked.innerText = "Deleting"
 
-    axios.delete(api + `/kegiatan/delete/${kegiatan_id}`).then(res => {
+    axios.delete(`/kegiatan/delete/${kegiatan_id}`).then(res => {
         if (res.data.status === 200) {
             swal("Success", res.data.message, "success");
             thisClicked.closest("tr").remove()
@@ -44,7 +43,7 @@ class DataKegiatan extends PureComponent {
     }
 
     componentDidMount() {
-        axios.get(api + `/kegiatan`).then(res => {
+        axios.get(`/kegiatan`).then(res => {
             this.setState({
                 kegiatan: res.data
             })

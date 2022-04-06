@@ -1,9 +1,7 @@
 import React, { useState } from 'react'
-import axios from 'axios'
-import { useSelector } from "react-redux";
+import axios from '../../api/axiosClient'
 
-const ForgotPassword = (props) => {
-    const api = 'http://127.0.0.1:8000/api';
+const ForgotPassword = () => {
 
     const [email, setEmail] = useState('');
     const [error, setError] = useState('');
@@ -19,7 +17,7 @@ const ForgotPassword = (props) => {
         if(!email){
             setError('Email wajib diisi');
         }else{
-            axios.put(api + '/password/forgot-password', {email:email})
+            axios.put('/password/forgot-password', {email:email})
             .then(res => {
                 setEmail('')
                 setAlert('Link Reset Password Telah di Kirim, Silahkan cek Email Anda')

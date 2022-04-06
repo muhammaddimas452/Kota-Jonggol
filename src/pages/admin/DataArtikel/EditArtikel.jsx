@@ -1,5 +1,5 @@
-import React, { Component, useEffect, useState } from 'react'
-import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import axios from '../../../api/axiosClient'
 import Nav from '../Nav'
 import swal from 'sweetalert'
 import { useParams } from 'react-router'
@@ -12,7 +12,6 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import '../css/main.min.css'
 
 function EditArtikel(props) {
-    const api = 'http://127.0.0.1:8000/api';
     const { id } = useParams()
 
     const [artikelInput, setArtikel] = useState([]);
@@ -25,7 +24,7 @@ function EditArtikel(props) {
         try {
             const artikel_id = id;
             setLoading(true)
-            const res = await axios.get(api + `/artikel/edit/${artikel_id}`)
+            const res = await axios.get(`/artikel/edit/${artikel_id}`)
             setLoading(false)
             if (res.data.status === 200) {
                 setArtikel(res.data.artikel);
@@ -73,7 +72,7 @@ function EditArtikel(props) {
 
         const artikel_id = id;
         const data = artikelInput;
-        const result = await axios.post(api + `/artikel/update/${artikel_id}/?_method=PUT`, formData)
+        const result = await axios.post(`/artikel/update/${artikel_id}/?_method=PUT`, formData)
         if (result.data.status === 200) {
             swal("Success", result.data.message, "success")
             setError([]);

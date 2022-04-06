@@ -4,8 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { authLogin } from "../../redux/actions/authAction";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import ErrorMessage from "../../components/templates/ErrorMessage";
-import { ButtonGroup } from 'reactstrap';
 
 const RegisterSchema = Yup.object().shape({
     email: Yup.string().email().required("Wajib di isi"),

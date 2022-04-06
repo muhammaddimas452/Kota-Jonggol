@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+import axios from '../../../api/axiosClient'
 import Nav from '../Nav'
 import swal from 'sweetalert'
 import { useParams } from 'react-router'
@@ -9,7 +9,6 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import '../css/main.min.css'
 
 function EditJabatan(props) {
-    const api = 'http://127.0.0.1:8000/api';
     const { id } = useParams()
     console.log(id)
 
@@ -22,7 +21,7 @@ function EditJabatan(props) {
         try {
             const infowilayah_id = id;
             setLoading(true)
-            const res = await axios.get(api + `/infowilayah/edit/${infowilayah_id}`)
+            const res = await axios.get(`/infowilayah/edit/${infowilayah_id}`)
             setLoading(false)
             console.log(res)
             if (res.data.status === 200) {
@@ -48,7 +47,7 @@ function EditJabatan(props) {
     const updateInfoWilayah = (e) => {
         e.preventDefault();
         const infowilayah_id = id;
-        axios.put(api + `/infowilayah/update/${infowilayah_id}`, {
+        axios.put(`/infowilayah/update/${infowilayah_id}`, {
             nama_desa: infoWilayah.nama_desa,
             rt: infoWilayah.rt,
             rw: infoWilayah.rw,

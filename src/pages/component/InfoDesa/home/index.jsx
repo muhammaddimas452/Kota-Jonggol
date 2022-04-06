@@ -13,24 +13,16 @@ import "../../css/nice-select.css"
 import "../../css/style.css"
 import logo from '../../assets/jonggol.png'
 
-import { MdOutlineNavigateBefore, MdOutlineNavigateNext } from "react-icons/md";
-
-import Header from '../Header';
 import Footer from '../Footer';
 import Aside from '../Aside';
-import axios from 'axios';
-import { useParams } from 'react-router';
+import axios from '../../../../api/axiosClient'
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from 'react-bootstrap';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 export default function Home(props) {
-    const api = 'http://127.0.0.1:8000/api'
     const [artikel, setArtikel] = useState([]);
-    const [paginate, setPaginate] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [page, setPage] = useState(1);
-    const [lastPage, setLastPage] = useState();
-    const [totalPage, setTotalPage] = useState([]);
     const [kegiatan, setKegiatan] = useState();
     const [kegiatanDone, setKegiatanDone] = useState([]);
     const [kegiatanNot, setKegiatanNot] = useState([]);
@@ -39,20 +31,29 @@ export default function Home(props) {
     const moment = require('moment');
     const getJumlahPenduduk = async () => {
         try {
-            const res = await axios.get(api + `/jumlah-penduduk`)
+            const res = await axios.get(`/jumlah-penduduk`)
             setJumlahPenduduk(res.data)
         }
         catch (err) {
         }
     }
 
+    // const getPaginate = async (e) => {
+    //     e.preventDefault()
+    //     try {
+    //         const res = await axios.get(`/artikel/paginate?perpage=2&page=${page}`)
+    //         setLastPage(res.data.data.last_page)
+    //         setPage(res.data.data.current_page)
+    //     }
+    //     catch (err) {
+    //     }
+    // }
+    // console.log(page)
+
     const getArtikel = async () => {
         try {
-            const res = await axios.get(api + `/artikel/paginate?perpage=1&page=${page}`,)
-            setPaginate(res.data.data.data)
-            setLastPage(res.data.data.last_page)
-            setPage(res.data.data.current_page)
-            setTotalPage(res.data.data.links.label)
+            const res = await axios.get(`/artikel`)
+            setArtikel(res.data)
         }
         catch (err) {
         }
@@ -60,7 +61,7 @@ export default function Home(props) {
 
     const getKegiatanDone = async () => {
         try {
-            const res = await axios.get(api + `/kegiatan-done/paginate?perpage=6`,)
+            const res = await axios.get(`/kegiatan-done/paginate?perpage=6`,)
             setKegiatanDone(res.data.data.data)
         }
         catch (err) {
@@ -69,7 +70,7 @@ export default function Home(props) {
 
     const getKegiatanNot = async () => {
         try {
-            const res = await axios.get(api + `/kegiatan-not/paginate?perpage=6`,)
+            const res = await axios.get(`/kegiatan-not/paginate?perpage=6`,)
             setKegiatanNot(res.data.data.data)
         }
         catch (err) {
@@ -78,7 +79,7 @@ export default function Home(props) {
 
     const getKegiatan = async () => {
         try {
-            const res = await axios.get(api + `/kegiatan`)
+            const res = await axios.get(`/kegiatan`)
             setKegiatan(res.data)
         }
         catch (err) {
@@ -114,7 +115,7 @@ export default function Home(props) {
                         <nav className="navbar navbar-expand-lg navbar-green ftco_navbar bg-green ftco-navbar-light" id="ftco-navbar">
                             <div className="container">
                                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-                                    <span className="fa fa-bars" /> Menu
+                                <FontAwesomeIcon icon={faBars} className='mr-2' /> Menu
                                 </button>
                                 <form action="#" className="searchform order-lg-last">
                                     <div className="form-group d-flex">
@@ -123,10 +124,9 @@ export default function Home(props) {
                                                 setSearch(e.target.value);
                                             }}
                                             type="text"
-                                            className="form-control pl-3"
+                                            className="form-control pl-3 col-12"
                                             placeholder="Cari Artikel"
                                         />
-                                        <button type="button" placeholder className="form-control search"><span className="fa fa-search" /></button>
                                     </div>
                                 </form>
                                 <div className="collapse navbar-collapse" id="ftco-nav">
@@ -137,10 +137,10 @@ export default function Home(props) {
                                         <li className="nav-item font-weight-bold "><a href="/peta" className="nav-link"><h6>Peta</h6></a></li>
                                         <li className="nav-item font-weight-bold "><a href="/galeri" className="nav-link"><h6>Galeri</h6></a></li>
                                         <li className="nav-item dropdown font-weight-bold ">
-                                            <a className="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><h6>Page</h6></a>
+                                            <a className="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><h6>Info Desa</h6></a>
                                             <div className="dropdown-menu" aria-labelledby="dropdown04">
                                                 {artikel?.map((artikel, index) => (
-                                                    <a key={index} className="dropdown-item font-weight-bold " href={`/detail/${artikel.id}`}>{artikel.nama_artikel}</a>
+                                                    <a key={index} className="dropdown-item font-weight-bold" href={`/detail/${artikel.id}`}>{artikel.nama_artikel}</a>
                                                     // {/* <a className="dropdown-item font-weight-bold " href="/visimisi">Visi Dan Misi</a>
                                                     // <a className="dropdown-item font-weight-bold " href="/pemerintah">Pemerintah Desa</a> */}
                                                 ))}
@@ -170,7 +170,6 @@ export default function Home(props) {
                                                                 <div className="single-slider">
                                                                     <div className="trending-top mb-30">
                                                                         <div className="trend-top-img">
-                                                                            {/* <img src="assets/img/trending/trending_top2.jpg" alt /> */}
                                                                             <img src={kegiatan.image} alt="" />
                                                                             <div className="trend-top-cap pt-5">
                                                                                 <span className="bgg" data-animation="fadeInUp" data-delay=".2s" data-duration="1000ms">{kegiatan.status == 0 ? "Belum Dilaksanakan" : "Sudah Dilaksakan"}</span>
@@ -217,8 +216,9 @@ export default function Home(props) {
                                                         <div className="col-12">
                                                             <div className="tab-content" id="nav-tabContent">
                                                                 <div className="tab-pane fade show active" id="nav-artikel" role="tabpanel" aria-labelledby="nav-artikel-tab">
+                                                                <div className="scroller" data-height="800">
                                                                     <div className="row">
-                                                                        {paginate?.filter((artikel) => {
+                                                                        {artikel?.filter((artikel) => {
                                                                             if (search == "") {
                                                                                 return artikel
                                                                             } else if (artikel.nama_artikel.toLowerCase().includes(search.toLowerCase())) {
@@ -238,62 +238,7 @@ export default function Home(props) {
                                                                             </div>
                                                                         ))}
                                                                     </div>
-                                                                    <div className="single-wrap">
-                                                                        <nav aria-label="Page navigation example">
-                                                                            <ul className="pagination justify-content-start">
-                                                                                {/* <li className="page-item"><a className="page-link" href="#">
-                                                                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="24px" height="15px">
-                                                                                                        <path fillRule="evenodd" fill="rgb(221, 221, 221)" d="M8.142,13.118 L6.973,14.135 L0.127,7.646 L0.127,6.623 L6.973,0.132 L8.087,1.153 L2.683,6.413 L23.309,6.413 L23.309,7.856 L2.683,7.856 L8.142,13.118 Z" />
-                                                                                                    </svg>
-                                                                                                </a></li> */}
-                                                                                <li className="page-item"><a className="page-link" href="#">{page}</a></li>
-                                                                                {/* <li className="page-item"><a className="page-link" href="#">
-                                                                                                    <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="40px" height="15px">
-                                                                                                        <path fillRule="evenodd" fill="rgb(255, 11, 11)" d="M31.112,13.118 L32.281,14.136 L39.127,7.646 L39.127,6.624 L32.281,0.132 L31.167,1.154 L36.571,6.413 L0.491,6.413 L0.491,7.857 L36.571,7.857 L31.112,13.118 Z" />
-                                                                                                    </svg>
-                                                                                                </a></li> */}
-                                                                            </ul>
-                                                                        </nav>
-                                                                    </div>
-                                                                    {/* {(() => {
-                                                            if (lastPage === 4) {
-                                                                return (
-                                                                    <div className="flex justify-center items-center sm-max:mt-5">
-                                                                        <div className="text-2xl text-gray-400 mx-3">
-                                                                            <MdOutlineNavigateBefore />
-                                                                        </div>
-                                                                        <div className="bg-gray-200 p-3 w-12 h-12 text-center shadow-inner shadow-slate-300 font-bahnschrift rounded-md">{page}</div>
-                                                                        <div className="text-2xl text-gray-400 font-bold mx-3">
-                                                                            <MdOutlineNavigateNext />
-                                                                        </div>
-                                                                    </div>
-                                                                )
-                                                            } else {
-                                                                return (
-                                                                    <div className="flex justify-center items-center sm-max:mt-5">
-                                                                        {page === 1 ? (
-                                                                            <div className="text-2xl text-gray-400 mx-3">
-                                                                                <MdOutlineNavigateBefore />
-                                                                            </div>
-                                                                        ) : (
-                                                                            <div className="text-2xl text-blue-400 mx-3">
-                                                                                <MdOutlineNavigateBefore />
-                                                                            </div>
-                                                                        )}
-                                                                        <div className="bg-gray-200 p-3 w-12 h-12 text-center  font-bahnschrift rounded-md">{page}</div>
-                                                                        {lastPage === page ? (
-                                                                            <div className="text-2xl text-gray-400 font-bold mx-3">
-                                                                                <MdOutlineNavigateNext />
-                                                                            </div>
-                                                                        ) : (
-                                                                            <div className="text-2xl text-blue-400 font-bold mx-3">
-                                                                                <MdOutlineNavigateNext />
-                                                                            </div>
-                                                                        )}
-                                                                    </div>
-                                                                )
-                                                            }
-                                                        })()} */}
+                                                                </div>    
                                                                 </div>
                                                                 <div className="tab-pane" id="nav-not" role="tabpanel" aria-labelledby="nav-not-tab">
                                                                     <div className="row">

@@ -1,17 +1,11 @@
-import React, { useState, useEffect } from 'react'
-import { Formik } from "formik"
-import { useSelector } from "react-redux";
-import { resetPassword } from "../../redux/actions/authAction";
-import { useNavigate } from "react-router-dom";
-import axios from 'axios';
+import React, { useState } from 'react'
+import axios from '../../api/axiosClient';
 import { useParams } from 'react-router'
-import swal from 'sweetalert';
 import jonggol from '../admin/assets/img/jonggol.png'
 import forgotpw from '../admin/assets/img/forgotpw.png'
 
 
-export default function ResetPassword  (props) {
-    const api = 'http://127.0.0.1:8000/api';
+export default function ResetPassword  () {
     const { token } = useParams();
     const [password, setPassword] = useState('');
     const [errorPassword, setErrorPassword] = useState('');
@@ -48,7 +42,7 @@ export default function ResetPassword  (props) {
             password: password,
             password_confirmation: confirmPassword
         }
-        axios.put(api + '/password/reset', data)
+        axios.put('/password/reset', data)
         .then(res => {
             if(res) {
                 setPassword('')

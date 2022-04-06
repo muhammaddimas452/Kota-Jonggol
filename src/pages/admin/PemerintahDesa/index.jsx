@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Nav from '../Nav'
-import axios from 'axios'
+import axios from '../../../api/axiosClient'
 import { NavLink } from 'reactstrap'
 import { Link } from 'react-router-dom'
 import swal from 'sweetalert';
@@ -10,14 +10,13 @@ import '../vendors/themify-icons/css/themify-icons.css'
 
 
 export default function PemerintahDesa(props) {
-    const api = 'http://127.0.0.1:8000/api'
     const [pemerintah, setPemerintah] = useState();
     const deleteCategory = (e, jabatan_id) => {
         e.preventDefault();
 
         const thisClicked = e.currentTarget;
         thisClicked.innerText = "Deleting"
-        axios.delete(api + `/jabatan/delete/${jabatan_id}`).then(res => {
+        axios.delete(`/jabatan/delete/${jabatan_id}`).then(res => {
             if (res.data.status === 200) {
                 swal("Success", res.data.message, "success");
                 thisClicked.closest("tr").remove()
@@ -29,7 +28,7 @@ export default function PemerintahDesa(props) {
     }
     const getPemerintah = async () => {
         try {
-            const res = await axios.get(api + `/pemerintahdesa`,)
+            const res = await axios.get(`/pemerintahdesa`,)
             console.log(res.data)
             setPemerintah(res.data)
         }
@@ -65,7 +64,6 @@ export default function PemerintahDesa(props) {
                             <table className="table table-striped table-bordered table-hover" id="example-table" cellSpacing={0} width="100%">
                                 <thead>
                                     <tr>
-                                        <th>No</th>
                                         <th className="">Nama</th>
                                         <th className="">Jabatan</th>
                                         <th className="">Foto</th>

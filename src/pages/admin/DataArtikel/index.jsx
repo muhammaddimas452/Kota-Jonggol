@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
 import Nav from '../Nav'
-import axios from 'axios'
+import axios from '../../../api/axiosClient'
 import { NavLink } from 'reactstrap'
 import swal from 'sweetalert';
 import '../css/main.min.css'
@@ -11,8 +11,13 @@ import { Modal, Container, Table } from 'react-bootstrap'
 
 
 export default function DataArtikel(props) {
-    const api = 'http://127.0.0.1:8000/api'
+
     const [artikel, setArtikel] = useState();
+
+    const [page, setPage] = useState();
+    const [lastPage, setLastPage] = useState();
+    const [dataPage, setDataPage] = useState();
+
     const [modalShow, setModalShow] = useState(false);
     const navigate = useNavigate();
     const deleteCategory = (e, artikel_id) => {
@@ -20,7 +25,7 @@ export default function DataArtikel(props) {
 
         const thisClicked = e.currentTarget;
         thisClicked.innerText = "Deleting"
-        axios.delete(api + `/artikel/delete/${artikel_id}`).then(res => {
+        axios.delete(`/artikel/delete/${artikel_id}`).then(res => {
             if (res.data.status === 200) {
                 swal("Success", res.data.message, "success");
                 thisClicked.closest("tr").remove()
@@ -30,19 +35,32 @@ export default function DataArtikel(props) {
             }
         });
     }
+    // const getArtikel = async () => {
+    //     try {
+    //         const res = await axios.get(`/artikel`)
+    //         setArtikel(res.data)
+    //         console.log(res.data)
+    //     }
+    //     catch (err) {
+    //     }
+    // }
     const getArtikel = async () => {
+
         try {
-            const res = await axios.get(api + `/artikel`)
+            const res = await axios.get(`/artikel`)
             setArtikel(res.data)
-            console.log(res.data)
+            setLastPage(res.data.data.last_page)
+            setPage(res.data.data.current_page)
+            setDataPage(res.data.data.links)
         }
         catch (err) {
         }
     }
+
     const [detailArtikel, setDetailArtikel] = useState([]);
     const readArtikel = async (id) => {
         try {
-            const res = await axios.get(api + `/artikel/${id}`)
+            const res = await axios.get(`/artikel/${id}`)
             if (res.data.status === 200) {
                 setDetailArtikel(res.data.artikel);
             } else if (res.data.status === 404) {
@@ -86,6 +104,7 @@ export default function DataArtikel(props) {
                             <NavLink href="/tambahartikel"><button className='genric-btn info radius'>Tambah Data</button></NavLink>
                         </div>
                         <div className="ibox-body">
+                        <div className="scroller" data-height="600">
                             <Table responsive striped bordered hover>
                                 <thead>
                                     <tr>
@@ -100,12 +119,11 @@ export default function DataArtikel(props) {
                                 </thead>
                                 <tbody>
                                     {artikel?.map((artikel, index) => (
-                                        console.log(artikel.id),
                                         <tr key={index}>
                                             {/* <th class="text-center">1</th> */}
                                             <td className="text-center">{artikel.tanggal}</td>
                                             <td className="text-center">{artikel.nama_artikel}</td>
-                                            <td className="text-center"><img className='responsive' style={{ height:'auto', width:200 }}
+                                            <td className="text-center"><img className='responsive' style={{ width: 200, height: 'auto' }}
                                                 src={artikel.image} /></td>
                                             <td dangerouslySetInnerHTML={{ __html: artikel.isi_artikel }} />
                                             <td className="text-center">{artikel.views}</td>
@@ -118,6 +136,7 @@ export default function DataArtikel(props) {
                                     ))}
                                 </tbody>
                             </Table>
+                        </div>
                         </div>
                     </div>
                 </div>

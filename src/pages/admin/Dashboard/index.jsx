@@ -5,6 +5,12 @@ import Nav from '../Nav'
 import {
     AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
 } from "recharts";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPeopleGroup } from "@fortawesome/free-solid-svg-icons";
+import { faBook } from "@fortawesome/free-solid-svg-icons";
+import { faCalendarCheck } from "@fortawesome/free-solid-svg-icons";
+import { faCalendarMinus } from "@fortawesome/free-solid-svg-icons";
+
 
 
 
@@ -127,7 +133,7 @@ export default function Dashboard(props) {
                                 <div className="ibox bg-success color-white widget-stat">
                                     <div className="ibox-body">
                                         <h2 className="m-b-5 font-strong text-white">{jumlahPendudukInput}</h2>
-                                        <div className="m-b-5 font-weight-bold">Jumlah Penduduk</div><i className="fa fa-users widget-stat-icon" />
+                                        <div className="m-b-5 font-weight-bold">Jumlah Penduduk</div><FontAwesomeIcon icon={faPeopleGroup} className='widget-stat-icon little pl-2 pr-2' />
                                         <div><i className="fa fa-level-up m-r-5" /><small></small></div>
                                     </div>
                                 </div>
@@ -136,7 +142,7 @@ export default function Dashboard(props) {
                                 <div className="ibox bg-info color-white widget-stat">
                                     <div className="ibox-body">
                                         <h2 className="m-b-5 font-strong text-white">{totalArtikel}</h2>
-                                        <div className="m-b-5 font-weight-bold">Jumlah Artikel</div><i className="fa fa-book widget-stat-icon" />
+                                        <div className="m-b-5 font-weight-bold">Jumlah Artikel</div><FontAwesomeIcon icon={faBook} className='widget-stat-icon pl-2 pr-2' />
                                         <div><i className="fa fa-level-up m-r-5" /><small></small></div>
                                     </div>
                                 </div>
@@ -145,7 +151,7 @@ export default function Dashboard(props) {
                                 <div className="ibox bg-warning color-white widget-stat">
                                     <div className="ibox-body">
                                         <h2 className="m-b-5 font-strong text-white">{totalKegiatanNot}</h2>
-                                        <div className="m-b-5 font-weight-bold">Kegiatan Mendatang</div><i className="far fa-calendar-minus widget-stat-icon" />
+                                        <div className="m-b-5 font-weight-bold">Kegiatan Mendatang</div><FontAwesomeIcon icon={faCalendarMinus} className='widget-stat-icon pl-2 pr-2' />
                                         <div><i className="fa fa-level-up m-r-5" /><small></small></div>
                                     </div>
                                 </div>
@@ -154,7 +160,7 @@ export default function Dashboard(props) {
                                 <div className="ibox bg-danger color-white widget-stat">
                                     <div className="ibox-body">
                                         <h2 className="m-b-5 font-strong text-white">{totalKegiatanDone}</h2>
-                                        <div className="m-b-5 font-weight-bold">Kegiatan Selesai</div><i className="far fa-calendar-check widget-stat-icon" />
+                                        <div className="m-b-5 font-weight-bold">Kegiatan Selesai</div><FontAwesomeIcon icon={faCalendarCheck} className='widget-stat-icon pl-2 pr-2' />
                                         <div><i className="fa fa-level-down m-r-5" /><small></small></div>
                                     </div>
                                 </div>

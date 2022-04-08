@@ -24,8 +24,8 @@ const ForgotPassword = () => {
                 setTimeout(() =>{
                     setAlert('')
                 },3000)
+                console.log(res)
             })
-            console.log(kirim)
         }
     }
 

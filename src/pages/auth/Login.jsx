@@ -4,6 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { authLogin } from "../../redux/actions/authAction";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye } from "@fortawesome/free-solid-svg-icons";
+import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 const RegisterSchema = Yup.object().shape({
     email: Yup.string().email().required("Wajib di isi"),
@@ -19,6 +22,8 @@ const Login = () => {
         email: "",
         password: "",
     };
+
+    const [isRevealPwd, setIsRevealPwd] = useState(false);
 
     const [error, setError] = useState([]);
     const isLoading = useSelector((state) => state.auth.isLoading);
@@ -46,7 +51,7 @@ const Login = () => {
         <div className="container" style={myStyle}>
             <div className="row d-flex justify-content-center align-items-center h-100">
                 <div className="col col-xl-10">
-                    <div className="card" style={{ borderRadius: '1rem',marginbottom:50 }}>
+                    <div className="card" style={{ borderRadius: '1rem', marginbottom: 50 }}>
                         <div className="row g-0">
                             <div className="col-md-6 col-lg-5 d-none d-md-block">
                                 <img src="assets/img/admin.jpg" alt="login form" className="image-fluid" style={{ width: 500 }} />
@@ -75,25 +80,32 @@ const Login = () => {
                                                 </div>
                                                 <h5 className="fw-normal mb-3 pb-3" style={{ letterSpacing: 1 }}>Sign into your account</h5>
                                                 <div className="form-outline mb-4">
-                                                <label className="form-label ml-1" htmlFor="email">Email Address</label>
+                                                    <label className="form-label ml-1" htmlFor="email">Email Address</label>
                                                     <input type="email" name="email" id="email" className="form-control form-control-lg" placeholder='Email'
                                                         error={errors.email && touched.email}
                                                         onChange={handleChange}
                                                         onBlur={handleBlur}
                                                         value={values.email}
-                                                        disabled={isSubmitting} 
-                                                        />
+                                                        disabled={isSubmitting}
+                                                    />
                                                     <small className='text-danger'>{error.email}</small>
                                                 </div>
                                                 <div className="form-outline mb-4">
-                                                <label className="form-label ml-1" htmlFor="password">Password</label>
-                                                    <input type="password" name="password" id="password" className="form-control form-control-lg" placeholder='Password'
-                                                        error={errors.password && touched.password}
-                                                        onChange={handleChange}
-                                                        onBlur={handleBlur}
-                                                        value={values.password}
-                                                        disabled={isSubmitting}
-                                                    />
+                                                    <label className="form-label ml-1" htmlFor="password">Password</label>
+                                                    <div className="input-group-icon right">
+                                                        <div className="input-icon"><FontAwesomeIcon 
+                                                            title={isRevealPwd ? "Hide password" : "Show password"}
+                                                            onClick={() => setIsRevealPwd(prevState => !prevState)} 
+                                                            icon={isRevealPwd ? faEyeSlash : faEye} className='mt-3' /></div>
+                                                        <input className="form-control form-control-lg" name="password" id="password" 
+                                                         type={isRevealPwd ? "text" : "password"} placeholder="Password"
+                                                         error={errors.password && touched.password}
+                                                         onChange={handleChange}
+                                                         onBlur={handleBlur}
+                                                         value={values.password}
+                                                         disabled={isSubmitting}
+                                                         FontAwesomeIcon={faEye} />
+                                                    </div>
                                                     <small className='text-danger'>{error.password}</small>
                                                 </div>
                                                 <div className="pt-1 mb-4">

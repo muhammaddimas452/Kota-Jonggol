@@ -3,13 +3,7 @@ import axios from '../../../api/axiosClient'
 import { useNavigate } from "react-router-dom";
 import { Carousel } from 'react-bootstrap';
 import {
-    Tooltip,
-    BarChart,
-    XAxis,
-    YAxis,
-    Legend,
-    CartesianGrid,
-    Bar,
+    AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
 } from "recharts";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye } from "@fortawesome/free-solid-svg-icons";
@@ -30,6 +24,8 @@ export default function Aside(props) {
     const [acak, setAcak] = useState();
     const [ikegiatan, setIKegiatan] = useState();
     const [kegiatan, setKegiatan] = useState();
+    const [chartData, setChartData] = useState({});
+
     const navigate = useNavigate();
     const getArtikel = async () => {
         try {
@@ -90,7 +86,26 @@ export default function Aside(props) {
         getAcak();
         getIKegiatan();
         getKegiatan();
+        chart();
     }, [props])
+
+    const data01 = [
+        { name: 'Group A', value: 400 },
+        { name: 'Group B', value: 300 },
+        { name: 'Group C', value: 300 },
+        { name: 'Group D', value: 200 },
+        { name: 'Group E', value: 278 },
+        { name: 'Group F', value: 189 },
+      ];
+    
+      const chart = async () => {
+        try {
+            const res = await axios.get(`/artikel`)
+            setChartData(res.data)
+        }
+        catch (err) {
+        }
+    }
 
     return (
         <div>
@@ -105,23 +120,23 @@ export default function Aside(props) {
                 <div className="mb-5">
                     <div className="single-defination">
                         <h4 className="mb-20 ml-5">Statistik Penduduk</h4>
-                        <BarChart className='col-sm-12'
-                            width={320}
-                            height={300}
-                            data={data}
-                            barSize={30}
-                        >
-                            <XAxis
-                                dataKey="name"
-                                scale="point"
-                                padding={{ left: 10, right: 10 }}
-                            />
-                            <YAxis />   
-                            <Tooltip />
-                            <Legend />
-                            <CartesianGrid strokeDasharray="3 3" />
-                            <Bar dataKey="total" fill="grey" background={{ fill: "#eee" }} />
-                        </BarChart>
+                        <AreaChart
+                                                width={350}
+                                                height={300}
+                                                data={chartData}
+                                                margin={{
+                                                    top: 10,
+                                                    right: 30,
+                                                    left: 0,
+                                                    bottom: 0,
+                                                }}
+                                            >
+                                                <CartesianGrid strokeDasharray="4 4" />
+                                                <XAxis dataKey="nama_artikel" />
+                                                <YAxis />
+                                                <Tooltip />
+                                                <Area type="monotone" dataKey="views" stroke="#8884d8" fill="#8884d8" />
+                                            </AreaChart>
                     </div>
                 </div>
                 <div className="single_sidebar_widget popular_post_widget">
@@ -142,10 +157,10 @@ export default function Aside(props) {
                             </li>
                         </ul>
                         <div className="tab-content mt-3">
-                                <div className="tab-pane fade show active" id="tab-1-1">
+                            <div className="tab-pane fade show active" id="tab-1-1">
                                 {populer?.map((populer, index) => (
                                     <div key={index} className="media post_item">
-                                        <img src={populer.image} style={{width:120, height:'auto'}} alt="post" />
+                                        <img src={populer.image} style={{ width: 120, height: 'auto' }} alt="post" />
                                         <div className="media-body">
                                             <a href={`/detail/${populer.id}`}>
                                                 <h3>{populer.nama_artikel}</h3>
@@ -154,12 +169,12 @@ export default function Aside(props) {
                                             <p><FontAwesomeIcon icon={faEye} className='mr-2' />{populer.views}</p>
                                         </div>
                                     </div>
-                                    ))}
-                                </div>
-                                <div className="tab-pane" id="tab-1-2">
+                                ))}
+                            </div>
+                            <div className="tab-pane" id="tab-1-2">
                                 {newest?.map((newest, index) => (
                                     <div key={index} className="media post_item">
-                                       <img src={newest.image} style={{width:120, height:'auto'}} alt="post" />
+                                        <img src={newest.image} style={{ width: 120, height: 'auto' }} alt="post" />
                                         <div className="media-body">
                                             <a href={`/detail/${newest.id}`}>
                                                 <h3>{newest.nama_artikel}</h3>
@@ -168,28 +183,28 @@ export default function Aside(props) {
                                             <p><FontAwesomeIcon icon={faEye} className='mr-2' />{newest.views}</p>
                                         </div>
                                     </div>
+                                ))}
+                            </div>
+                            <div className="tab-pane" id="tab-1-3">
+                                <div className="scroller" data-height="260">
+                                    {acak?.map((artikel, map) => (
+                                        <div key={map} className="media post_item">
+                                            <img src={artikel.image} style={{ width: 120, height: 'auto' }} alt="post" />
+                                            <div className="media-body">
+                                                <a href={`/detail/${artikel.id}`}>
+                                                    <h3>{artikel.nama_artikel}</h3>
+                                                </a>
+                                                <p>{moment(acak.created_at).fromNow()}</p>
+                                                <p><FontAwesomeIcon icon={faEye} className='mr-2' />{artikel.views}</p>
+                                            </div>
+                                        </div>
                                     ))}
                                 </div>
-                                <div className="tab-pane" id="tab-1-3">
-                                <div className="scroller" data-height="260">
-                                {acak?.map((artikel, map) => (
-                                    <div key={map} className="media post_item">
-                                        <img src={artikel.image} style={{width:120, height:'auto'}} alt="post" />
-                                        <div className="media-body">
-                                            <a href={`/detail/${artikel.id}`}>
-                                                <h3>{artikel.nama_artikel}</h3>
-                                            </a>
-                                            <p>{moment(acak.created_at).fromNow()}</p>
-                                            <p><FontAwesomeIcon icon={faEye} className='mr-2' />{artikel.views}</p>
-                                        </div>
-                                    </div>
-                                     ))}
-                                </div>     
-                                </div>
-                                <div className="tab-pane" id="tab-1-4">
+                            </div>
+                            <div className="tab-pane" id="tab-1-4">
                                 {kegiatan?.map((kegiatan, map) => (
                                     <div key={map} className="media post_item">
-                                        <img src={kegiatan.image} style={{width:120, height:'auto'}} alt="post" />
+                                        <img src={kegiatan.image} style={{ width: 120, height: 'auto' }} alt="post" />
                                         <div className="media-body">
                                             <a href={`/detail/${kegiatan.id}`}>
                                                 <h3>{kegiatan.nama_kegiatan}</h3>
@@ -198,25 +213,25 @@ export default function Aside(props) {
                                             <p><FontAwesomeIcon icon={faPen} className='mr-2' />{kegiatan.status == 0 ? "Belum Dilaksanakan" : "Sudah Dilaksakan"}</p>
                                         </div>
                                     </div>
-                                    ))}
-                                </div>
+                                ))}
                             </div>
+                        </div>
                     </div>
                 </div>
                 <aside className="single_sidebar_widget instagram_feeds">
                     <h4 className="widget_title">Galeri Foto</h4>
                     <div className="col-lg-12">
                         <Carousel fade={true} pause={false} controls={false} indicators={false}>
-                        {ikegiatan?.map((kegiatan, index) => (
-                            <Carousel.Item interval={5000} key={index.id}>
-                                <div className="single-slider">
-                                    <div className="trending-top mb-30">
-                                        <div className="trend-top-img">
-                                            <img src={kegiatan.image} alt />
+                            {ikegiatan?.map((kegiatan, index) => (
+                                <Carousel.Item interval={5000} key={index.id}>
+                                    <div className="single-slider">
+                                        <div className="trending-top mb-30">
+                                            <div className="trend-top-img">
+                                                <img src={kegiatan.image} alt />
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </Carousel.Item>
+                                </Carousel.Item>
                             ))}
                         </Carousel>
                     </div>

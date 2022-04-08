@@ -36,6 +36,7 @@ import InfoWilayah from './pages/admin/InfoWilayah/index'
 import TambahInfoWilayah from './pages/admin/InfoWilayah/TambahInfoWilayah'
 import EditInfoWilayah from './pages/admin/InfoWilayah/EditInfoWilayah'
 
+
 function App() {
   return (
     <Routes>

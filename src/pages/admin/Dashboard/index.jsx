@@ -21,6 +21,7 @@ export default function Dashboard(props) {
     const [totalKegiatanDone, setTotalKegiatanDone] = useState([]);
     const [totalKegiatanNot, setTotalKegiatanNot] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [chartData, setChartData] = useState({});
 
     const getJumlahPenduduk = async () => {
         try {
@@ -61,7 +62,6 @@ export default function Dashboard(props) {
             setLoading(true)
             const res = await axios.get(`/totalKegiatanNot`)
             setLoading(false)
-            // console.log(res)
             setTotalKegiatanNot(res.data)
         }
         catch (err) {
@@ -73,54 +73,17 @@ export default function Dashboard(props) {
         getTotalArtikel();
         getTotalKegiatanDone();
         getTotalKegiatanNot();
+        chart();
     }, [props])
 
-
-
-    const data = [
-        {
-            name: 'Page A',
-            uv: 4000,
-            pv: 2400,
-            amt: 2400,
-        },
-        {
-            name: 'Page B',
-            uv: 3000,
-            pv: 1398,
-            amt: 2210,
-        },
-        {
-            name: 'Page C',
-            uv: 2000,
-            pv: 9800,
-            amt: 2290,
-        },
-        {
-            name: 'Page D',
-            uv: 2780,
-            pv: 3908,
-            amt: 2000,
-        },
-        {
-            name: 'Page E',
-            uv: 1890,
-            pv: 4800,
-            amt: 2181,
-        },
-        {
-            name: 'Page F',
-            uv: 2390,
-            pv: 3800,
-            amt: 2500,
-        },
-        {
-            name: 'Page G',
-            uv: 3490,
-            pv: 4300,
-            amt: 2100,
-        },
-    ];
+    const chart = async () => {
+        try {
+            const res = await axios.get(`/artikel`)
+            setChartData(res.data)
+        }
+        catch (err) {
+        }
+    }
 
     return (
         <div>
@@ -172,15 +135,15 @@ export default function Dashboard(props) {
                                     <div className="ibox-body col-sm-12">
                                         <div className="mb-4">
                                             <div>
-                                                <h3 className="m-0">Statistics</h3>
-                                                <div>Your shop sales analytics</div>
+                                                <h3 className="m-0">Grafik</h3>
+                                                <div></div>
                                             </div>
                                         </div>
-                                        <div className='col-lg-12'>
+                                        <div className='col-lg-12' >
                                             <AreaChart
-                                                width={600}
-                                                height={270}
-                                                data={data}
+                                                width={700}
+                                                height={300}
+                                                data={chartData}
                                                 margin={{
                                                     top: 10,
                                                     right: 30,
@@ -188,13 +151,13 @@ export default function Dashboard(props) {
                                                     bottom: 0,
                                                 }}
                                             >
-                                                <CartesianGrid strokeDasharray="3 3" />
-                                                <XAxis dataKey="name" />
+                                                <CartesianGrid strokeDasharray="4 4" />
+                                                <XAxis dataKey="nama_artikel" />
                                                 <YAxis />
                                                 <Tooltip />
-                                                <Area type="monotone" dataKey="uv" stroke="#8884d8" fill="#8884d8" />
+                                                <Area type="monotone" dataKey="views" stroke="#8884d8" fill="#8884d8" />
                                             </AreaChart>
-                                        </div>    
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -212,7 +175,6 @@ export default function Dashboard(props) {
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>

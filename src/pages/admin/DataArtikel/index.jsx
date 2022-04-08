@@ -35,17 +35,7 @@ export default function DataArtikel(props) {
             }
         });
     }
-    // const getArtikel = async () => {
-    //     try {
-    //         const res = await axios.get(`/artikel`)
-    //         setArtikel(res.data)
-    //         console.log(res.data)
-    //     }
-    //     catch (err) {
-    //     }
-    // }
     const getArtikel = async () => {
-
         try {
             const res = await axios.get(`/artikel`)
             setArtikel(res.data)

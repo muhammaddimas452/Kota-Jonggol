@@ -108,8 +108,8 @@ export default function (props) {
     )
 }
 
-function MydModalWithGrid(props) {
-
+const MydModalWithGrid = (props) => {
+    console.log(props)
     return (
         <div>
             <Modal {...props} aria-labelledby="contained-modal-title-vcenter">
@@ -128,8 +128,8 @@ function MydModalWithGrid(props) {
                                     <h5 className="card-title">{props.detail.nama}</h5>
                                     <div className="text-muted card-subtitle"></div>
                                 </div>
-                                <div className="card-footer">
-                                    {/* {props.detail.} */}
+                                <div className="card-footer"  onClick={(e) => console.log(props.detail.jabatan.nama_jabatan)}>
+                                    {/* {props.detail.jabatan.nama_jabatan} */}
                                 </div>
                             </div>
                         </Container>

@@ -96,9 +96,9 @@ export default function Aside(props) {
         { name: 'Group D', value: 200 },
         { name: 'Group E', value: 278 },
         { name: 'Group F', value: 189 },
-      ];
-    
-      const chart = async () => {
+    ];
+
+    const chart = async () => {
         try {
             const res = await axios.get(`/artikel`)
             setChartData(res.data)
@@ -119,24 +119,24 @@ export default function Aside(props) {
                 </aside>
                 <div className="mb-5">
                     <div className="single-defination">
-                        <h4 className="mb-20 ml-5">Statistik Penduduk</h4>
+                        <h4 className="mb-20 ml-5 ">Statistik Penduduk</h4>
                         <AreaChart
-                                                width={350}
-                                                height={300}
-                                                data={chartData}
-                                                margin={{
-                                                    top: 10,
-                                                    right: 30,
-                                                    left: 0,
-                                                    bottom: 0,
-                                                }}
-                                            >
-                                                <CartesianGrid strokeDasharray="4 4" />
-                                                <XAxis dataKey="nama_artikel" />
-                                                <YAxis />
-                                                <Tooltip />
-                                                <Area type="monotone" dataKey="views" stroke="#8884d8" fill="#8884d8" />
-                                            </AreaChart>
+                            width={350}
+                            height={300}
+                            data={chartData}
+                            margin={{
+                                top: 10,
+                                right: 30,
+                                left: 0,
+                                bottom: 0,
+                            }}
+                        >
+                            <CartesianGrid strokeDasharray="4 4" />
+                            <XAxis dataKey="nama_artikel" />
+                            <YAxis />
+                            <Tooltip />
+                            <Area type="monotone" dataKey="views" stroke="#8884d8" fill="#8884d8" />
+                        </AreaChart>
                     </div>
                 </div>
                 <div className="single_sidebar_widget popular_post_widget">

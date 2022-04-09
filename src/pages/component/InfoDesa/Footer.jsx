@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { faPhone } from "@fortawesome/free-solid-svg-icons";
+import { faArrowUp } from "@fortawesome/free-solid-svg-icons"
 
 
 export default function Footer(props) {
@@ -90,7 +91,7 @@ export default function Footer(props) {
                         </div>
                     </div>
                 </div>
-                <div className="to-top mr-5"><i className="fa fa-angle-double-up" /></div>
+                <div className="to-top mr-5"><FontAwesomeIcon icon={faArrowUp} className="text-dark" /></div>
             </footer>
         </div>
     )

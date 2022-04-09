@@ -103,13 +103,6 @@ export default function ResetPassword() {
                                                 value={password} />
                                                 <label className="form-label" htmlFor="password">Masukkan Password Baru</label>
                                         </div>
-                                        {/* <div className="form-outline mb-4">
-                                            <input type="password" className="form-control form-control-lg"
-                                                value={password}
-                                                onChange={changePassword}
-                                            />
-                                            <label className="form-label" htmlFor="password">Masukkan Password Baru</label>
-                                        </div> */}
                                         {
                                             errorConfirmPassword && (
                                                 <p className='text-danger'>{errorConfirmPassword}</p>
@@ -126,13 +119,6 @@ export default function ResetPassword() {
                                                 value={confirmPassword} />
                                                 <label className="form-label">Konfirmasi Password Baru</label>
                                         </div>
-                                        {/* <div className="form-outline mb-4">
-                                            <input type="password" className="form-control form-control-lg"
-                                                value={confirmPassword}
-                                                onChange={changeConfirmPassword}
-                                            />
-                                            <label className="form-label">Konfirmasi Password Baru</label>
-                                        </div> */}
                                         <div className="pt-1 mb-4">
                                             <button className="genric-btn primary btn-lg btn-block" type="submit">Reset Password</button>
                                         </div>

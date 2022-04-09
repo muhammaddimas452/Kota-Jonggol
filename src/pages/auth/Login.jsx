@@ -25,17 +25,14 @@ const Login = () => {
 
     const [isRevealPwd, setIsRevealPwd] = useState(false);
 
-    const [error, setError] = useState([]);
+    const [error, setError] = useState('');
     const isLoading = useSelector((state) => state.auth.isLoading);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const onSubmit = async (values) => {
         const result = await dispatch(authLogin(values));
-        console.log("result", result);
         if (result.status === "error") {
-            setErrorBE(result);
-            alert(result?.msg)
-            setError(result.data.errors);
+            setError("Email Atau Password Salah");
         }
         if (result.status === "success") {
             return navigate("/dashboard");
@@ -79,6 +76,11 @@ const Login = () => {
                                                     <span className="h1 fw-bold mb-0 ml-3">Admin Kota Jonggol</span>
                                                 </div>
                                                 <h5 className="fw-normal mb-3 pb-3" style={{ letterSpacing: 1 }}>Sign into your account</h5>
+                                                {
+                                                    error && (
+                                                        <p className='text-danger'>{error}</p>
+                                                    )
+                                                }
                                                 <div className="form-outline mb-4">
                                                     <label className="form-label ml-1" htmlFor="email">Email Address</label>
                                                     <input type="email" name="email" id="email" className="form-control form-control-lg" placeholder='Email'
@@ -93,18 +95,18 @@ const Login = () => {
                                                 <div className="form-outline mb-4">
                                                     <label className="form-label ml-1" htmlFor="password">Password</label>
                                                     <div className="input-group-icon right">
-                                                        <div className="input-icon"><FontAwesomeIcon 
+                                                        <div className="input-icon"><FontAwesomeIcon
                                                             title={isRevealPwd ? "Hide password" : "Show password"}
-                                                            onClick={() => setIsRevealPwd(prevState => !prevState)} 
+                                                            onClick={() => setIsRevealPwd(prevState => !prevState)}
                                                             icon={isRevealPwd ? faEyeSlash : faEye} className='mt-3' /></div>
-                                                        <input className="form-control form-control-lg" name="password" id="password" 
-                                                         type={isRevealPwd ? "text" : "password"} placeholder="Password"
-                                                         error={errors.password && touched.password}
-                                                         onChange={handleChange}
-                                                         onBlur={handleBlur}
-                                                         value={values.password}
-                                                         disabled={isSubmitting}
-                                                         FontAwesomeIcon={faEye} />
+                                                        <input className="form-control form-control-lg" name="password" id="password"
+                                                            type={isRevealPwd ? "text" : "password"} placeholder="Password"
+                                                            error={errors.password && touched.password}
+                                                            onChange={handleChange}
+                                                            onBlur={handleBlur}
+                                                            value={values.password}
+                                                            disabled={isSubmitting}
+                                                            FontAwesomeIcon={faEye} />
                                                     </div>
                                                     <small className='text-danger'>{error.password}</small>
                                                 </div>

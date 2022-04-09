@@ -43,7 +43,6 @@ export default function (props) {
             const res = await axios.get(`/pemerintahdesa/${id}`)
             if (res.data.status === 200) {
                 setDetailPemerintah(res.data.pemerintahdesa);
-                setDetailJabatan(res.data.pemerintahdesa.jabatan);
             } else if (res.data.status === 404) {
                 swal("Error", res.data.message, "error");
                 return navigate("/pemerintah");

@@ -7,7 +7,9 @@ import swal from 'sweetalert';
 import '../css/main.min.css'
 import '../vendors/bootstrap/dist/css/bootstrap.min.css'
 import '../vendors/themify-icons/css/themify-icons.css'
-import { Modal, Col, Container, Row, Button, Table } from 'react-bootstrap'
+import { Modal, Container, Table } from 'react-bootstrap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowUp } from "@fortawesome/free-solid-svg-icons"
 
 export default function Jabatan(props) {
     const [jabatan, setJabatan] = useState();
@@ -111,7 +113,7 @@ export default function Jabatan(props) {
                 </div>
                 <footer className="page-footer">
                     <div className="font-13">2018 © <b>AdminCAST</b> - All rights reserved.</div>
-                    <div className="to-top"><i className="fa fa-angle-double-up" /></div>
+                    <div className="to-top mr-5"><FontAwesomeIcon icon={faArrowUp} className="text-dark" /></div>
                 </footer>
                 <MydModalWithGrid show={modalShow} onHide={() => setModalShow(false)} />
                 <UpdateModal show={updateModal} detail={detailJabatan} onHide={() => setUpdateModal(false)} />

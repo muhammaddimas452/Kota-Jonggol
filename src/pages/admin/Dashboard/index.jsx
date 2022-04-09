@@ -10,6 +10,7 @@ import { faPeopleGroup } from "@fortawesome/free-solid-svg-icons";
 import { faBook } from "@fortawesome/free-solid-svg-icons";
 import { faCalendarCheck } from "@fortawesome/free-solid-svg-icons";
 import { faCalendarMinus } from "@fortawesome/free-solid-svg-icons";
+import { faArrowUp } from "@fortawesome/free-solid-svg-icons"
 
 
 
@@ -184,7 +185,7 @@ export default function Dashboard(props) {
                     {/* END PAGE CONTENT*/}
                     <footer className="page-footer">
                         <div className="font-13">2018 © <b>AdminCAST</b> - All rights reserved.</div>
-                        <div className="to-top"><i className="fa fa-angle-double-up" /></div>
+                        <div className="to-top mr-5"><FontAwesomeIcon icon={faArrowUp} className="text-dark" /></div>
                     </footer>
                 </div>
             </div>

@@ -4,6 +4,9 @@ import axios from '../../../api/axiosClient'
 import { NavLink } from 'reactstrap'
 import { Link } from 'react-router-dom'
 import swal from 'sweetalert';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowUp } from "@fortawesome/free-solid-svg-icons"
+
 import '../css/main.min.css'
 import '../vendors/bootstrap/dist/css/bootstrap.min.css'
 import '../vendors/themify-icons/css/themify-icons.css'
@@ -99,7 +102,7 @@ export default function PemerintahDesa(props) {
                 </div>
                 <footer className="page-footer">
                     <div className="font-13">2018 © <b>AdminCAST</b> - All rights reserved.</div>
-                    <div className="to-top"><i className="fa fa-angle-double-up" /></div>
+                    <div className="to-top mr-5"><FontAwesomeIcon icon={faArrowUp} className="text-dark" /></div>
                 </footer>
             </div>
         </div>

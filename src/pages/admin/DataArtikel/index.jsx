@@ -8,6 +8,8 @@ import '../css/main.min.css'
 import '../vendors/bootstrap/dist/css/bootstrap.min.css'
 import '../vendors/themify-icons/css/themify-icons.css'
 import { Modal, Container, Table } from 'react-bootstrap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowUp } from "@fortawesome/free-solid-svg-icons"
 
 
 export default function DataArtikel(props) {
@@ -132,7 +134,7 @@ export default function DataArtikel(props) {
                 </div>
                 <footer className="page-footer">
                     <div className="font-13">2018 © <b>AdminCAST</b> - All rights reserved.</div>
-                    <div className="to-top"><i className="fa fa-angle-double-up" /></div>
+                    <div className="to-top mr-5"><FontAwesomeIcon icon={faArrowUp} className="text-dark" /></div>
                 </footer>
                 <MydModalWithGrid show={modalShow} detail={detailArtikel} onHide={() => setModalShow(false)} />
             </div>

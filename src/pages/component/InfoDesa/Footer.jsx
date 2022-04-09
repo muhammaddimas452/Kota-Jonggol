@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react'
 import logo from '../assets/jonggol.png'
 import axios from '../../../api/axiosClient'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowUp } from "@fortawesome/free-solid-svg-icons"
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { faLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { faPhone } from "@fortawesome/free-solid-svg-icons";
-import { faArrowUp } from "@fortawesome/free-solid-svg-icons"
+
 
 
 export default function Footer(props) {

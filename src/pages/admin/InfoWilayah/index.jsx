@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from "react-router-dom";
 import Nav from '../Nav'
 import axios from '../../../api/axiosClient'
@@ -7,7 +7,9 @@ import swal from 'sweetalert';
 import '../css/main.min.css'
 import '../vendors/bootstrap/dist/css/bootstrap.min.css'
 import '../vendors/themify-icons/css/themify-icons.css'
-import { Modal, Col, Container, Row, Button, Table } from 'react-bootstrap'
+import { Table } from 'react-bootstrap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowUp } from "@fortawesome/free-solid-svg-icons"
 
 
 export default function DataInfoWilayah(props) {
@@ -65,7 +67,6 @@ export default function DataInfoWilayah(props) {
                             <Table responsive striped bordered hover>
                                 <thead>
                                     <tr>
-                                        {/* <th>No</th> */}
                                         <th className=''>Nama Desa</th>
                                         <th className=''>RT</th>
                                         <th className=''>RW</th>
@@ -76,16 +77,12 @@ export default function DataInfoWilayah(props) {
                                 <tbody>
                                     {infoWilayah?.map((infowilayah, index) => (
                                         <tr key={index}>
-                                            {/* <th class="text-center">1</th> */}
                                             <td className="text-center">{infowilayah.nama_desa}</td>
                                             <td className="text-center">{infowilayah.rt}</td>
                                             <td className="text-center">{infowilayah.rw}</td>
                                             <td className="text-center">{infowilayah.kepala_desa}</td>
                                             <td className="text-center">
-                                                {/* <Link to={`/editartikel/${artikel.id}`}> */}
-                                                    {/* <Route path='/editartikel/:id' element={<EditArtikel />} id={artikel.id} /> */}
                                                     <a href={`/editdatainfowilayah/${infowilayah.id}`}><button className="genric-btn success radius">Edit</button></a>
-                                                {/* </Link> */}
                                                 <button className="genric-btn danger radius ml-3" onClick={(e) => deleteCategory(e, infowilayah.id)}>Delete</button>
                                             </td>
                                         </tr>
@@ -97,7 +94,7 @@ export default function DataInfoWilayah(props) {
                 </div>
                 <footer className="page-footer">
                     <div className="font-13">2018 © <b>AdminCAST</b> - All rights reserved.</div>
-                    <div className="to-top"><i className="fa fa-angle-double-up" /></div>
+                    <div className="to-top mr-5"><FontAwesomeIcon icon={faArrowUp} className="text-dark" /></div>
                 </footer>
             </div>
         </div>

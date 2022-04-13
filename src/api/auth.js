@@ -8,10 +8,6 @@ export function authme() {
   return axios.get("/authme");
 }
 
-// export function resetpassword() {
-//   return axios.put("/password/reset");
-// }
-
 export function deleteartikel() {
   return axios.post("/artikel/delete/{id}")
 }

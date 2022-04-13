@@ -4,6 +4,7 @@ import Nav from '../Nav'
 import axios from '../../../api/axiosClient'
 import { NavLink } from 'reactstrap'
 import swal from 'sweetalert';
+import ReactReadMoreReadLess from "react-read-more-read-less";
 import '../css/main.min.css'
 import '../vendors/bootstrap/dist/css/bootstrap.min.css'
 import '../vendors/themify-icons/css/themify-icons.css'
@@ -81,7 +82,7 @@ export default function DataArtikel(props) {
                 {/* START PAGE CONTENT*/}
                 <div className="page-heading">
                     <h1 className="page-title">DataTables</h1>
-
+                    <dt className="col-2 text-truncate">Truncated term is truncated ddddddddddddddddddsssssssssssssssssss</dt>
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">
                             <a href="index.html"><i className="la la-home font-20" /></a>
@@ -96,39 +97,41 @@ export default function DataArtikel(props) {
                             <NavLink href="/tambahartikel"><button className='genric-btn info radius'>Tambah Data</button></NavLink>
                         </div>
                         <div className="ibox-body">
-                        <div className="scroller" data-height="600">
-                            <Table responsive striped bordered hover>
-                                <thead>
-                                    <tr>
-                                        {/* <th>No</th> */}
-                                        <th className=''>Tanggal</th>
-                                        <th className=''>Judul Artikel</th>
-                                        <th className=''>Foto</th>
-                                        <th className=''>Isi Artikel</th>
-                                        <th className=''>Views</th>
-                                        <th className=''>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {artikel?.map((artikel, index) => (
-                                        <tr key={index}>
-                                            {/* <th class="text-center">1</th> */}
-                                            <td className="text-center">{artikel.tanggal}</td>
-                                            <td className="text-center">{artikel.nama_artikel}</td>
-                                            <td className="text-center"><img className='responsive' style={{ width: 200, height: 'auto' }}
-                                                src={artikel.image} /></td>
-                                            <td dangerouslySetInnerHTML={{ __html: artikel.isi_artikel }} />
-                                            <td className="text-center">{artikel.views}</td>
-                                            <td className="text-center">
-                                                <a href={`/editartikel/${artikel.id}`}><button className="genric-btn success radius">Edit</button></a>
-                                                <button className="genric-btn primary radius ml-3" onClick={() => detail(artikel.id)}>Detail</button>
-                                                <button className="genric-btn danger radius ml-3" onClick={(e) => deleteCategory(e, artikel.id)}>Delete</button>
-                                            </td>
+                            <div className="scroller" data-height="600">
+                                
+                                {/* <Table responsive striped bordered hover> */}
+                                    <thead>
+                                        <tr>
+                                            {/* <th>No</th> */}
+                                            <th className=''>Tanggal</th>
+                                            <th className=''>Judul Artikel</th>
+                                            <th className='col-3'>Foto</th>
+                                            <th className=''>Isi Artikel</th>
+                                            <th className=''>Views</th>
+                                            <th className='col-3'>Action</th>
                                         </tr>
-                                    ))}
-                                </tbody>
-                            </Table>
-                        </div>
+                                    </thead>
+                                    <tbody>
+                                    
+                                        {artikel?.map((artikel, index) => (
+                                            <tr key={index}>
+                                                {/* <th class="text-center">1</th> */}
+                                                <td className="text-center">{artikel.tanggal}</td>
+                                                <td className="text-center">{artikel.nama_artikel}</td>
+                                                <td className="text-center"><img className='responsive' style={{ width: 200, height: 'auto' }}
+                                                    src={artikel.image} /></td>
+                                                <dt className="col-2 text-truncate" dangerouslySetInnerHTML={{ __html: artikel.isi_artikel }} />
+                                                <td className="text-center">{artikel.views}</td>
+                                                <td className="text-center">
+                                                    <a href={`/editartikel/${artikel.id}`}><button className="genric-btn success radius">Edit</button></a>
+                                                    <button className="genric-btn primary radius ml-3" onClick={() => detail(artikel.id)}>Detail</button>
+                                                    <button className="genric-btn danger radius ml-3" onClick={(e) => deleteCategory(e, artikel.id)}>Delete</button>
+                                                </td>
+                                            </tr>
+                                        ))}
+                                    </tbody>
+                                {/* </Table> */}
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -92,7 +92,7 @@ export default function EditPemerintah(props) {
             <Nav />
             <div className="content-wrapper">
                 <div className="page-heading">
-                    <h1 className="page-title">Basic Form</h1>
+                    <h1 className="page-title">Edit Data Pemerintah Desa</h1>
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">
                             <a href="index.html"><i className="la la-home font-20" /></a>
@@ -105,7 +105,7 @@ export default function EditPemerintah(props) {
                         <div className="col-md-12 col-12">
                             <div className="ibox">
                                 <div className="ibox-head">
-                                    <div className="ibox-title">Basic form</div>
+                                    <div className="ibox-title">Edit Data Pemerintah Desa</div>
                                     <NavLink href="/pemerintahdesa"><button className='genric-btn info radius mr-4'>Back</button></NavLink>
                                 </div>
                                 <div className="ibox-body">

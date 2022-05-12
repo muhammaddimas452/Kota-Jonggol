@@ -11,44 +11,44 @@ import draftToHtml from 'draftjs-to-html';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import '../css/main.min.css'
 
-function EditArtikel(props) {
+function EditUmkm(props) {
     const { id } = useParams()
 
-    const [artikelInput, setArtikel] = useState([]);
+    const [umkmInput, setUmkm] = useState([]);
     const [error, setError] = useState([]);
     const [loading, setLoading] = useState(false);
     const [picture, setPicture] = useState([]);
     const navigate = useNavigate();
 
-    const getArtikel = async () => {
+    const getUmkm = async () => {
         try {
-            const artikel_id = id;
+            const umkm_id = id;
             setLoading(true)
-            const res = await axios.get(`/artikel/edit/${artikel_id}`)
+            const res = await axios.get(`/data-umkm/edit/${umkm_id}`)
             setLoading(false)
             if (res.data.status === 200) {
-                setArtikel(res.data.artikel);
+                setUmkm(res.data.artikel);
             } else if (res.data.status === 404) {
                 swal("Error", res.data.message, "error");
-                return navigate("/artikel");
+                return navigate("/data-umkm");
             }
             console.log(res)
         }
         catch (err) {
             setLoading(false)
-            return navigate("/artikel");
+            return navigate("/data-umkm");
         }
         
     }
     useEffect(() => {
 
-        getArtikel();
+        getUmkm();
 
     }, [props])
 
     const handleInput = (e) => {
         e.persist();
-        setArtikel({ ...artikelInput, [e.target.name]: e.target.value });
+        setUmkm({ ...umkmInput, [e.target.name]: e.target.value });
     }
 
     const handleImage = (e) => {
@@ -57,22 +57,21 @@ function EditArtikel(props) {
     }
 
     let editorState = EditorState.createEmpty();
-    const [isiArtikel, setIsiArtikel] = useState(editorState);
+    const [isiUmkm, setIsiUmkm] = useState(editorState);
     const onEditorStateChange = (editorState) => {
-        setIsiArtikel(editorState);
+        setIsiUmkm(editorState);
     }
 
-    const updateArtikel = async (e) => {
+    const updateUmkm = async (e) => {
         e.preventDefault();
         const formData = new FormData();
         formData.append('image', picture.image)
-        formData.append('tanggal', artikelInput.tanggal)
-        formData.append('nama_artikel', artikelInput.nama_artikel)
-        formData.append('isi_artikel', artikelInput.isi_artikel.value)
+        formData.append('nama_usaha', umkmInput.nama_usaha)
+        formData.append('isi_usaha', umkmInput.isi_usaha.value)
 
-        const artikel_id = id;
-        const data = artikelInput;
-        const result = await axios.post(`/artikel/update/${artikel_id}/?_method=PUT`, formData)
+        const umkm_id = id;
+        const data = umkmInput;
+        const result = await axios.post(`/data-umkm/update/${umkm_id}/?_method=PUT`, formData)
         if (result.data.status === 200) {
             swal("Success", result.data.message, "success")
             setError([]);
@@ -81,7 +80,7 @@ function EditArtikel(props) {
             setError(result.data.errors);
         } else if (result.data.status === 404) {
             swal("Error", result.data.message, "error")
-            return navigate("/artikel")
+            return navigate("/data-umkm")
         }
     }
 
@@ -95,7 +94,7 @@ function EditArtikel(props) {
                 <Nav />
                 <div className="content-wrapper">
                     <div className="page-heading">
-                        <h1 className="page-title">Edit Data Artikel</h1>
+                        <h1 className="page-title">Edit Data UMKM</h1>
                         <ol className="breadcrumb">
                             <li className="breadcrumb-item">
                                 <a href=""><i className="la la-home font-20" /></a>
@@ -108,30 +107,20 @@ function EditArtikel(props) {
                             <div className="col-md-12 col-12">
                                 <div className="ibox">
                                     <div className="ibox-head">
-                                        <div className="ibox-title">Edit Data Artikel</div>
-                                        <NavLink href="/artikel"><button className='genric-btn info radius mr-4'>Back</button></NavLink>
+                                        <div className="ibox-title">Edit Data UMKM</div>
+                                        <NavLink href="/data-umkm"><button className='genric-btn info radius mr-4'>Back</button></NavLink>
                                     </div>
                                     <div className="ibox-body">
-                                        <form onSubmit={updateArtikel}>
+                                        <form onSubmit={updateUmkm}>
                                             <div className="form-group">
-                                                <label>Tanggal</label>
-                                                <input className="form-control" type="date"
-                                                    id="tanggal"
-                                                    name="tanggal"
+                                                <label>Judul Usaha</label>
+                                                <input type="text" className="form-control mt-3" placeholder="Judul Usaha"
+                                                    id="nama_usaha"
+                                                    name="nama_usaha"
                                                     onChange={handleInput}
-                                                    value={artikelInput.tanggal}
+                                                    value={umkmInput.nama_usaha}
                                                 />
-                                                <small className='text-danger'>{error.tanggal}</small>
-                                            </div>
-                                            <div className="form-group">
-                                                <label>Judul Artikel</label>
-                                                <input type="text" className="form-control mt-3" placeholder="Judul Artikel"
-                                                    id="nama_artikel"
-                                                    name="nama_artikel"
-                                                    onChange={handleInput}
-                                                    value={artikelInput.nama_artikel}
-                                                />
-                                                <small className='text-danger'>{error.nama_artikel}</small>
+                                                <small className='text-danger'>{error.nama_potensi}</small>
                                             </div>
                                             <div className="form-group">
                                                 <label>Tambahkan Gambar</label>
@@ -141,20 +130,20 @@ function EditArtikel(props) {
                                                     name="image"
                                                     onChange={handleImage}
                                                 />
-                                                <img className='mt-3 ml-3' style={{ width: 150, height: 100 }} src={artikelInput.image} alt="" />
+                                                <img className='mt-3 ml-3' style={{ width: 150, height: 100 }} src={umkmInput.image} alt="" />
                                                 <small className='text-danger'>{error.image}</small>
                                             </div>
                                             <div className="form-group">
-                                                <label>Isi Artikel</label>
+                                                <label>Isi Usaha</label>
                                                 <Editor
-                                                    editorState={isiArtikel}
+                                                    editorState={isiUmkm}
                                                     toolbarClassName="toolbarClassName"
                                                     wrapperClassName="wrapperClassName"
                                                     editorClassName="editorClassName"
                                                     onEditorStateChange={onEditorStateChange}
                                                 />
-                                                <textarea style={{ display: 'none' }} disabled ref={(val) => artikelInput.isi_artikel = val} value={draftToHtml(convertToRaw(isiArtikel.getCurrentContent()))} rows="3" ></textarea>
-                                                <small className='text-danger'>{error.isi_artikel}</small>
+                                                <textarea style={{ display: 'none' }} disabled ref={(val) => umkmInput.isi_usaha = val} value={draftToHtml(convertToRaw(isiUmkm.getCurrentContent()))} rows="3" ></textarea>
+                                                <small className='text-danger'>{error.isi_usaha}</small>
                                             </div>
                                             <button
                                                 type='submit' className='genric-btn info radius btn-user btn-block'>
@@ -172,4 +161,4 @@ function EditArtikel(props) {
     }
 }
 
-export default EditArtikel;
+export default EditUmkm;

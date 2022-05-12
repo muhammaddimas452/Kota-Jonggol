@@ -12,18 +12,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUp } from "@fortawesome/free-solid-svg-icons"
 
 
-export default function DataArtikel(props) {
+export default function DataBerita(props) {
 
-    const [artikel, setArtikel] = useState();
+    const [berita, setBerita] = useState();
 
     const [modalShow, setModalShow] = useState(false);
     const navigate = useNavigate();
-    const deleteCategory = (e, artikel_id) => {
+    const deleteCategory = (e, berita_id) => {
         e.preventDefault();
 
         const thisClicked = e.currentTarget;
         thisClicked.innerText = "Deleting"
-        axios.delete(`/artikel/delete/${artikel_id}`).then(res => {
+        axios.delete(`/berita/delete/${berita_id}`).then(res => {
             if (res.data.status === 200) {
                 swal("Success", res.data.message, "success");
                 thisClicked.closest("tr").remove()
@@ -33,38 +33,38 @@ export default function DataArtikel(props) {
             }
         });
     }
-    const getArtikel = async () => {
+    const getBerita = async () => {
         try {
-            const res = await axios.get(`/artikel`)
-            setArtikel(res.data)
+            const res = await axios.get(`/berita`)
+            setBerita(res.data)
         }
         catch (err) {
         }
     }
 
-    const [detailArtikel, setDetailArtikel] = useState([]);
-    const readArtikel = async (id) => {
+    const [detailBerita, setDetailBerita] = useState([]);
+    const readBerita = async (id) => {
         try {
-            const res = await axios.get(`/artikel/${id}`)
+            const res = await axios.get(`/berita/${id}`)
             if (res.data.status === 200) {
-                setDetailArtikel(res.data.artikel);
+                setDetailBerita(res.data.berita);
             } else if (res.data.status === 404) {
                 swal("Error", res.data.message, "error");
-                return navigate("/artikel");
+                return navigate("/data-berita");
             }
         }
         catch (err) {
-            return navigate("/artikel");
+            return navigate("/data-berita");
         }
     }
 
     useEffect(() => {
-        getArtikel();
+        getBerita();
     }, [props])
 
     const detail = (id) => {
         setModalShow(true)
-        readArtikel(id)
+        readBerita(id)
     }
 
     return (
@@ -73,7 +73,7 @@ export default function DataArtikel(props) {
             <div className="content-wrapper">
                 {/* START PAGE CONTENT*/}
                 <div className="page-heading">
-                    <h1 className="page-title">Data Artikel</h1>
+                    <h1 className="page-title">Data Berita</h1>
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">
                             <a href="index.html"><i className="la la-home font-20" /></a>
@@ -84,8 +84,8 @@ export default function DataArtikel(props) {
                 <div className="page-content fade-in-up">
                     <div className="ibox">
                         <div className="ibox-head">
-                            <div className="ibox-title">Data Artikel</div>
-                            <NavLink href="/tambahartikel"><button className='genric-btn info radius'>Tambah Data</button></NavLink>
+                            <div className="ibox-title">Data Berita</div>
+                            <NavLink href="/tambah-data-berita"><button className='genric-btn info radius'>Tambah Data</button></NavLink>
                         </div>
                         <div className="ibox-body">
                             <div className="scroller" data-height="600">
@@ -94,29 +94,27 @@ export default function DataArtikel(props) {
                                     <thead>
                                         <tr>
                                             {/* <th>No</th> */}
-                                            <th className=''>Tanggal</th>
-                                            <th className=''>Judul Artikel</th>
+                                            <th className=''>Judul Berita</th>
                                             <th className='col-3'>Foto</th>
-                                            <th className=''>Isi Artikel</th>
+                                            <th className=''>Isi Berita</th>
                                             <th className=''>Views</th>
                                             <th className='col-3'>Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                     
-                                        {artikel?.map((artikel, index) => (
+                                        {berita?.map((berita, index) => (
                                             <tr key={index}>
                                                 {/* <th class="text-center">1</th> */}
-                                                <td className="text-center">{artikel.tanggal}</td>
-                                                <dt className="text-center">{artikel.nama_artikel}</dt>
+                                                <td className="text-center">{berita.nama_berita}</td>
                                                 <td className="text-center"><img className='responsive' style={{ width: 200, height: 'auto' }}
-                                                    src={artikel.image} /></td>
-                                                <dt className=""><p dangerouslySetInnerHTML={{ __html: artikel.isi_artikel }} /></dt>
-                                                <td className="text-center">{artikel.views}</td>
+                                                    src={berita.image} /></td>
+                                                <dt className=""><p dangerouslySetInnerHTML={{ __html: berita.isi_berita }} /></dt>
+                                                <td className="text-center">{berita.views}</td>
                                                 <td className="text-center">
-                                                    <a href={`/editartikel/${artikel.id}`}><button className="genric-btn success radius">Edit</button></a>
-                                                    <button className="genric-btn primary radius ml-3" onClick={() => detail(artikel.id)}>Detail</button>
-                                                    <button className="genric-btn danger radius ml-3" onClick={(e) => deleteCategory(e, artikel.id)}>Delete</button>
+                                                    <a href={`/edit-data-berita/${berita.id}`}><button className="genric-btn success radius">Edit</button></a>
+                                                    <button className="genric-btn primary radius ml-3" onClick={() => detail(berita.id)}>Detail</button>
+                                                    <button className="genric-btn danger radius ml-3" onClick={(e) => deleteCategory(e, berita.id)}>Delete</button>
                                                 </td>
                                             </tr>
                                         ))}
@@ -130,44 +128,7 @@ export default function DataArtikel(props) {
                     <div className="font-13">2018 © <b>AdminCAST</b> - All rights reserved.</div>
                     <div className="to-top mr-5"><FontAwesomeIcon icon={faArrowUp} className="text-dark" /></div>
                 </footer>
-                <MydModalWithGrid show={modalShow} detail={detailArtikel} onHide={() => setModalShow(false)} />
             </div>
         </div>
     )
-}
-
-function MydModalWithGrid(props) {
-
-    return (
-        <div>
-            <Modal {...props} aria-labelledby="contained-modal-title-vcenter">
-                <Modal.Header>
-                    <Modal.Title id="contained-modal-title-vcenter">
-                        Detail
-                    </Modal.Title>
-                </Modal.Header>
-                <div>
-                    <Modal.Body className="show-grid">
-                        <Container>
-                            <div class="card">
-                                <img className='responsive'
-                                    src={props.detail.image} />
-                                <div class="card-body">
-                                    <h5 class="card-title">{props.detail.nama_artikel}</h5>
-                                    <div class="text-muted card-subtitle"></div>
-                                    <div dangerouslySetInnerHTML={{ __html: props.detail.isi_artikel }} />
-                                </div>
-                                <div class="card-footer">
-                                    <span class="pull-right text-muted font-13">{props.detail.tanggal}</span>
-                                </div>
-                            </div>
-                        </Container>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        {/* <button type='button' className="genric-btn info radius small">Back</button> */}
-                    </Modal.Footer>
-                </div>
-            </Modal>
-        </div>
-    );
 }

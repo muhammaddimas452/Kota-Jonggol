@@ -72,7 +72,7 @@ function EditJabatan(props) {
             <Nav />
             <div className="content-wrapper">
                 <div className="page-heading">
-                    <h1 className="page-title">Basic Form</h1>
+                    <h1 className="page-title">Edit Data Wilayah</h1>
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">
                             <a href=""><i className="la la-home font-20" /></a>
@@ -85,7 +85,7 @@ function EditJabatan(props) {
                         <div className="col-md-12 col-12">
                             <div className="ibox">
                                 <div className="ibox-head">
-                                    <div className="ibox-title">Basic form</div>
+                                    <div className="ibox-title">Edit Data Wilayah</div>
                                     <NavLink href="/datainfowilayah"><button className='genric-btn info radius mr-4'>Back</button></NavLink>
                                 </div>
                                 <div className="ibox-body">

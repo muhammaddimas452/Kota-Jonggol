@@ -72,7 +72,7 @@ export default function Jabatan(props) {
             <div className="content-wrapper">
                 {/* START PAGE CONTENT*/}
                 <div className="page-heading">
-                    <h1 className="page-title">DataTables</h1>
+                    <h1 className="page-title">Data Jabatan</h1>
 
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">
@@ -84,7 +84,7 @@ export default function Jabatan(props) {
                 <div className="page-content fade-in-up">
                     <div className="ibox">
                         <div className="ibox-head">
-                            <div className="ibox-title">Data Table</div>
+                            <div className="ibox-title">Data Jabatan</div>
                             <NavLink onClick={() => setModalShow(true)}><button className='genric-btn info radius'>Tambah Data</button></NavLink>
                         </div>
                         <div className="ibox-body">

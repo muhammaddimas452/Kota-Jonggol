@@ -5,10 +5,10 @@ import { useNavigate } from "react-router-dom";
 import axios from '../../../api/axiosClient'
 import '../css/main.min.css'
 
-export default function TambahKegiatan() {
+export default function TambahKegiatanRutin() {
 
     const [kegiatanInput, setKegiatan] = useState({
-        tanggal: "",
+        tanggal_kegiatan: "",
         nama_kegiatan: "",
         status: "",
 
@@ -30,15 +30,15 @@ export default function TambahKegiatan() {
         e.preventDefault();
         const formData = new FormData();
         formData.append('image', picture.image)
-        formData.append('tanggal', kegiatanInput.tanggal)
+        formData.append('tanggal_kegiatan', kegiatanInput.tanggal_kegiatan)
         formData.append('nama_kegiatan', kegiatanInput.nama_kegiatan)
         formData.append('status', kegiatanInput.status)
 
-        const res = await axios.post(`/kegiatan/add`, formData)
+        const res = await axios.post(`/kegiatan-rutin/add`, formData)
         if (res.data.status === 200) {
             swal("Success", res.data.message, "success");
             setError([]);
-            return navigate("/kegiatan");
+            return navigate("/kegiatan-rutin");
         }
         else if (res.data.status === 422) {
             swal("Data Perlu di Isi", "", "error");
@@ -51,7 +51,7 @@ export default function TambahKegiatan() {
             <Nav />
             <div className="content-wrapper">
                 <div className="page-heading">
-                    <h1 className="page-title">Tambah Data Kegiatan</h1>
+                    <h1 className="page-title">Tambah Data Kegiatan Rutin</h1>
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">
                             <a href="index.html"><i className="la la-home font-20" /></a>
@@ -64,7 +64,7 @@ export default function TambahKegiatan() {
                         <div className="col-md-12 col-12">
                             <div className="ibox">
                                 <div className="ibox-head">
-                                    <div className="ibox-title">Tambah Data Kegiatan</div>
+                                    <div className="ibox-title">Tambah Data Kegiatan Rutin</div>
                                 </div>
                                 <div className="ibox-body">
                                     <form onSubmit={submitKegiatan}>
@@ -74,12 +74,12 @@ export default function TambahKegiatan() {
                                                     <div className="form-group">
                                                         <label>Pelaksanaan Kegiatan</label>
                                                         <input className="form-control" type="date" placeholder="Masukkan Nama Artikel"
-                                                            id="tanggal"
-                                                            name="tanggal"
+                                                            id="tanggal_kegiatan"
+                                                            name="tanggal_kegiatan"
                                                             onChange={handleInput}
-                                                            value={kegiatanInput.tanggal}
+                                                            value={kegiatanInput.tanggal_kegiatan}
                                                         />
-                                                        <small className='text-danger'>{error.tanggal}</small>
+                                                        <small className='text-danger'>{error.tanggal_kegiatan}</small>
                                                     </div>
                                                     <div className="form-group">
                                                         <label>Nama Kegiatan</label>

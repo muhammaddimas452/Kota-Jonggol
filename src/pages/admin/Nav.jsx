@@ -2,9 +2,8 @@ import React, { Component, useEffect, useState } from 'react'
 import jonggol from './assets/img/jonggol.png'
 import axios from '../../api/axiosClient'
 import swal from 'sweetalert'
-import { Navigate, useParams } from 'react-router'
 import { useNavigate } from "react-router-dom";
-import { Modal, Col, Container, Row, Button } from 'react-bootstrap'
+import { Modal, Container } from 'react-bootstrap'
 import './css/main.min.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGauge } from "@fortawesome/free-solid-svg-icons";
@@ -12,8 +11,9 @@ import { faTable } from "@fortawesome/free-solid-svg-icons";
 import { faSquarePen } from "@fortawesome/free-solid-svg-icons";
 import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 
-export default function Nav(props) {
+export default function Nav() {
     const [modalShow, setModalShow] = useState(false);
+    const [modalSetting, setModalSetting] = useState(false);
     const navigate = useNavigate();
     const logOut = () => {
         localStorage.clear()
@@ -36,14 +36,6 @@ export default function Nav(props) {
                         <li>
                             <a className="nav-link sidebar-toggler js-sidebar-toggler"><i className="ti-menu" /></a>
                         </li>
-                        <li>
-                            <form className="navbar-search" action="javascript:;">
-                                <div className="rel">
-                                    <span className="search-icon"><i className="ti-search" /></span>
-                                    <input className="form-control" placeholder="Search here..." />
-                                </div>
-                            </form>
-                        </li>
                     </ul>
                 </div>
             </header>
@@ -58,57 +50,73 @@ export default function Nav(props) {
                     </div>
                     <ul className="side-menu metismenu">
                         <li>
-                            <a className="" href="/dashboard"><FontAwesomeIcon className='sidebar-item-icon' icon={faGauge}  />
+                            <a className="" href="/dashboard"><FontAwesomeIcon className='sidebar-item-icon' icon={faGauge} />
                                 <span className="nav-label">Dashboard</span>
                             </a>
                         </li>
                         <li className="heading">Data Desa</li>
                         <li>
-                            <a href="/artikel"><FontAwesomeIcon className='sidebar-item-icon' icon={faTable}  />
-                                <span className="nav-label">Data Artikel</span></a>
+                            <a href="/artikel"><FontAwesomeIcon className='sidebar-item-icon' icon={faTable} />
+                                <span className="nav-label">Data Artikel Profile</span></a>
                         </li>
                         <li>
-                            <a href="/kegiatan"><FontAwesomeIcon className='sidebar-item-icon' icon={faTable}  />
-                                <span className="nav-label">Data Kegiatan</span></a>
+                            <a href="/potensi"><FontAwesomeIcon className='sidebar-item-icon' icon={faTable} />
+                                <span className="nav-label">Data Potensi</span></a>
                         </li>
                         <li>
-                            <a href="/pemerintahdesa"><FontAwesomeIcon className='sidebar-item-icon' icon={faTable}  />
-                                <span className="nav-label">Pemerintah Desa</span></a>
+                            <a href="/data-umkm"><FontAwesomeIcon className='sidebar-item-icon' icon={faTable} />
+                                <span className="nav-label">Data UMKM</span></a>
                         </li>
                         <li>
-                            <a href="/jabatan"><FontAwesomeIcon className='sidebar-item-icon' icon={faTable}  />
-                                <span className="nav-label">Data Jabatan</span></a>
+                            <a href="/layanan"><FontAwesomeIcon className='sidebar-item-icon' icon={faTable} />
+                                <span className="nav-label">Data Layanan</span></a>
                         </li>
                         <li>
-                            <a href="/datainfowilayah"><FontAwesomeIcon className='sidebar-item-icon' icon={faTable}  />
+                            <a href="/data-berita"><FontAwesomeIcon className='sidebar-item-icon' icon={faTable} />
+                                <span className="nav-label">Data Berita</span></a>
+                        </li>
+                        <li>
+                            <a href="/datainfowilayah"><FontAwesomeIcon className='sidebar-item-icon' icon={faTable} />
                                 <span className="nav-label">Info Wilayah</span></a>
                         </li>
                         <li>
-                            <a href=''><FontAwesomeIcon className='sidebar-item-icon' icon={faSquarePen}  />
+                            <a href="/pemerintahdesa"><FontAwesomeIcon className='sidebar-item-icon' icon={faTable} />
+                                <span className="nav-label">Pemerintah Desa</span></a>
+                        </li>
+                        <li>
+                            <a href="/kegiatan"><FontAwesomeIcon className='sidebar-item-icon' icon={faTable} />
+                                <span className="nav-label">Data Kegiatan</span></a>
+                        </li>
+                        <li>
+                            <a href="/kegiatan-rutin"><FontAwesomeIcon className='sidebar-item-icon' icon={faTable} />
+                                <span className="nav-label">Data Kegiatan Rutin</span></a>
+                        </li>
+                        <li>
+                            <a href=''><FontAwesomeIcon className='sidebar-item-icon' icon={faSquarePen} />
                                 <span className="nav-label">Menu</span><i className="fa fa-angle-left arrow" /></a>
                             <ul className="nav-2-level collapse">
                                 <li>
-                                    <a className='text-white' onClick={() => setModalShow(true)}>Jumlah Penduduk</a>
+                                    <a className='text-white' onClick={() => setModalShow(true)}>Edit Jumlah Penduduk</a>
                                 </li>
                                 <li>
-                                    <a href="javascript:;">?</a>
+                                    <a className='text-white' onClick={() => setModalSetting(true)}>Pengaturan Info</a>
                                 </li>
                             </ul>
                         </li>
                         <li>
-                            <a href="" onClick={logOut}><FontAwesomeIcon className='sidebar-item-icon' icon={faRightFromBracket}  />
+                            <a href="" onClick={logOut}><FontAwesomeIcon className='sidebar-item-icon' icon={faRightFromBracket} />
                                 <span className="nav-label">Log Out</span></a>
                         </li>
                     </ul>
                 </div>
                 <MydModalWithGrid show={modalShow} onHide={() => setModalShow(false)} />
+                <ModalSetting show={modalSetting} onHide={() => setModalSetting(false)} />
             </nav>
         </div>
     )
 }
 
 function MydModalWithGrid(props) {
-    const { id } = useParams()
     const [jumlahPendudukInput, setJumlahPenduduk] = useState([]);
     const [error, setError] = useState([]);
     const [loading, setLoading] = useState(false)
@@ -129,6 +137,7 @@ function MydModalWithGrid(props) {
             setLoading(false)
         }
     }
+
     useEffect(() => {
         getJumlahPenduduk();
     }, [props])
@@ -150,7 +159,7 @@ function MydModalWithGrid(props) {
                 } else if (res.data.status === 422) {
                     swal("Data Perlu di Isi", "", "error")
                     setError(res.data.errors);
-                }else if (res.data.status === 404) {
+                } else if (res.data.status === 404) {
                     swal("Error", res.data.message, "error")
                 }
                 console.log(res)
@@ -183,6 +192,178 @@ function MydModalWithGrid(props) {
                                             value={jumlahPendudukInput.jumlah_penduduk}
                                         />
                                         <small className='text-danger'>{error.jumlah_penduduk}</small>
+                                    </div>
+                                </Container>
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <button type='submit' className="genric-btn info radius small">Update</button>
+                            </Modal.Footer>
+                        </form>
+                    </div>
+                </Modal>
+            </div>
+        );
+    }
+}
+
+function ModalSetting(props) {
+    const [setting, setSetting] = useState([]);
+    const [error, setError] = useState([]);
+    const [loading, setLoading] = useState(false)
+
+    const getSetting = async () => {
+        try {
+            setLoading(true)
+            const res = await axios.get(`/info/edit/1`)
+            setLoading(false)
+            if (res.data.status === 200) {
+                setSetting(res.data.info);
+            } else if (res.data.status === 404) {
+                swal("Error", res.data.message, "error");
+                setError(res.data.errors);
+            }
+        }
+        catch (err) {
+            setLoading(false)
+        }
+    }
+    useEffect(() => {
+        getSetting();
+    }, [props])
+
+    const changeValue = (e) => {
+        e.persist();
+        setSetting({ ...setting, [e.target.name]: e.target.value });
+    }
+
+    const updateSetting = (e) => {
+        e.preventDefault();
+        axios.put(`/info/update/1`, {
+            lokasi_desa: setting.lokasi_desa,
+            email_desa: setting.email_desa,
+            nomor_hp1: setting.nomor_hp1,
+            nomor_hp2: setting.nomor_hp2,
+            link_fb: setting.link_fb,
+            link_twitter: setting.link_twitter,
+            link_ig: setting.link_ig,
+            link_yt: setting.link_yt,
+        })
+            .then(res => {
+                if (res.data.status === 200) {
+                    swal("Success", res.data.message, "success")
+                    setError([]);
+                } else if (res.data.status === 422) {
+                    swal("Data Perlu di Isi", "", "error")
+                    setError(res.data.errors);
+                } else if (res.data.status === 404) {
+                    swal("Error", res.data.message, "error")
+                }
+                console.log(res)
+            })
+    }
+
+    if (loading === true) {
+        return (
+            <div>loading</div>
+        )
+    } else {
+        return (
+            <div>
+                <Modal {...props} size="lg" aria-labelledby="contained-modal-title-vcenter">
+                    <Modal.Header>
+                        <Modal.Title id="contained-modal-title-vcenter font-bold">
+                            Update Info
+                        </Modal.Title>
+                    </Modal.Header>
+                    <div>
+                        <form onSubmit={updateSetting}>
+                            <Modal.Body className="show-grid">
+                                <Container>
+                                    <div className="form-group">
+                                        <label className='font-bold'>Lokasi Desa</label>
+                                        <input className="form-control input-rounded" type="text"
+                                            id="lokasi_desa"
+                                            name="lokasi_desa"
+                                            onChange={changeValue}
+                                            value={setting.lokasi_desa}
+                                        />
+                                        <small className='text-danger'>{error.lokasi_desa}</small>
+                                    </div>
+                                    <div className="form-group">
+                                        <label className='font-bold'>Email Desa</label>
+                                        <input className="form-control input-rounded" type="text"
+                                            id="email_desa"
+                                            name="email_desa"
+                                            onChange={changeValue}
+                                            value={setting.email_desa}
+                                        />
+                                        <small className='text-danger'>{error.email_desa}</small>
+                                    </div>
+                                    <div className='row'>
+                                    <div className="col-sm-6 form-group">
+                                        <label className='font-bold'>Nomor Hp 1</label>
+                                        <input className="form-control input-rounded" type="number"
+                                            id="nomor_hp1"
+                                            name="nomor_hp1"
+                                            onChange={changeValue}
+                                            value={setting.nomor_hp1}
+                                        />
+                                        <small className='text-danger'>{error.nomor_hp1}</small>
+                                    </div>
+                                    <div className="col-sm-6 form-group">
+                                        <label className='font-bold'>Nomor Hp 2</label>
+                                        <input className="form-control input-rounded" type="number"
+                                            id="nomor_hp2"
+                                            name="nomor_hp2"
+                                            onChange={changeValue}
+                                            value={setting.nomor_hp2}
+                                        />
+                                        <small className='text-danger'>{error.nomor_hp2}</small>
+                                    </div>
+                                    </div>
+                                    <div className='row'>
+                                    <div className="col-sm-6 form-group">
+                                        <label className='font-bold'>Link Facebook</label>
+                                        <input className="form-control input-rounded" type="text"
+                                            id="link_fb"
+                                            name="link_fb"
+                                            onChange={changeValue}
+                                            value={setting.link_fb}
+                                        />
+                                        <small className='text-danger'>{error.link_fb}</small>
+                                    </div>
+                                    <div className="col-sm-6 form-group">
+                                        <label className='font-bold'>Link Twitter</label>
+                                        <input className="form-control input-rounded" type="text"
+                                            id="link_twitter"
+                                            name="link_twitter"
+                                            onChange={changeValue}
+                                            value={setting.link_twitter}
+                                        />
+                                        <small className='text-danger'>{error.link_twitter}</small>
+                                    </div>
+                                    </div>
+                                    <div className='row'>
+                                    <div className="col-sm-6 form-group">
+                                        <label className='font-bold'>Link Instagram</label>
+                                        <input className="form-control input-rounded" type="text"
+                                            id="link_ig"
+                                            name="link_ig"
+                                            onChange={changeValue}
+                                            value={setting.link_ig}
+                                        />
+                                        <small className='text-danger'>{error.link_ig}</small>
+                                    </div>
+                                    <div className="col-sm-6 form-group">
+                                        <label className='font-bold'>Link Youtube</label>
+                                        <input className="form-control input-rounded" type="text"
+                                            id="link_yt"
+                                            name="link_yt"
+                                            onChange={changeValue}
+                                            value={setting.link_yt}
+                                        />
+                                        <small className='text-danger'>{error.link_yt}</small>
+                                    </div>
                                     </div>
                                 </Container>
                             </Modal.Body>

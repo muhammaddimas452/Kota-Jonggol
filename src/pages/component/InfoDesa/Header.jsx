@@ -16,6 +16,7 @@ import logo from '../assets/jonggol.png'
 import axios from '../../../api/axiosClient'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 
 export default function Header(props) {
     const [artikel, setArtikel] = useState([]);
@@ -56,39 +57,26 @@ export default function Header(props) {
                                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
                                 <FontAwesomeIcon icon={faBars} className='mr-2' /> Menu
                                 </button>
-                                <form action="#" className="searchform order-lg-last">
-                                    <div className="form-group d-flex">
-                                    </div>
-                                </form>
+                                
                                 <div className="collapse navbar-collapse" id="ftco-nav">
                                     <ul className="navbar-nav mr-auto">
                                         <li className="nav-item font-weight-bold "><a href="/home" className="nav-link"><h6>Beranda</h6></a></li>
-                                        <li className="nav-item font-weight-bold "><a href="/informasi" className="nav-link"><h6>Informasi Wilayah</h6></a></li>
-                                        <li className="nav-item font-weight-bold "><a href="/pemerintah" className="nav-link"><h6>Pemerintah Desa</h6></a></li>
-                                        <li className="nav-item font-weight-bold "><a href="/peta" className="nav-link"><h6>Peta</h6></a></li>
-                                        <li className="nav-item font-weight-bold "><a href="/galeri" className="nav-link"><h6>Galeri</h6></a></li>
                                         <li className="nav-item dropdown font-weight-bold ">
-                                            <a className="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><h6>Info Desa</h6></a>
+                                            <a className="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><h6>Profile <FontAwesomeIcon icon={faCaretDown} className='mr-2' /></h6></a>
                                             <div className="dropdown-menu" aria-labelledby="dropdown04">
-                                                {artikel?.map((artikel, index) => (
-                                                    <a key={index} className="dropdown-item font-weight-bold " href={`/detail/${artikel.id}`}>{artikel.nama_artikel}</a>
-                                                    // {/* <a className="dropdown-item font-weight-bold " href="/visimisi">Visi Dan Misi</a>
-                                                    // <a className="dropdown-item font-weight-bold " href="/pemerintah">Pemerintah Desa</a> */}
-                                                ))}
+                                                {/* {artikel?.map((artikel, index) => (
+                                                    <a key={index} className="dropdown-item font-weight-bold " href={`/detail/${artikel.id}`}>{artikel.nama_artikel}</a> */}
+                                                    <a className="dropdown-item font-weight-bold " href="/visimisi">Visi Dan Misi</a>
+                                                    <a className="dropdown-item font-weight-bold " href="/pemerintah">Pemerintah Desa</a> 
+                                                {/* ))} */}
                                             </div>
                                         </li>
-                                        <li className="nav-item font-weight-bold">
-                                        <div class="mt-2 ml-5 col d-flex justify-content-end">
-                                            <div class="social-media">
-                                                <p class="mb-0 d-flex">
-                                                    <a href="#" class="text-white d-flex align-items-center justify-content-center"><i class="ti-facebook"></i></a>
-                                                    <a href="#" class="text-white d-flex align-items-center justify-content-center"><i class="ti-twitter"></i></a>
-                                                    <a href="#" class="text-white d-flex align-items-center justify-content-center"><i class="ti-instagram"></i></a>
-                                                    <a href="#" class="text-white d-flex align-items-center justify-content-center"><i class="ti-youtube"></i></a>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        </li>
+                                        <li className="nav-item font-weight-bold "><a href="/" className="nav-link"><h6>Informasi <FontAwesomeIcon icon={faCaretDown} className='mr-2' /></h6></a></li>
+                                        <li className="nav-item font-weight-bold "><a href="/" className="nav-link"><h6>Potensi <FontAwesomeIcon icon={faCaretDown} className='mr-2' /></h6></a></li>
+                                        <li className="nav-item font-weight-bold "><a href="/" className="nav-link"><h6>Kegiatan <FontAwesomeIcon className='mr-2' /></h6></a></li>
+                                        <li className="nav-item font-weight-bold "><a href="/" className="nav-link"><h6>Kegiatan Rutin <FontAwesomeIcon className='mr-2' /></h6></a></li>
+                                        <li className="nav-item font-weight-bold "><a href="/" className="nav-link"><h6>Berita</h6></a></li>
+                                        <li className="nav-item font-weight-bold "><a href="/peta" className="nav-link"><h6>Peta</h6></a></li>
                                     </ul>
                                 </div>
                             </div>

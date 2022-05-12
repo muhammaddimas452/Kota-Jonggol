@@ -40,8 +40,8 @@ export default function Footer(props) {
                                         <div className="single-footer-caption mb-30">
                                             <div className="footer-tittle">
                                                 <div className="footer-pera">
-                                                    <p className="info1"><FontAwesomeIcon icon={faEnvelope} className='mr-2' />Kec. Jonggol Kabupaten Bogor Jawa Barat</p>
-                                                    <p className="info2"><FontAwesomeIcon icon={faLocationDot} className='mr-2' />Email: ????</p>
+                                                    <p className="info1"><FontAwesomeIcon icon={faLocationDot} className='mr-2' />Kec. Jonggol Kabupaten Bogor Jawa Barat</p>
+                                                    <p className="info2"><FontAwesomeIcon icon={faEnvelope} className='mr-2' />Email: ????</p>
                                                     <p className="info2"><FontAwesomeIcon icon={faPhone} className='mr-2' />Phone: +95 (0) 123 456 789 </p>
                                                     <p className="info2"><FontAwesomeIcon icon={faPhone} className='mr-2' />Cell: +95 (0) 123 456 789</p>
                                                 </div>
@@ -70,8 +70,19 @@ export default function Footer(props) {
                                 </div>
                                 <div className="col-xl-3 col-lg-3 col-md-4 col-sm-4 col-xs-3">
                                     <div className="single-footer-caption mb-50">
+                                    <div className="footer-tittle">
+                                            <h4>Kunjungi Sosmed Kami</h4>
+                                        </div>
                                         <div className="banner text-center">
-                                            <img src={logo} style={{ width: 200, height: 'auto' }} alt />
+                                            {/* <img src={logo} style={{ width: 200, height: 'auto' }} alt /> */}
+                                            <div class="social-media">
+                                                <p class="mb-0 d-flex">
+                                                    <a href="#" class="text-white d-flex align-items-center justify-content-center"><i class="ti-facebook"></i></a>
+                                                    <a href="#" class="text-white d-flex align-items-center justify-content-center"><i class="ti-twitter"></i></a>
+                                                    <a href="#" class="text-white d-flex align-items-center justify-content-center"><i class="ti-instagram"></i></a>
+                                                    <a href="#" class="text-white d-flex align-items-center justify-content-center"><i class="ti-youtube"></i></a>
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

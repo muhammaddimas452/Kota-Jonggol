@@ -13,6 +13,7 @@ import "../../css/nice-select.css"
 import "../../css/style.css"
 import logo from '../../assets/jonggol.png'
 
+import Header from '../Header';
 import Footer from '../Footer';
 import Aside from '../Aside';
 import axios from '../../../../api/axiosClient'
@@ -37,18 +38,6 @@ export default function Home(props) {
         catch (err) {
         }
     }
-
-    // const getPaginate = async (e) => {
-    //     e.preventDefault()
-    //     try {
-    //         const res = await axios.get(`/artikel/paginate?perpage=2&page=${page}`)
-    //         setLastPage(res.data.data.last_page)
-    //         setPage(res.data.data.current_page)
-    //     }
-    //     catch (err) {
-    //     }
-    // }
-    // console.log(page)
 
     const getArtikel = async () => {
         try {
@@ -96,7 +85,7 @@ export default function Home(props) {
 
     return (
         <div>
-            <header>
+            {/* <header>
                 <div className="header-area">
                     <div className="main-header ">
                         <div className="header-mid gray-bg">
@@ -141,8 +130,7 @@ export default function Home(props) {
                                             <div className="dropdown-menu" aria-labelledby="dropdown04">
                                                 {artikel?.map((artikel, index) => (
                                                     <a key={index} className="dropdown-item font-weight-bold" href={`/detail/${artikel.id}`}>{artikel.nama_artikel}</a>
-                                                    // {/* <a className="dropdown-item font-weight-bold " href="/visimisi">Visi Dan Misi</a>
-                                                    // <a className="dropdown-item font-weight-bold " href="/pemerintah">Pemerintah Desa</a> */}
+                                                    
                                                 ))}
                                             </div>
                                         </li>
@@ -153,7 +141,8 @@ export default function Home(props) {
 
                     </div>
                 </div>
-            </header>
+            </header> */}
+            <Header />
             <main>
                 <div className="trending-area fix pt-25 gray-bg mb-5">
                     <div className="container">

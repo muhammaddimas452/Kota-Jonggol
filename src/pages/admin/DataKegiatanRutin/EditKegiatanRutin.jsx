@@ -7,7 +7,7 @@ import { NavLink } from "reactstrap"
 import axios from '../../../api/axiosClient'
 import '../css/main.min.css'
 
-export default function EditKegiatan() {
+export default function EditKegiatanRutin() {
 
     const { id } = useParams()
     const [kegiatanInput, setKegiatan] = useState([]);
@@ -20,19 +20,19 @@ export default function EditKegiatan() {
         try {
             const kegiatan_id = id;
             setLoading(true)
-            const res = await axios.get(`/kegiatan/edit/${kegiatan_id}`)
+            const res = await axios.get(`/kegiatan-rutin/edit/${kegiatan_id}`)
             console.log(res)
             setLoading(false)
             if (res.data.status === 200) {
                 setKegiatan(res.data.kegiatan);
             } else if (res.data.status === 404) {
                 swal("Error", res.data.message, "error");
-                return navigate("/kegiatan");
+                return navigate("/kegiatan-rutin");
             }
         }
         catch (err) {
             setLoading(false)
-            return navigate("/kegiatan");
+            return navigate("/kegiatan-rutin");
         }
     }
 
@@ -62,7 +62,7 @@ export default function EditKegiatan() {
 
         const kegiatan_id = id;
         const data = kegiatanInput;
-        const res = await axios.post(`/kegiatan/update/${kegiatan_id}/?_method=PUT`, formData)
+        const res = await axios.post(`/kegiatan-rutin/update/${kegiatan_id}/?_method=PUT`, formData)
         if (res.data.status === 200) {
             swal("Success", res.data.message, "success")
             setError([]);
@@ -84,7 +84,7 @@ export default function EditKegiatan() {
       
                 <div className="content-wrapper">
                     <div className="page-heading">
-                        <h1 className="page-title">Edit Data Kegaiatan</h1>
+                        <h1 className="page-title">Edit Data Kegiatan Rutin</h1>
                         <ol className="breadcrumb">
                             <li className="breadcrumb-item">
                                 <a href="index.html"><i className="la la-home font-20" /></a>
@@ -97,8 +97,8 @@ export default function EditKegiatan() {
                             <div className="col-md-12 col-12">
                                 <div className="ibox">
                                     <div className="ibox-head">
-                                        <div className="ibox-title">Edit Data Kegaiatan</div>
-                                        <NavLink href="/kegiatan"><button className='genric-btn info radius mr-4'>Back</button></NavLink>
+                                        <div className="ibox-title">Edit Data Kegiatan Rutin</div>
+                                        <NavLink href="/kegiatan-rutin"><button className='genric-btn info radius mr-4'>Back</button></NavLink>
                                     </div>
                                     <div className="ibox-body">
                                         <form onSubmit={updateKegiatan}>
@@ -108,12 +108,12 @@ export default function EditKegiatan() {
                                                         <div className="form-group">
                                                             <label>Pelaksanaan Kegiatan</label>
                                                             <input className="form-control" type="date" placeholder="Masukkan Nama Artikel"
-                                                                id="tanggal"
-                                                                name="tanggal"
+                                                                id="tanggal_kegiatan"
+                                                                name="tanggal_kegiatan"
                                                                 onChange={handleInput}
-                                                                value={kegiatanInput.tanggal}
+                                                                value={kegiatanInput.tanggal_kegiatan}
                                                             />
-                                                            <small className='text-danger'>{error.tanggal}</small>
+                                                            <small className='text-danger'>{error.tanggal_kegiatan}</small>
                                                         </div>
                                                         <div className="form-group">
                                                             <label>Nama Kegiatan</label>

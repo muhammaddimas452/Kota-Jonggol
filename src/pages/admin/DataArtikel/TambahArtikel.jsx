@@ -60,7 +60,7 @@ export default function TambahArtikel() {
             <Nav />
             <div className="content-wrapper">
                 <div className="page-heading">
-                    <h1 className="page-title">Basic Form</h1>
+                    <h1 className="page-title">Tambah Data Artikel</h1>
                     <ol className="breadcrumb">
                         <li className="breadcrumb-item">
                             <a href="index.html"><i className="la la-home font-20" /></a>
@@ -73,7 +73,7 @@ export default function TambahArtikel() {
                         <div className="col-md-12 col-12">
                             <div className="ibox">
                                 <div className="ibox-head">
-                                    <div className="ibox-title">Basic form</div>
+                                    <div className="ibox-title">Tambah Data Artikel</div>
                                 </div>
                                 <div className="ibox-body">
                                     <form onSubmit={onSubmit}>

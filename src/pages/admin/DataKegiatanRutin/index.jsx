@@ -13,13 +13,13 @@ import '../css/main.css'
 
 
 
-const deleteKegiatan = (e, kegiatan_id) => {
+const deleteKegiatanRutin = (e, kegiatan_id) => {
     e.preventDefault();
 
     const thisClicked = e.currentTarget;
     thisClicked.innerText = "Deleting"
 
-    axios.delete(`/kegiatan/delete/${kegiatan_id}`).then(res => {
+    axios.delete(`/kegiatan-rutin/delete/${kegiatan_id}`).then(res => {
         if (res.data.status === 200) {
             swal("Success", res.data.message, "success");
             thisClicked.closest("tr").remove()
@@ -32,7 +32,7 @@ const deleteKegiatan = (e, kegiatan_id) => {
 
 
 
-class DataKegiatan extends PureComponent {
+class DataKegiatanRutin extends PureComponent {
     constructor(props) {
         super(props)
 
@@ -45,7 +45,7 @@ class DataKegiatan extends PureComponent {
     }
 
     componentDidMount() {
-        axios.get(`/kegiatan`).then(res => {
+        axios.get(`/kegiatan-rutin`).then(res => {
             this.setState({
                 kegiatan: res.data
             })
@@ -58,7 +58,7 @@ class DataKegiatan extends PureComponent {
                 <Nav />
                 <div className="content-wrapper">
                     <div className="page-heading">
-                        <h1 className="page-title">Data Kegiatan</h1>
+                        <h1 className="page-title">Data Kegiatan Rutin</h1>
                         <ol className="breadcrumb">
                             <li className="breadcrumb-item">
                                 <a href="index.html"><i className="la la-home font-20" /></a>
@@ -69,8 +69,8 @@ class DataKegiatan extends PureComponent {
                     <div className="page-content fade-in-up">
                         <div className="ibox">
                             <div className="ibox-head">
-                                <div className="ibox-title">Data Kegiatan</div>
-                                <NavLink href="/tambahkegiatan"><button className='genric-btn info radius mr-4'>Tambah Data</button></NavLink>
+                                <div className="ibox-title">Data Kegiatan Rutin</div>
+                                <NavLink href="/tambah-kegiatan-rutin"><button className='genric-btn info radius mr-4'>Tambah Data</button></NavLink>
                             </div>
                             <div className="ibox-body">
                                 <Table responsive striped bordered hover>
@@ -88,7 +88,7 @@ class DataKegiatan extends PureComponent {
                                         {this.state.kegiatan.map(kegiatan =>
                                             <tr key={kegiatan.id}>
                                                 {/* <th class="text-center">1</th> */}
-                                                <td className="text-center">{kegiatan.tanggal}</td>
+                                                <td className="text-center">{kegiatan.tanggal_kegiatan}</td>
                                                 <td className="text-center">{kegiatan.nama_kegiatan}</td>
                                                 <td className="text-center">
                                                 <img className='responsive' style={{ width:150, height: 'auto' }}
@@ -96,11 +96,11 @@ class DataKegiatan extends PureComponent {
                                                 </td>
                                                 <td className="text-center">{kegiatan.status == 0 ? "Belum Dilaksanakan" : "Sudah Dilaksakan"}</td>
                                                 <td className="text-center">
-                                                <Link to={`/editkegiatan/${kegiatan.id}`}>
+                                                <Link to={`/edit-kegiatan-rutin/${kegiatan.id}`}>
                                                         {/* <Route path='/editartikel/:id' element={<EditArtikel />} id={artikel.id} /> */}
                                                         <button className="genric-btn success radius">Edit</button>
                                                     </Link>
-                                                    <button className="genric-btn danger radius ml-3" onClick={(e) => deleteKegiatan(e, kegiatan.id)}>Delete</button>
+                                                    <button className="genric-btn danger radius ml-3" onClick={(e) => deleteKegiatanRutin(e, kegiatan.id)}>Delete</button>
                                                 </td>
                                             </tr>
                                              )}
@@ -119,4 +119,4 @@ class DataKegiatan extends PureComponent {
     }
 }
 
-export default DataKegiatan;
+export default DataKegiatanRutin;

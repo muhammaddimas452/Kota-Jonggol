@@ -7,8 +7,9 @@ import { useNavigate } from "react-router-dom";
 import { NavLink } from "reactstrap"
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import '../css/main.min.css'
+import logo from '../assets/jonggol.png'
 
-function EditJabatan(props) {
+function EditInfoWilayah(props) {
     const { id } = useParams()
     console.log(id)
 
@@ -46,6 +47,8 @@ function EditJabatan(props) {
 
     const updateInfoWilayah = (e) => {
         e.preventDefault();
+        const thisClicked = e.currentTarget;
+        thisClicked.innerText = "Proccess...."
         const infowilayah_id = id;
         axios.put(`/infowilayah/update/${infowilayah_id}`, {
             nama_desa: infoWilayah.nama_desa,
@@ -56,9 +59,10 @@ function EditJabatan(props) {
             .then(res => {
                 if (res.data.status === 200) {
                     swal("Success", res.data.message, "success")
-                    setError([]);
+                    return navigate("/datainfowilayah")
                 } else if (res.data.status === 422) {
                     swal("Data Perlu di Isi", "", "error")
+                    thisClicked.innerText = "Proccess...."
                     setError(res.data.errors);
                 } else if (res.data.status === 404) {
                     swal("Error", res.data.message, "error")
@@ -67,6 +71,20 @@ function EditJabatan(props) {
             })
     }
 
+    if (loading === true) {
+        return (
+            <div id="preloader-active">
+            <div className="preloader d-flex align-items-center justify-content-center">
+                <div className="preloader-inner position-relative">
+                    <div className="preloader-circle" />
+                    <div className="preloader-img pere-text">
+                        <img src={logo} alt />
+                    </div>
+                </div>
+            </div>
+        </div>
+        )
+    } else {
     return (
         <div className='page-wrapper'>
             <Nav />
@@ -89,7 +107,7 @@ function EditJabatan(props) {
                                     <NavLink href="/datainfowilayah"><button className='genric-btn info radius mr-4'>Back</button></NavLink>
                                 </div>
                                 <div className="ibox-body">
-                                    <form onSubmit={updateInfoWilayah}>
+                                    <form>
                                         <div className="form-group col-8">
                                             <label>Nama Desa</label>
                                             <input className="form-control" type="text" placeholder="Masukkan Nama Desa"
@@ -133,7 +151,7 @@ function EditJabatan(props) {
                                             <small className='text-danger'>{error.kepala_desa}</small>
                                         </div>
                                         <button
-                                            type='submit' className='genric-btn info radius btn-user btn-block'>
+                                            onClick={updateInfoWilayah} className='genric-btn info radius btn-user btn-block'>
                                             Update Data
                                         </button>
                                     </form>
@@ -146,5 +164,6 @@ function EditJabatan(props) {
         </div>
     )
 }
+}
 
-export default EditJabatan;
+export default EditInfoWilayah;

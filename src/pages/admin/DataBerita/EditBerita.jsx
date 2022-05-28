@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from '../../../api/axiosClient'
 import Nav from '../Nav'
 import swal from 'sweetalert'
+import logo from '../assets/jonggol.png'
 import { useParams } from 'react-router'
 import { useNavigate } from "react-router-dom";
 import { NavLink } from "reactstrap"
@@ -64,6 +65,8 @@ function EditBerita(props) {
 
     const updateBerita = async (e) => {
         e.preventDefault();
+        const thisClicked = e.currentTarget;
+        thisClicked.innerText = "Proccess...."
         const formData = new FormData();
         formData.append('image', picture.image)
         formData.append('nama_berita', beritaInput.nama_berita)
@@ -74,9 +77,10 @@ function EditBerita(props) {
         const result = await axios.post(`/berita/update/${berita_id}/?_method=PUT`, formData)
         if (result.data.status === 200) {
             swal("Success", result.data.message, "success")
-            setError([]);
+            return navigate("/data-berita")
         } else if (result.data.status === 422) {
             swal("Data Perlu di Isi", "", "error")
+            thisClicked.innerText = "Proccess...."
             setError(result.data.errors);
         } else if (result.data.status === 404) {
             swal("Error", result.data.message, "error")
@@ -86,7 +90,16 @@ function EditBerita(props) {
 
     if (loading === true) {
         return (
-            <div>loading</div>
+            <div id="preloader-active">
+            <div className="preloader d-flex align-items-center justify-content-center">
+                <div className="preloader-inner position-relative">
+                    <div className="preloader-circle" />
+                    <div className="preloader-img pere-text">
+                        <img src={logo} alt />
+                    </div>
+                </div>
+            </div>
+        </div>
         )
     } else {
         return (
@@ -111,7 +124,7 @@ function EditBerita(props) {
                                         <NavLink href="/data-berita"><button className='genric-btn info radius mr-4'>Back</button></NavLink>
                                     </div>
                                     <div className="ibox-body">
-                                        <form onSubmit={updateBerita}>
+                                        <form>
                                             <div className="form-group">
                                                 <label>Judul Berita</label>
                                                 <input type="text" className="form-control mt-3" placeholder="Judul Berita"
@@ -146,7 +159,7 @@ function EditBerita(props) {
                                                 <small className='text-danger'>{error.isi_berita}</small>
                                             </div>
                                             <button
-                                                type='submit' className='genric-btn info radius btn-user btn-block'>
+                                                onClick={updateBerita} className='genric-btn info radius btn-user btn-block'>
                                                 Update Data
                                             </button>
                                         </form>

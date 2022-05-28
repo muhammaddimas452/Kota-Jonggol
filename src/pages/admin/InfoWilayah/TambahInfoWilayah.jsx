@@ -23,6 +23,8 @@ export default function TambahArtikel() {
 
     const TambahInfoWilayah = async (e) => {
         e.preventDefault();
+        const thisClicked = e.currentTarget;
+        thisClicked.innerText = "Proccess...."
         const result = await axios.post(`/infowilayah/add`, {
             nama_desa: infoWilayah.nama_desa,
             rt: infoWilayah.rt,
@@ -36,6 +38,7 @@ export default function TambahArtikel() {
         }
         else if (result.data?.status === 422) {
             swal("Data Perlu di Isi", "", "error");
+            thisClicked.innerText = "Proccess...."
             setError(result.data.errors);
         }
         else if (result?.data?.status === 404) {
@@ -63,7 +66,7 @@ export default function TambahArtikel() {
                                     <div className="ibox-title">Tambah Data Wilayah</div>
                                 </div>
                                 <div className="ibox-body">
-                                    <form onSubmit={TambahInfoWilayah}>
+                                    <form>
                                         <div className="form-group col-8">
                                             <label>Nama Desa</label>
                                             <input className="form-control" type="text" placeholder="Masukkan Nama Desa"
@@ -107,7 +110,7 @@ export default function TambahArtikel() {
                                             <small className='text-danger'>{error.kepala_desa}</small>
                                         </div>
                                         <button
-                                            type='submit' className='genric-btn info radius btn-user btn-block'>
+                                            onClick={TambahInfoWilayah} className='genric-btn info radius btn-user btn-block'>
                                             Tambah Data
                                         </button>
                                     </form>

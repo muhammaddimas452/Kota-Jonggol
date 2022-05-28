@@ -41,9 +41,9 @@ text-transform: capitalize;
     font-family: "Roboto",sans-serif;
     font-size: 16px;
 }
-.ticker-content:focus {
-
-}
+/* .ticker-content:focus {
+ none;
+} */
 .ticker-content a {
 text-decoration: none;
 color: #1F527B;

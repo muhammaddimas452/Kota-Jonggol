@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Nav from '../Nav'
 import axios from '../../../api/axiosClient'
 import { NavLink } from 'reactstrap'
+import logo from '../assets/jonggol.png'
 import swal from 'sweetalert';
 import '../css/main.min.css'
 import '../vendors/bootstrap/dist/css/bootstrap.min.css'
@@ -15,6 +16,7 @@ import { faArrowUp } from "@fortawesome/free-solid-svg-icons"
 export default function DataBerita(props) {
 
     const [berita, setBerita] = useState();
+    const [loading, setLoading] = useState(false);
 
     const [modalShow, setModalShow] = useState(false);
     const navigate = useNavigate();
@@ -35,10 +37,13 @@ export default function DataBerita(props) {
     }
     const getBerita = async () => {
         try {
+            setLoading(true)
             const res = await axios.get(`/berita`)
+            setLoading(false)
             setBerita(res.data)
         }
         catch (err) {
+            setLoading(false)
         }
     }
 
@@ -67,6 +72,20 @@ export default function DataBerita(props) {
         readBerita(id)
     }
 
+    if (loading === true) {
+        return (
+            <div id="preloader-active">
+            <div className="preloader d-flex align-items-center justify-content-center">
+                <div className="preloader-inner position-relative">
+                    <div className="preloader-circle" />
+                    <div className="preloader-img pere-text">
+                        <img src={logo} alt />
+                    </div>
+                </div>
+            </div>
+        </div>
+        )
+    } else {
     return (
         <div className='page-wrapper'>
             <Nav />
@@ -109,7 +128,7 @@ export default function DataBerita(props) {
                                                 <td className="text-center">{berita.nama_berita}</td>
                                                 <td className="text-center"><img className='responsive' style={{ width: 200, height: 'auto' }}
                                                     src={berita.image} /></td>
-                                                <dt className=""><p dangerouslySetInnerHTML={{ __html: berita.isi_berita }} /></dt>
+                                                <dt className=""><p dangerouslySetInnerHTML={{ __html: berita.isi_berita.substr(0, 200) }} /></dt>
                                                 <td className="text-center">{berita.views}</td>
                                                 <td className="text-center">
                                                     <a href={`/edit-data-berita/${berita.id}`}><button className="genric-btn success radius">Edit</button></a>
@@ -131,4 +150,5 @@ export default function DataBerita(props) {
             </div>
         </div>
     )
+}
 }

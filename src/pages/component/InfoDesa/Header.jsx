@@ -20,6 +20,7 @@ import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 
 export default function Header(props) {
     const [artikel, setArtikel] = useState([]);
+    const [potensi, setPotensi] = useState();
 
     const getArtikel = async () => {
         try {
@@ -30,8 +31,18 @@ export default function Header(props) {
         }
     }
 
+    const getPotensi = async () => {
+        try {
+            const res = await axios.get(`/artikel-potensi`)
+            setPotensi(res.data)
+        }
+        catch (err) {
+        }
+    }
+
     useEffect(() => {
         getArtikel();
+        getPotensi();
     }, [props])
 
     return (
@@ -57,26 +68,38 @@ export default function Header(props) {
                                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
                                 <FontAwesomeIcon icon={faBars} className='mr-2' /> Menu
                                 </button>
-                                
                                 <div className="collapse navbar-collapse" id="ftco-nav">
                                     <ul className="navbar-nav mr-auto">
-                                        <li className="nav-item font-weight-bold "><a href="/home" className="nav-link"><h6>Beranda</h6></a></li>
-                                        <li className="nav-item dropdown font-weight-bold ">
+                                        <li className="nav-item font-weight-bold ml-3"><a href="/home" className="nav-link"><h6>Beranda</h6></a></li>
+                                        <li className="nav-item dropdown font-weight-bold ml-3">
                                             <a className="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><h6>Profile <FontAwesomeIcon icon={faCaretDown} className='mr-2' /></h6></a>
                                             <div className="dropdown-menu" aria-labelledby="dropdown04">
-                                                {/* {artikel?.map((artikel, index) => (
-                                                    <a key={index} className="dropdown-item font-weight-bold " href={`/detail/${artikel.id}`}>{artikel.nama_artikel}</a> */}
-                                                    <a className="dropdown-item font-weight-bold " href="/visimisi">Visi Dan Misi</a>
-                                                    <a className="dropdown-item font-weight-bold " href="/pemerintah">Pemerintah Desa</a> 
-                                                {/* ))} */}
+                                                {artikel?.map((artikel, index) => (
+                                                    <a key={index} className="dropdown-item font-weight-bold " href={`/detail-profile/${artikel.id}`}>{artikel.nama_artikel}</a>
+                                               ))}
+                                                    <a className="dropdown-item font-weight-bold " href="/pemerintah">Pemerintah Desa</a>
                                             </div>
                                         </li>
-                                        <li className="nav-item font-weight-bold "><a href="/" className="nav-link"><h6>Informasi <FontAwesomeIcon icon={faCaretDown} className='mr-2' /></h6></a></li>
-                                        <li className="nav-item font-weight-bold "><a href="/" className="nav-link"><h6>Potensi <FontAwesomeIcon icon={faCaretDown} className='mr-2' /></h6></a></li>
-                                        <li className="nav-item font-weight-bold "><a href="/" className="nav-link"><h6>Kegiatan <FontAwesomeIcon className='mr-2' /></h6></a></li>
-                                        <li className="nav-item font-weight-bold "><a href="/" className="nav-link"><h6>Kegiatan Rutin <FontAwesomeIcon className='mr-2' /></h6></a></li>
-                                        <li className="nav-item font-weight-bold "><a href="/" className="nav-link"><h6>Berita</h6></a></li>
-                                        <li className="nav-item font-weight-bold "><a href="/peta" className="nav-link"><h6>Peta</h6></a></li>
+                                        <li className="nav-item dropdown font-weight-bold ml-3">
+                                            <a className="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><h6>Informasi <FontAwesomeIcon icon={faCaretDown} className='mr-2' /></h6></a>
+                                            <div className="dropdown-menu" aria-labelledby="dropdown04">
+                                                <a className="dropdown-item font-weight-bold " href="/informasi-wilayah">Informasi Wilayah</a>
+                                                <a className="dropdown-item font-weight-bold " href="/layanan-masyarakat">Informasi Layanan</a>
+                                                <a className="dropdown-item font-weight-bold " href="/umkm">UMKM</a>
+                                                <a className="dropdown-item font-weight-bold " href="/galeri">Galeri</a>
+                                            </div>
+                                        </li>
+                                        <li className="nav-item dropdown font-weight-bold ml-3">
+                                            <a className="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><h6>Potensi <FontAwesomeIcon icon={faCaretDown} className='mr-2' /></h6></a>
+                                            <div className="dropdown-menu" aria-labelledby="dropdown04">
+                                                {potensi?.map((potensi, index) => (
+                                                    <a key={index} className="dropdown-item font-weight-bold " href={`/detail-potensi/${potensi.id}`}>{potensi.nama_potensi}</a>
+                                               ))}
+                                            </div>
+                                        </li>
+                                        <li className="nav-item font-weight-bold ml-3"><a href="/kegiatan" className="nav-link"><h6>Kegiatan <FontAwesomeIcon className='mr-2' /></h6></a></li>
+                                        <li className="nav-item font-weight-bold ml-3"><a href="/berita" className="nav-link"><h6>Berita</h6></a></li>
+                                        <li className="nav-item font-weight-bold ml-3"><a href="/peta" className="nav-link"><h6>Peta</h6></a></li>
                                     </ul>
                                 </div>
                             </div>

@@ -1,15 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700");
 @import url("https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700");
-
-.responsive{
-  width: 100%;
-  height: auto;
-}
-
-.hidden{
-  display: none;
-}
-
 .clf:after, .clf:before {
   content: '';
   display: table; }
@@ -336,7 +326,7 @@ pre {
   border-right: 4px solid transparent;
   border-left: 4px solid transparent; }
 
-.btn .caret {
+btn .caret {
   margin-left: 0; }
 
 .btn-social {

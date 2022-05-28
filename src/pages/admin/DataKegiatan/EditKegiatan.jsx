@@ -4,6 +4,7 @@ import swal from 'sweetalert';
 import { useParams } from 'react-router'
 import { useNavigate } from "react-router-dom";
 import { NavLink } from "reactstrap"
+import logo from '../assets/jonggol.png'
 import axios from '../../../api/axiosClient'
 import '../css/main.min.css'
 
@@ -54,6 +55,8 @@ export default function EditKegiatan() {
 
     const updateKegiatan = async (e) => {
         e.preventDefault();
+        const thisClicked = e.currentTarget;
+        thisClicked.innerText = "Proccess...."
         const formData = new FormData();
         formData.append('image', picture.image)
         formData.append('tanggal', kegiatanInput.tanggal)
@@ -61,23 +64,31 @@ export default function EditKegiatan() {
         formData.append('status', kegiatanInput.status)
 
         const kegiatan_id = id;
-        const data = kegiatanInput;
         const res = await axios.post(`/kegiatan/update/${kegiatan_id}/?_method=PUT`, formData)
         if (res.data.status === 200) {
             swal("Success", res.data.message, "success")
-            setError([]);
+            return navigate("/kegiatan")
         } else if (res.data.status === 422) {
             swal("Data Perlu di Isi", "", "error")
+            thisClicked.innerText = "Proccess...."
             setError(res.data.errors);
         }
     }
 
     if (loading === true) {
         return (
-            <div>loading</div>
+            <div id="preloader-active">
+            <div className="preloader d-flex align-items-center justify-content-center">
+                <div className="preloader-inner position-relative">
+                    <div className="preloader-circle" />
+                    <div className="preloader-img pere-text">
+                        <img src={logo} alt />
+                    </div>
+                </div>
+            </div>
+        </div>
         )
     } else {
-
         return (
             <div className='page-wrapper'>
                 <Nav />
@@ -98,10 +109,10 @@ export default function EditKegiatan() {
                                 <div className="ibox">
                                     <div className="ibox-head">
                                         <div className="ibox-title">Edit Data Kegaiatan</div>
-                                        <NavLink href="/kegiatan"><button className='genric-btn info radius mr-4'>Back</button></NavLink>
+                                        <NavLink href="/data-kegiatan"><button className='genric-btn info radius mr-4'>Back</button></NavLink>
                                     </div>
                                     <div className="ibox-body">
-                                        <form onSubmit={updateKegiatan}>
+                                        <form>
                                             <div className="card-body">
                                                 <div className="row">
                                                     <div className="col-lg-12 col-6">
@@ -175,7 +186,7 @@ export default function EditKegiatan() {
                                                             <small className='text-danger'>{error.status}</small>
                                                         </div>
                                                         <button
-                                                            type='submit' className='genric-btn info radius btn-user btn-block'>
+                                                            onClick={updateKegiatan} className='genric-btn info radius btn-user btn-block'>
                                                             Update Data
                                                         </button>
                                                     </div>

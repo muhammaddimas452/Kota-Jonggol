@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import axios from '../../../api/axiosClient'
-import { useNavigate } from "react-router-dom";
 import { Carousel } from 'react-bootstrap';
 import {
     AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
@@ -11,14 +10,8 @@ import { faPen } from "@fortawesome/free-solid-svg-icons";
 
 
 export default function Aside(props) {
-    const data = [
-        { name: "Laki-Laki", total: 600 },
-        { name: "Perempuan", total: 300 },
-        { name: "Total", total: 1000 },
-    ];
     const moment = require('moment');
 
-    const [artikel, setArtikel] = useState();
     const [populer, setPopuler] = useState();
     const [newest, setNewest] = useState();
     const [acak, setAcak] = useState();
@@ -26,15 +19,14 @@ export default function Aside(props) {
     const [kegiatan, setKegiatan] = useState();
     const [chartData, setChartData] = useState({});
 
-    const navigate = useNavigate();
-    const getArtikel = async () => {
-        try {
-            const res = await axios.get(`/artikel?perpage=6`,)
-            setArtikel(res.data.data.data)
-        }
-        catch (err) {
-        }
-    }
+    // const getArtikel = async () => {
+    //     try {
+    //         const res = await axios.get(`/artikel?perpage=6`,)
+    //         setArtikel(res.data.data.data)
+    //     }
+    //     catch (err) {
+    //     }
+    // }
 
     const getIKegiatan = async () => {
         try {
@@ -80,7 +72,6 @@ export default function Aside(props) {
     }
 
     useEffect(() => {
-        getArtikel();
         getPopuler();
         getNewest();
         getAcak();
@@ -89,14 +80,6 @@ export default function Aside(props) {
         chart();
     }, [props])
 
-    const data01 = [
-        { name: 'Group A', value: 400 },
-        { name: 'Group B', value: 300 },
-        { name: 'Group C', value: 300 },
-        { name: 'Group D', value: 200 },
-        { name: 'Group E', value: 278 },
-        { name: 'Group F', value: 189 },
-    ];
 
     const chart = async () => {
         try {
@@ -110,16 +93,18 @@ export default function Aside(props) {
     return (
         <div>
             <div className="blog_right_sidebar">
-                <aside className="single_sidebar_widget post_category_widget">
-                    <h4 className="widget_title">Lokasi Kantor Kecamatan Jonggol</h4>
-                    <div className="">
-                        <iframe className='col-sm-12' src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.423548888298!2d107.06381541474067!3d-6.467908195320918!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69bd6e2b938d7b%3A0x60cb30f2f8b1b8fe!2sKantor%20Kecamatan%20Jonggol!5e0!3m2!1sid!2sid!4v1646206447042!5m2!1sid!2sid"
-                            style={{ height: 300, border: 0 }} allowFullScreen loading="lazy" />
+                <div className="single_sidebar_widget post_category_widget">
+                    <div className='bg-success rounded-3'>
+                    <h4 className="widget_title text-white text-center pt-2 font-weight-bold">Lokasi Kantor Kecamatan Jonggol</h4>
                     </div>
-                </aside>
+                    <div className="">
+                        <iframe className='col-sm-12 col-lg-12 col-12' src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.423548888298!2d107.06381541474067!3d-6.467908195320918!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69bd6e2b938d7b%3A0x60cb30f2f8b1b8fe!2sKantor%20Kecamatan%20Jonggol!5e0!3m2!1sid!2sid!4v1646206447042!5m2!1sid!2sid"
+                            style={{ height: 300, width:500 , border: 0 }} allowFullScreen loading="lazy" />
+                    </div>
+                </div>
                 <div className="mb-5">
                     <div className="single-defination">
-                        <h4 className="mb-20 ml-5 ">Statistik Penduduk</h4>
+                        <h4 className="mb-20 ml-5 ">Statistik Views Artikel</h4>
                         <AreaChart
                             width={350}
                             height={300}
@@ -140,7 +125,7 @@ export default function Aside(props) {
                     </div>
                 </div>
                 <div className="single_sidebar_widget popular_post_widget">
-                    <h3 className="widget_title">Arsip Artikel dan Kegiatan</h3>
+                    <h3 className="widget_title bg-success pt-2 text-white text-center font-weight-bold">Arsip Artikel dan Kegiatan</h3>
                     <div className="ibox-body">
                         <ul className="nav nav-tabs">
                             <li className="nav-item">
@@ -219,7 +204,7 @@ export default function Aside(props) {
                     </div>
                 </div>
                 <aside className="single_sidebar_widget instagram_feeds">
-                    <h4 className="widget_title">Galeri Foto</h4>
+                    <h4 className="widget_title bg-success pt-2 text-white text-center font-weight-bold">Galeri Foto</h4>
                     <div className="col-lg-12">
                         <Carousel fade={true} pause={false} controls={false} indicators={false}>
                             {ikegiatan?.map((kegiatan, index) => (

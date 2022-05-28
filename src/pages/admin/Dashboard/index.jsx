@@ -5,6 +5,7 @@ import Nav from '../Nav'
 import {
     AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer
 } from "recharts";
+import logo from '../assets/jonggol.png'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPeopleGroup } from "@fortawesome/free-solid-svg-icons";
 import { faBook } from "@fortawesome/free-solid-svg-icons";
@@ -86,6 +87,20 @@ export default function Dashboard(props) {
         }
     }
 
+    if (loading === true) {
+        return (
+            <div id="preloader-active">
+            <div className="preloader d-flex align-items-center justify-content-center">
+                <div className="preloader-inner position-relative">
+                    <div className="preloader-circle" />
+                    <div className="preloader-img pere-text">
+                        <img src={logo} alt />
+                    </div>
+                </div>
+            </div>
+        </div>
+        )
+    } else {
     return (
         <div>
             <div className="page-wrapper">
@@ -136,7 +151,7 @@ export default function Dashboard(props) {
                                     <div className="ibox-body col-sm-12">
                                         <div className="mb-4">
                                             <div>
-                                                <h3 className="m-0">Grafik</h3>
+                                                <h3 className="m-0">Grafik Statistik Views Artikel</h3>
                                                 <div></div>
                                             </div>
                                         </div>
@@ -191,4 +206,5 @@ export default function Dashboard(props) {
             </div>
         </div>
     )
+}
 }

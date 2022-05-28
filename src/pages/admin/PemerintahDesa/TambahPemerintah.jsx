@@ -30,6 +30,8 @@ export default function TambahArtikel(props) {
     const navigate = useNavigate();
     const onSubmit = async (e) => {
         e.preventDefault();
+        const thisClicked = e.currentTarget;
+        thisClicked.innerText = "Proccess...."
         const formData = new FormData();
         formData.append('gambar_pemerintah', picture.gambar_pemerintah)
         formData.append('nama', values.nama)
@@ -41,6 +43,7 @@ export default function TambahArtikel(props) {
             return navigate("/pemerintahdesa")
         } else if (result?.data?.status === 422) {
             swal("Data Perlu di Isi", "", "error")
+            thisClicked.innerText = "Proccess...."
             setError(result.data.errors);
         } else if (result?.data?.status === 404) {
             swal("Error", result.data.message, "error")
@@ -80,7 +83,7 @@ export default function TambahArtikel(props) {
                                     <div className="ibox-title">Tambah Data Pemerintah Desa</div>
                                 </div>
                                 <div className="ibox-body">
-                                    <form onSubmit={onSubmit}>
+                                    <form>
                                         <div className="form-group">
                                             <label>Nama</label>
                                             <input className="form-control" type="text" placeholder="Masukkan Nama"
@@ -115,7 +118,7 @@ export default function TambahArtikel(props) {
                                         </div>
 
                                         <button
-                                            type='submit' className='genric-btn info radius btn-user btn-block'>
+                                            onClick={onSubmit} className='genric-btn info radius btn-user btn-block'>
                                             Tambah Data
                                         </button>
                                     </form>

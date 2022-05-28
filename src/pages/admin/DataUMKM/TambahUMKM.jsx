@@ -39,6 +39,8 @@ export default function TambahUmkm() {
     const navigate = useNavigate();
     const onSubmit = async (e) => {
         e.preventDefault();
+        const thisClicked = e.currentTarget;
+        thisClicked.innerText = "Proccess...."
         const formData = new FormData();
         formData.append('image', picture.image)
         formData.append('nama_usaha', values.nama_usaha)
@@ -51,6 +53,7 @@ export default function TambahUmkm() {
             return navigate("/data-umkm")
         } else if (result?.data?.status === 422) {
             swal("Data Perlu di Isi", "", "error")
+            thisClicked.innerText = "Proccess...."
             setError(result.data.errors);
         } 
     }
@@ -75,7 +78,7 @@ export default function TambahUmkm() {
                                     <div className="ibox-title">Tambah Data UMKM</div>
                                 </div>
                                 <div className="ibox-body">
-                                    <form onSubmit={onSubmit}>
+                                    <form>
                                         <div className="form-group">
                                             <label htmlFor="roundText">Judul Usaha</label>
                                             <input type="text" className="form-control mt-3" placeholder="Judul Usaha"
@@ -110,7 +113,7 @@ export default function TambahUmkm() {
                                             <small className='text-danger'>{error.isi_usaha}</small>
                                         </div>
                                         <button
-                                            type='submit' className='genric-btn info radius btn-user btn-block'>
+                                            onClick={onSubmit} className='genric-btn info radius btn-user btn-block'>
                                             Tambah Data
                                         </button>
                                     </form>

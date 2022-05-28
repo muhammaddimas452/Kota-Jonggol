@@ -16,17 +16,22 @@ import "../../css/style.css"
 import axios from '../../../../api/axiosClient'
 import Header from '../Header'
 import Footer from '../Footer'
+import logo from '../../assets/jonggol.png'
 
 export default function Galeri(props) {
     const [artikel, setArtikel] = useState();
     const [kegiatan, setKegiatan] = useState();
+    const [loading, setLoading] = useState(false);
 
     const getArtikel = async () => {
         try {
+            setLoading(true)
             const res = await axios.get(`/artikel`)
+            setLoading(false)
             setArtikel(res.data)
         }
         catch (err) {
+            setLoading(false)
         }
     }
    
@@ -44,6 +49,20 @@ export default function Galeri(props) {
         getKegiatan();
     }, [props])
 
+    if (loading === true) {
+        return (
+            <div id="preloader-active">
+            <div className="preloader d-flex align-items-center justify-content-center">
+                <div className="preloader-inner position-relative">
+                    <div className="preloader-circle" />
+                    <div className="preloader-img pere-text">
+                        <img src={logo} alt />
+                    </div>
+                </div>
+            </div>
+        </div>
+        )
+    } else {
     return (
         <div>
             <Header />
@@ -75,4 +94,5 @@ export default function Galeri(props) {
             <Footer />
         </div>
     )
+}
 }

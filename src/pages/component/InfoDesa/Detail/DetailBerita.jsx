@@ -1,4 +1,4 @@
-import React, { Component, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import "../../css/bootstrap.min.css";
 import "../../css/owl.carousel.min.css";
 import "../../css/ticker-style.css";
@@ -23,32 +23,52 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
+import logo from '../../assets/jonggol.png'
 
-export default function Detail(props) {
+export default function DetailBerita(props) {
     const { id } = useParams()
-
+    const [loading, setLoading] = useState(false);
     const moment = require('moment');
-    const [artikel, setArtikel] = useState([]);
+    const [berita, setBerita] = useState([]);
     const navigate = useNavigate();
-    const getArtikel = async () => {
+    const getBerita = async () => {
         try {
-            const artikel_id = id;
-            const res = await axios.get(`/artikel/${artikel_id}`)
+            setLoading(true)
+            const berita_id = id;
+            const res = await axios.get(`/berita/${berita_id}`)
+            setLoading(false)
             if (res.data.status === 200) {
-                setArtikel(res.data.artikel);
+                setBerita(res.data.berita);
             } else if (res.data.status === 404) {
                 swal("Error", res.data.message, "error");
-                return navigate("/home");
+                return navigate("/berita");
             }
         }
         catch (err) {
-            return navigate("/home");
+            setLoading(false)
+            return navigate("/berita");
         }
+        
     }
+    
     useEffect(() => {
-        getArtikel();
+        getBerita();
     }, [props])
 
+    if (loading === true) {
+        return (
+            <div id="preloader-active">
+            <div className="preloader d-flex align-items-center justify-content-center">
+                <div className="preloader-inner position-relative">
+                    <div className="preloader-circle" />
+                    <div className="preloader-img pere-text">
+                        <img src={logo} alt />
+                    </div>
+                </div>
+            </div>
+        </div>
+        )
+    } else {
     return(
         <div>
         <Header />
@@ -59,17 +79,16 @@ export default function Detail(props) {
                         <div className="col-lg-8 mt-5">
                             <div className="single-post">
                                 <div className="feature-img">
-                                    <img className="img-fluid" src={artikel.image} alt />
+                                    <img className="img-fluid" src={berita.image} alt />
                                 </div>
                                 <div className="blog_details">
-                                    <h2>{artikel.nama_artikel}
-                                    </h2>
+                                    <h1 className='font-weight-bold'>{berita.nama_berita}</h1>
                                     <ul className="blog-info-link mt-3 mb-4">
                                         <li><a href="#"><FontAwesomeIcon icon={faUser} className='mr-2' />Admin</a></li>
-                                        <li><a href="#"><FontAwesomeIcon icon={faPen} className='mr-2' />{moment(artikel.created_at).fromNow()}</a></li>
-                                        <li><a href="#"><FontAwesomeIcon icon={faEye} className='mr-2' />{artikel.views}</a></li>
+                                        <li><a href="#"><FontAwesomeIcon icon={faPen} className='mr-2' />{moment(berita.created_at).fromNow()}</a></li>
+                                        <li><a href="#"><FontAwesomeIcon icon={faEye} className='mr-2' />{berita.views}</a></li>
                                     </ul>
-                                    <p className="excert" dangerouslySetInnerHTML={{ __html: artikel.isi_artikel }} />
+                                    <p className="excert" dangerouslySetInnerHTML={{ __html: berita.isi_berita }} />
                                     <div className="quote-wrapper">
                                         <div className="quotes">
                                             MCSE boot camps have its supporters and its detractors. Some people do not understand why you
@@ -93,4 +112,5 @@ export default function Detail(props) {
         <Footer />
     </div>
     )
+}
 }

@@ -10,6 +10,7 @@ import { Editor } from 'react-draft-wysiwyg';
 import draftToHtml from 'draftjs-to-html';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import '../css/main.min.css'
+import logo from '../assets/jonggol.png'
 
 function EditUmkm(props) {
     const { id } = useParams()
@@ -64,6 +65,8 @@ function EditUmkm(props) {
 
     const updateUmkm = async (e) => {
         e.preventDefault();
+        const thisClicked = e.currentTarget;
+        thisClicked.innerText = "Proccess...."
         const formData = new FormData();
         formData.append('image', picture.image)
         formData.append('nama_usaha', umkmInput.nama_usaha)
@@ -74,9 +77,10 @@ function EditUmkm(props) {
         const result = await axios.post(`/data-umkm/update/${umkm_id}/?_method=PUT`, formData)
         if (result.data.status === 200) {
             swal("Success", result.data.message, "success")
-            setError([]);
+            return navigate("/data-umkm")
         } else if (result.data.status === 422) {
             swal("Data Perlu di Isi", "", "error")
+            thisClicked.innerText = "Proccess...."
             setError(result.data.errors);
         } else if (result.data.status === 404) {
             swal("Error", result.data.message, "error")
@@ -86,7 +90,16 @@ function EditUmkm(props) {
 
     if (loading === true) {
         return (
-            <div>loading</div>
+            <div id="preloader-active">
+            <div className="preloader d-flex align-items-center justify-content-center">
+                <div className="preloader-inner position-relative">
+                    <div className="preloader-circle" />
+                    <div className="preloader-img pere-text">
+                        <img src={logo} alt />
+                    </div>
+                </div>
+            </div>
+        </div>
         )
     } else {
         return (
@@ -111,7 +124,7 @@ function EditUmkm(props) {
                                         <NavLink href="/data-umkm"><button className='genric-btn info radius mr-4'>Back</button></NavLink>
                                     </div>
                                     <div className="ibox-body">
-                                        <form onSubmit={updateUmkm}>
+                                        <form>
                                             <div className="form-group">
                                                 <label>Judul Usaha</label>
                                                 <input type="text" className="form-control mt-3" placeholder="Judul Usaha"
@@ -146,7 +159,7 @@ function EditUmkm(props) {
                                                 <small className='text-danger'>{error.isi_usaha}</small>
                                             </div>
                                             <button
-                                                type='submit' className='genric-btn info radius btn-user btn-block'>
+                                                onClick={updateUmkm} className='genric-btn info radius btn-user btn-block'>
                                                 Update Data
                                             </button>
                                         </form>

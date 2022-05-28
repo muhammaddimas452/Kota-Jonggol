@@ -28,6 +28,8 @@ export default function TambahKegiatanRutin() {
     const [error, setError] = useState([]);
     const submitKegiatan = async (e) => {
         e.preventDefault();
+        const thisClicked = e.currentTarget;
+        thisClicked.innerText = "Proccess...."
         const formData = new FormData();
         formData.append('image', picture.image)
         formData.append('tanggal_kegiatan', kegiatanInput.tanggal_kegiatan)
@@ -42,6 +44,7 @@ export default function TambahKegiatanRutin() {
         }
         else if (res.data.status === 422) {
             swal("Data Perlu di Isi", "", "error");
+            thisClicked.innerText = "Proccess...."
             setError(res.data.errors);
         }
     }
@@ -67,7 +70,7 @@ export default function TambahKegiatanRutin() {
                                     <div className="ibox-title">Tambah Data Kegiatan Rutin</div>
                                 </div>
                                 <div className="ibox-body">
-                                    <form onSubmit={submitKegiatan}>
+                                    <form>
                                         <div className="card-body">
                                             <div className="row">
                                                 <div className="col-lg-12 col-6">
@@ -116,7 +119,7 @@ export default function TambahKegiatanRutin() {
                                                         <small className='text-danger'>{error.status}</small>
                                                     </div>
                                                     <button
-                                                        type='submit' className='genric-btn info radius btn-user btn-block'>
+                                                        onClick={submitKegiatan} className='genric-btn info radius btn-user btn-block'>
                                                         Tambah Data
                                                     </button>
                                                 </div>

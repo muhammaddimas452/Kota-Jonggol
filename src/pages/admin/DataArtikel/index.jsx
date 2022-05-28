@@ -4,6 +4,7 @@ import Nav from '../Nav'
 import axios from '../../../api/axiosClient'
 import { NavLink } from 'reactstrap'
 import swal from 'sweetalert';
+import logo from '../assets/jonggol.png'
 import '../css/main.min.css'
 import '../vendors/bootstrap/dist/css/bootstrap.min.css'
 import '../vendors/themify-icons/css/themify-icons.css'
@@ -15,9 +16,10 @@ import { faArrowUp } from "@fortawesome/free-solid-svg-icons"
 export default function DataArtikel(props) {
 
     const [artikel, setArtikel] = useState();
-
+    const [loading, setLoading] = useState(false);
     const [modalShow, setModalShow] = useState(false);
     const navigate = useNavigate();
+    
     const deleteCategory = (e, artikel_id) => {
         e.preventDefault();
 
@@ -35,10 +37,13 @@ export default function DataArtikel(props) {
     }
     const getArtikel = async () => {
         try {
+            setLoading(true)
             const res = await axios.get(`/artikel`)
+            setLoading(false)
             setArtikel(res.data)
         }
         catch (err) {
+            setLoading(false)
         }
     }
 
@@ -67,6 +72,20 @@ export default function DataArtikel(props) {
         readArtikel(id)
     }
 
+    if (loading === true) {
+        return (
+            <div id="preloader-active">
+            <div className="preloader d-flex align-items-center justify-content-center">
+                <div className="preloader-inner position-relative">
+                    <div className="preloader-circle" />
+                    <div className="preloader-img pere-text">
+                        <img src={logo} alt />
+                    </div>
+                </div>
+            </div>
+        </div>
+        )
+    } else {
     return (
         <div className='page-wrapper'>
             <Nav />
@@ -89,7 +108,6 @@ export default function DataArtikel(props) {
                         </div>
                         <div className="ibox-body">
                             <div className="scroller" data-height="600">
-                                
                                 <Table responsive striped bordered hover>
                                     <thead>
                                         <tr>
@@ -108,10 +126,10 @@ export default function DataArtikel(props) {
                                             <tr key={index}>
                                                 {/* <th class="text-center">1</th> */}
                                                 <td className="text-center">{artikel.tanggal}</td>
-                                                <dt className="text-center">{artikel.nama_artikel}</dt>
+                                                <td className="text-center">{artikel.nama_artikel}</td>
                                                 <td className="text-center"><img className='responsive' style={{ width: 200, height: 'auto' }}
                                                     src={artikel.image} /></td>
-                                                <dt className=""><p dangerouslySetInnerHTML={{ __html: artikel.isi_artikel }} /></dt>
+                                                <dt className=""><p dangerouslySetInnerHTML={{ __html: artikel.isi_artikel.substr(0, 200) }} /></dt>
                                                 <td className="text-center">{artikel.views}</td>
                                                 <td className="text-center">
                                                     <a href={`/editartikel/${artikel.id}`}><button className="genric-btn success radius">Edit</button></a>
@@ -134,6 +152,7 @@ export default function DataArtikel(props) {
             </div>
         </div>
     )
+}
 }
 
 function MydModalWithGrid(props) {

@@ -10,6 +10,7 @@ import { Editor } from 'react-draft-wysiwyg';
 import draftToHtml from 'draftjs-to-html';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import '../css/main.min.css'
+import logo from '../assets/jonggol.png'
 
 function EditPotensi(props) {
     const { id } = useParams()
@@ -64,6 +65,8 @@ function EditPotensi(props) {
 
     const updatePotensi = async (e) => {
         e.preventDefault();
+        const thisClicked = e.currentTarget;
+        thisClicked.innerText = "Proccess...."
         const formData = new FormData();
         formData.append('image', picture.image)
         formData.append('nama_potensi', potensiInput.nama_potensi)
@@ -74,9 +77,10 @@ function EditPotensi(props) {
         const result = await axios.post(`/artikel-potensi/update/${potensi_id}/?_method=PUT`, formData)
         if (result.data.status === 200) {
             swal("Success", result.data.message, "success")
-            setError([]);
+            return navigate("/potensi")
         } else if (result.data.status === 422) {
             swal("Data Perlu di Isi", "", "error")
+            thisClicked.innerText = "Proccess...."
             setError(result.data.errors);
         } else if (result.data.status === 404) {
             swal("Error", result.data.message, "error")
@@ -86,7 +90,16 @@ function EditPotensi(props) {
 
     if (loading === true) {
         return (
-            <div>loading</div>
+            <div id="preloader-active">
+            <div className="preloader d-flex align-items-center justify-content-center">
+                <div className="preloader-inner position-relative">
+                    <div className="preloader-circle" />
+                    <div className="preloader-img pere-text">
+                        <img src={logo} alt />
+                    </div>
+                </div>
+            </div>
+        </div>
         )
     } else {
         return (
@@ -111,7 +124,7 @@ function EditPotensi(props) {
                                         <NavLink href="/potensi"><button className='genric-btn info radius mr-4'>Back</button></NavLink>
                                     </div>
                                     <div className="ibox-body">
-                                        <form onSubmit={updatePotensi}>
+                                        <form>
                                             <div className="form-group">
                                                 <label>Judul Potensi</label>
                                                 <input type="text" className="form-control mt-3" placeholder="Judul Potensi"
@@ -146,7 +159,7 @@ function EditPotensi(props) {
                                                 <small className='text-danger'>{error.isi_potensi}</small>
                                             </div>
                                             <button
-                                                type='submit' className='genric-btn info radius btn-user btn-block'>
+                                                onClick={updatePotensi} className='genric-btn info radius btn-user btn-block'>
                                                 Update Data
                                             </button>
                                         </form>

@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import React, { useState, PureComponent } from 'react'
 import Nav from '../Nav'
 import axios from '../../../api/axiosClient'
 import { NavLink } from 'reactstrap'
@@ -7,14 +7,13 @@ import swal from 'sweetalert';
 import {Table} from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUp } from "@fortawesome/free-solid-svg-icons"
-
+import logo from '../assets/jonggol.png'
 import '../css/main.min.css'
 import '../css/main.css'
 
-
-
 const deleteKegiatan = (e, kegiatan_id) => {
     e.preventDefault();
+    
 
     const thisClicked = e.currentTarget;
     thisClicked.innerText = "Deleting"

@@ -10,12 +10,13 @@ import '../vendors/themify-icons/css/themify-icons.css'
 import { Modal, Container, Table } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUp } from "@fortawesome/free-solid-svg-icons"
+import logo from '../assets/jonggol.png'
 
 
 export default function DataLayanan(props) {
 
     const [layanan, setLayanan] = useState();
-
+    const [loading, setLoading] = useState(false);
     const [modalShow, setModalShow] = useState(false);
     const navigate = useNavigate();
     const deleteCategory = (e, layanan_id) => {
@@ -35,10 +36,13 @@ export default function DataLayanan(props) {
     }
     const getLayanan = async () => {
         try {
+            setLoading(true)
             const res = await axios.get(`/layanan`)
+            setLoading(false)
             setLayanan(res.data)
         }
         catch (err) {
+            setLoading(false)
         }
     }
 
@@ -67,6 +71,20 @@ export default function DataLayanan(props) {
         readLayanan(id)
     }
 
+    if (loading === true) {
+        return (
+            <div id="preloader-active">
+            <div className="preloader d-flex align-items-center justify-content-center">
+                <div className="preloader-inner position-relative">
+                    <div className="preloader-circle" />
+                    <div className="preloader-img pere-text">
+                        <img src={logo} alt />
+                    </div>
+                </div>
+            </div>
+        </div>
+        )
+    } else {
     return (
         <div className='page-wrapper'>
             <Nav />
@@ -109,7 +127,7 @@ export default function DataLayanan(props) {
                                                 <td className="text-center">{layanan.nama_layanan}</td>
                                                 <td className="text-center"><img className='responsive' style={{ width: 200, height: 'auto' }}
                                                     src={layanan.image} /></td>
-                                                <dt className=""><p dangerouslySetInnerHTML={{ __html: layanan.isi_layanan }} /></dt>
+                                                <dt className=""><p dangerouslySetInnerHTML={{ __html: layanan.isi_layanan.substr(0, 200) }} /></dt>
                                                 <td className="text-center">{layanan.views}</td>
                                                 <td className="text-center">
                                                     <a href={`/editlayanan/${layanan.id}`}><button className="genric-btn success radius">Edit</button></a>
@@ -131,4 +149,5 @@ export default function DataLayanan(props) {
             </div>
         </div>
     )
+}
 }

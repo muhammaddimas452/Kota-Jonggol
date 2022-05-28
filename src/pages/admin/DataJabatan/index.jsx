@@ -4,6 +4,7 @@ import Nav from '../Nav'
 import axios from '../../../api/axiosClient'
 import { NavLink } from 'reactstrap'
 import swal from 'sweetalert';
+import logo from '../assets/jonggol.png'
 import '../css/main.min.css'
 import '../vendors/bootstrap/dist/css/bootstrap.min.css'
 import '../vendors/themify-icons/css/themify-icons.css'
@@ -14,6 +15,7 @@ import { faArrowUp } from "@fortawesome/free-solid-svg-icons"
 export default function Jabatan(props) {
     const [jabatan, setJabatan] = useState();
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
     const deleteCategory = (e, jabatan_id) => {
         e.preventDefault();
         const thisClicked = e.currentTarget;
@@ -31,10 +33,13 @@ export default function Jabatan(props) {
 
     const getJabatan = async () => {
         try {
+            setLoading(true)
             const res = await axios.get(`/jabatan`)
+            setLoading(false)
             setJabatan(res.data)
         }
         catch (err) {
+            setLoading(false)
         }
     }
     useEffect(() => {
@@ -66,6 +71,20 @@ export default function Jabatan(props) {
         readJabatan(id)
     }
 
+    if (loading === true) {
+        return (
+            <div id="preloader-active">
+            <div className="preloader d-flex align-items-center justify-content-center">
+                <div className="preloader-inner position-relative">
+                    <div className="preloader-circle" />
+                    <div className="preloader-img pere-text">
+                        <img src={logo} alt />
+                    </div>
+                </div>
+            </div>
+        </div>
+        )
+    } else {
     return (
         <div className='page-wrapper'>
             <Nav />
@@ -120,6 +139,7 @@ export default function Jabatan(props) {
             </div>
         </div>
     )
+}
 }
 
 function UpdateModal(props) {

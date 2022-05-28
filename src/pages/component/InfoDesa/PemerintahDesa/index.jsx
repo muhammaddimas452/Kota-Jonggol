@@ -19,17 +19,22 @@ import axios from '../../../../api/axiosClient'
 import swal from 'sweetalert';
 import { useNavigate } from "react-router-dom";
 import { Modal, Col, Container, Row, Button, Table } from 'react-bootstrap'
+import logo from '../../assets/jonggol.png'
 
 export default function (props) {
     const [pemerintah, setPemerintah] = useState();
     const [detailModal, setDetailModal] = useState();
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const getPemerintah = async () => {
         try {
+            setLoading(true)
             const res = await axios.get(`/pemerintahdesa`,)
+            setLoading(false)
             setPemerintah(res.data)
         }
         catch (err) {
+            setLoading(false)
         }
     }
     useEffect(() => {
@@ -59,6 +64,20 @@ export default function (props) {
         readPemerintah(id)
     }
 
+    if (loading === true) {
+        return (
+            <div id="preloader-active">
+            <div className="preloader d-flex align-items-center justify-content-center">
+                <div className="preloader-inner position-relative">
+                    <div className="preloader-circle" />
+                    <div className="preloader-img pere-text">
+                        <img src={logo} alt />
+                    </div>
+                </div>
+            </div>
+        </div>
+        )
+    } else {
     return (
         <div>
             <Header />
@@ -67,7 +86,6 @@ export default function (props) {
                     <div className="container">
                         <div className="row">
                             <div className="col-lg-8">
-                                    <div className="container">
                                         <div className="row">
                                             <div className="">
                                                 {/* Section Tittle */}
@@ -92,7 +110,6 @@ export default function (props) {
                                             </div>
                                             ))}
                                         </div>
-                                    </div>
                                 </div>
                                 <div className='col-lg-4'>
                                     <Aside />
@@ -105,6 +122,7 @@ export default function (props) {
             <MydModalWithGrid show={detailModal} detail={detailPemerintah} onHide={() => setDetailModal(false)} />
         </div>
     )
+}
 }
 
 const MydModalWithGrid = (props) => {

@@ -39,6 +39,8 @@ export default function TambahLayanan() {
     const navigate = useNavigate();
     const onSubmit = async (e) => {
         e.preventDefault();
+        const thisClicked = e.currentTarget;
+        thisClicked.innerText = "Proccess...."
         const formData = new FormData();
         formData.append('image', picture.image)
         formData.append('nama_layanan', values.nama_layanan)
@@ -51,6 +53,7 @@ export default function TambahLayanan() {
             return navigate("/layanan")
         } else if (result?.data?.status === 422) {
             swal("Data Perlu di Isi", "", "error")
+            thisClicked.innerText = "Proccess...."
             setError(result.data.errors);
         } 
     }
@@ -75,7 +78,7 @@ export default function TambahLayanan() {
                                     <div className="ibox-title">Tambah Data Layanan Masyarakat</div>
                                 </div>
                                 <div className="ibox-body">
-                                    <form onSubmit={onSubmit}>
+                                    <form>
                                         <div className="form-group">
                                             <label htmlFor="roundText">Judul Layanan</label>
                                             <input type="text" className="form-control mt-3" placeholder="Judul Layanan"
@@ -110,7 +113,7 @@ export default function TambahLayanan() {
                                             <small className='text-danger'>{error.isi_layanan}</small>
                                         </div>
                                         <button
-                                            type='submit' className='genric-btn info radius btn-user btn-block'>
+                                            onClick={onSubmit} className='genric-btn info radius btn-user btn-block'>
                                             Tambah Data
                                         </button>
                                     </form>

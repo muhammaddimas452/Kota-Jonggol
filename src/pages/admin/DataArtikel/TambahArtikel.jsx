@@ -15,6 +15,7 @@ export default function TambahArtikel() {
         isi_artikel: '',
     });
 
+    const [loading, setLoading] = useState(false);
     const [picture, setPicture] = useState([]);
 
     const handleImage = (e) => {
@@ -37,14 +38,16 @@ export default function TambahArtikel() {
 
     const [error, setError] = useState([]);
     const navigate = useNavigate();
+
     const onSubmit = async (e) => {
         e.preventDefault();
+        const thisClicked = e.currentTarget;
+        thisClicked.innerText = "Proccess...."
         const formData = new FormData();
         formData.append('image', picture.image)
         formData.append('tanggal', values.tanggal)
         formData.append('nama_artikel', values.nama_artikel)
         formData.append('isi_artikel', values.isi_artikel.value)
-
         const result = await axios.post(`/artikel/add`, formData)
         console.log(result)
         if (result?.data?.status === 200) {
@@ -52,8 +55,9 @@ export default function TambahArtikel() {
             return navigate("/artikel")
         } else if (result?.data?.status === 422) {
             swal("Data Perlu di Isi", "", "error")
+            thisClicked.innerText = "Proccess...."
             setError(result.data.errors);
-        } 
+        }
     }
     return (
         <div className='page-wrapper'>
@@ -76,7 +80,7 @@ export default function TambahArtikel() {
                                     <div className="ibox-title">Tambah Data Artikel</div>
                                 </div>
                                 <div className="ibox-body">
-                                    <form onSubmit={onSubmit}>
+                                    <form>
                                         <div className="form-group">
                                             <label>Tanggal</label>
                                             <input className="form-control" type="date" placeholder="Masukkan Nama Artikel"
@@ -116,13 +120,13 @@ export default function TambahArtikel() {
                                                 editorClassName="editorClassName"
                                                 onEditorStateChange={onEditorStateChange}
                                             />
-                                            <textarea style={{ display: 'none' }} disabled ref={(val) => values.isi_artikel = val} 
-                                            value={draftToHtml(convertToRaw(isiArtikel.getCurrentContent()))} rows="3" />
+                                            <textarea style={{ display: 'none' }} disabled ref={(val) => values.isi_artikel = val}
+                                                value={draftToHtml(convertToRaw(isiArtikel.getCurrentContent()))} rows="3" />
                                             <small className='text-danger'>{error.isi_artikel}</small>
                                         </div>
                                         <button
-                                            type='submit' className='genric-btn info radius btn-user btn-block'>
-                                            Tambah Data
+                                            onClick={onSubmit} className='genric-btn info radius btn-user btn-block'>
+                                            Tambah Data                                
                                         </button>
                                     </form>
                                 </div>

@@ -9,12 +9,13 @@ import '../vendors/bootstrap/dist/css/bootstrap.min.css'
 import '../vendors/themify-icons/css/themify-icons.css'
 import { Table } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import logo from '../assets/jonggol.png'
 import { faArrowUp } from "@fortawesome/free-solid-svg-icons"
 
 
 export default function DataInfoWilayah(props) {
     const [infoWilayah, setInfoWilayah] = useState();
-    const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
     const deleteCategory = (e, infowilayah_id) => {
         e.preventDefault();
 
@@ -32,16 +33,33 @@ export default function DataInfoWilayah(props) {
     }
     const getInfoWilayah = async () => {
         try {
+            setLoading(true)
             const res = await axios.get(`/infowilayah`,)
+            setLoading(false)
             setInfoWilayah(res.data)
         }
         catch (err) {
+            setLoading(false)
         }
     }
     useEffect(() => {
         getInfoWilayah();
     }, [props])
 
+    if (loading === true) {
+        return (
+            <div id="preloader-active">
+            <div className="preloader d-flex align-items-center justify-content-center">
+                <div className="preloader-inner position-relative">
+                    <div className="preloader-circle" />
+                    <div className="preloader-img pere-text">
+                        <img src={logo} alt />
+                    </div>
+                </div>
+            </div>
+        </div>
+        )
+    } else {
     return (
         <div className='page-wrapper'>
             <Nav />
@@ -99,4 +117,5 @@ export default function DataInfoWilayah(props) {
             </div>
         </div>
     )
+}
 }

@@ -7,6 +7,7 @@ import { NavLink } from "reactstrap"
 import axios from '../../../api/axiosClient'
 import swal from 'sweetalert';
 import '../css/main.min.css'
+import logo from '../assets/jonggol.png'
 
 export default function EditPemerintah(props) {
 
@@ -63,6 +64,8 @@ export default function EditPemerintah(props) {
     const navigate = useNavigate();
     const updatePemerintah = async (e) => {
         e.preventDefault();
+        const thisClicked = e.currentTarget;
+        thisClicked.innerText = "Proccess...."
         const formData = new FormData();
         formData.append('gambar_pemerintah', picture.gambar_pemerintah)
         formData.append('nama', values.nama)
@@ -76,6 +79,7 @@ export default function EditPemerintah(props) {
             return navigate("/pemerintahdesa")
         } else if (result?.data?.status === 422) {
             swal("Data Perlu di Isi", "", "error")
+            thisClicked.innerText = "Proccess...."
             setError(result.data.errors);
         } else if (result?.data?.status === 404) {
             swal("Error", result.data.message, "error")
@@ -83,10 +87,18 @@ export default function EditPemerintah(props) {
     }
     if (loading === true) {
         return (
-            <div>loading</div>
+            <div id="preloader-active">
+            <div className="preloader d-flex align-items-center justify-content-center">
+                <div className="preloader-inner position-relative">
+                    <div className="preloader-circle" />
+                    <div className="preloader-img pere-text">
+                        <img src={logo} alt />
+                    </div>
+                </div>
+            </div>
+        </div>
         )
     } else {
-
     return (
         <div className='page-wrapper'>
             <Nav />
@@ -109,7 +121,7 @@ export default function EditPemerintah(props) {
                                     <NavLink href="/pemerintahdesa"><button className='genric-btn info radius mr-4'>Back</button></NavLink>
                                 </div>
                                 <div className="ibox-body">
-                                    <form onSubmit={updatePemerintah}>
+                                    <form>
                                         <div className="form-group">
                                             <label>Nama</label>
                                             <input className="form-control" type="text" placeholder="Masukkan Nama"
@@ -145,7 +157,7 @@ export default function EditPemerintah(props) {
                                         </div>
 
                                         <button
-                                            type='submit' className='genric-btn info radius btn-user btn-block'>
+                                            onClick={updatePemerintah} className='genric-btn info radius btn-user btn-block'>
                                             Update Data
                                         </button>
                                     </form>

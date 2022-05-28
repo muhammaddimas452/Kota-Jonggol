@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 import swal from 'sweetalert';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUp } from "@fortawesome/free-solid-svg-icons"
-
+import logo from '../assets/jonggol.png'
 import '../css/main.min.css'
 import '../vendors/bootstrap/dist/css/bootstrap.min.css'
 import '../vendors/themify-icons/css/themify-icons.css'
@@ -14,6 +14,7 @@ import '../vendors/themify-icons/css/themify-icons.css'
 
 export default function PemerintahDesa(props) {
     const [pemerintah, setPemerintah] = useState();
+    const [loading, setLoading] = useState(false);
     const deleteCategory = (e, jabatan_id) => {
         e.preventDefault();
 
@@ -31,17 +32,33 @@ export default function PemerintahDesa(props) {
     }
     const getPemerintah = async () => {
         try {
+            setLoading(true)
             const res = await axios.get(`/pemerintahdesa`,)
-            console.log(res.data)
+            setLoading(false)
             setPemerintah(res.data)
         }
         catch (err) {
+            setLoading(false)
         }
     }
     useEffect(() => {
         getPemerintah();
     }, [props])
 
+    if (loading === true) {
+        return (
+            <div id="preloader-active">
+            <div className="preloader d-flex align-items-center justify-content-center">
+                <div className="preloader-inner position-relative">
+                    <div className="preloader-circle" />
+                    <div className="preloader-img pere-text">
+                        <img src={logo} alt />
+                    </div>
+                </div>
+            </div>
+        </div>
+        )
+    } else {
     return (
         <div className='page-wrapper'>
             <Nav />
@@ -107,4 +124,5 @@ export default function PemerintahDesa(props) {
             </div>
         </div>
     )
+}
 }

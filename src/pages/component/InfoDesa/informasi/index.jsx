@@ -17,17 +17,22 @@ import Footer from '../Footer';
 import Aside from '../Aside';
 import { Table } from 'react-bootstrap'
 import axios from '../../../../api/axiosClient'
+import logo from '../../assets/jonggol.png'
 
 export default function Informasi(props) {
     const [jumlahPenduduk, setJumlahPenduduk] = useState();
     const [infoWilayah, setInfoWilayah] = useState();
+    const [loading, setLoading] = useState(false);
 
     const getJumlahPenduduk = async () => {
         try{
+            setLoading(true)
             const res = await axios.get(`/jumlah-penduduk`)
+            setLoading(false)
             setJumlahPenduduk(res.data)
         }
         catch (err) {
+            setLoading(false)
         }
     }
     const getInfoWilayah = async () => {
@@ -44,6 +49,20 @@ export default function Informasi(props) {
         getInfoWilayah();
     }, [props])
 
+    if (loading === true) {
+        return (
+            <div id="preloader-active">
+            <div className="preloader d-flex align-items-center justify-content-center">
+                <div className="preloader-inner position-relative">
+                    <div className="preloader-circle" />
+                    <div className="preloader-img pere-text">
+                        <img src={logo} alt />
+                    </div>
+                </div>
+            </div>
+        </div>
+        )
+    } else {
     return (
         <div>
             <Header />
@@ -98,4 +117,5 @@ export default function Informasi(props) {
             <Footer />
         </div>
     )
+}
 }

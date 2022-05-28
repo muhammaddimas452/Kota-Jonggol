@@ -5,11 +5,16 @@ import { Route, Routes, Navigate } from 'react-router-dom';
 import Home from './pages/component/InfoDesa/home'
 import Peta from './pages/component/InfoDesa/peta'
 import Informasi from './pages/component/InfoDesa/informasi'
-import Sejarah from './pages/component/InfoDesa/Sejarah'
-import VisiMisi from './pages/component/InfoDesa/VisiMisi'
 import Pemerintah from './pages/component/InfoDesa/PemerintahDesa'
-import Detail from './pages/component/InfoDesa/Detail'
+import DetailProfile from './pages/component/InfoDesa/Detail/DetailProfile'
+import DetailUmkm from './pages/component/InfoDesa/Detail/DetailUmkm'
+import DetailPotensi from './pages/component/InfoDesa/Detail/DetailPotensi'
+import DetailBerita from './pages/component/InfoDesa/Detail/DetailBerita'
 import Galeri from './pages/component/InfoDesa/galeri'
+import Umkm from './pages/component/InfoDesa/UMKM'
+import Layanan from './pages/component/InfoDesa/Layanan'
+import Berita from './pages/component/InfoDesa/Berita'
+import Kegiatan from './pages/component/InfoDesa/Kegiatan'
  
 import Login from './pages/auth/Login'
 import ForgotPassword from './pages/auth/ForgotPassword';
@@ -62,12 +67,17 @@ function App() {
     <Routes>
       <Route path="/home" element={ <Home />} />
       <Route path="/peta" element={ <Peta />} />
-      <Route path="/informasi" element={ <Informasi />} />
-      <Route path="/sejarah" element={ <Sejarah />} />
-      <Route path="/visimisi" element={ <VisiMisi />} />
+      <Route path="/informasi-wilayah" element={ <Informasi />} />
       <Route path="/pemerintah" element={ <Pemerintah />} />
       <Route path="/galeri" element={ <Galeri />} />
-      <Route path="/detail/:id" element={ <Detail />} />
+      <Route path="/detail-profile/:id" element={ <DetailProfile />} />
+      <Route path="/detail-umkm/:id" element={ <DetailUmkm />} />
+      <Route path="/detail-potensi/:id" element={ <DetailPotensi />} />
+      <Route path="/detail-berita/:id" element={ <DetailBerita />} />
+      <Route path="/umkm" element={ <Umkm />} />
+      <Route path="/layanan-masyarakat" element={ <Layanan />} />
+      <Route path="/berita" element={ <Berita />} />
+      <Route path="/kegiatan" element={ <Kegiatan />} />
 
       <Route path="/login" element={<Login />} />
       <Route path="/forgotpassword" element={<ForgotPassword />} />
@@ -98,7 +108,7 @@ function App() {
 
       <Route path='/jabatan' element={<Jabatan />} />
 
-      <Route path='/kegiatan' element={<DataKegiatan />} />
+      <Route path='/data-kegiatan' element={<DataKegiatan />} />
       <Route path='/tambahkegiatan' element={<TambahKegiatan />} />
       <Route path='/editkegiatan/:id' element={<EditKegiatan />} />
 

@@ -10,12 +10,13 @@ import '../vendors/themify-icons/css/themify-icons.css'
 import { Modal, Container, Table } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowUp } from "@fortawesome/free-solid-svg-icons"
+import logo from '../assets/jonggol.png'
 
 
 export default function DataUMKM(props) {
 
     const [umkm, setUmkm] = useState();
-
+    const [loading, setLoading] = useState(false);
     const [modalShow, setModalShow] = useState(false);
     const navigate = useNavigate();
     const deleteCategory = (e, umkm_id) => {
@@ -35,10 +36,13 @@ export default function DataUMKM(props) {
     }
     const getUmkm = async () => {
         try {
+            setLoading(true)
             const res = await axios.get(`/data-umkm`)
+            setLoading(false)
             setUmkm(res.data)
         }
         catch (err) {
+            setLoading(false)
         }
     }
 
@@ -67,6 +71,20 @@ export default function DataUMKM(props) {
         readUmkm(id)
     }
 
+    if (loading === true) {
+        return (
+            <div id="preloader-active">
+            <div className="preloader d-flex align-items-center justify-content-center">
+                <div className="preloader-inner position-relative">
+                    <div className="preloader-circle" />
+                    <div className="preloader-img pere-text">
+                        <img src={logo} alt />
+                    </div>
+                </div>
+            </div>
+        </div>
+        )
+    } else {
     return (
         <div className='page-wrapper'>
             <Nav />
@@ -109,7 +127,7 @@ export default function DataUMKM(props) {
                                                 <td className="text-center">{umkm.nama_usaha}</td>
                                                 <td className="text-center"><img className='responsive' style={{ width: 200, height: 'auto' }}
                                                     src={umkm.image} /></td>
-                                                <dt className=""><p dangerouslySetInnerHTML={{ __html: umkm.isi_usaha }} /></dt>
+                                                <dt className=""><p dangerouslySetInnerHTML={{ __html: umkm.isi_usaha.substr(0, 200) }} /></dt>
                                                 <td className="text-center">{umkm.views}</td>
                                                 <td className="text-center">
                                                     <a href={`/edit-data-umkm/${umkm.id}`}><button className="genric-btn success radius">Edit</button></a>
@@ -131,4 +149,5 @@ export default function DataUMKM(props) {
             </div>
         </div>
     )
+}
 }

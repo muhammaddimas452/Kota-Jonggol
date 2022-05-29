@@ -79,7 +79,7 @@ function App() {
       <Route path="/berita" element={ <Berita />} />
       <Route path="/kegiatan" element={ <Kegiatan />} />
 
-      <Route path="/login" element={<Login />} />
+      <Route path="/login-admin-desa-jonggol" element={<Login />} />
       <Route path="/forgotpassword" element={<ForgotPassword />} />
       <Route path="/resetpassword/:token" element={<ResetPassword/>} />
 

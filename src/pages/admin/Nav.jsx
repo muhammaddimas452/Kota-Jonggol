@@ -5,6 +5,7 @@ import swal from 'sweetalert'
 import { useNavigate } from "react-router-dom";
 import { Modal, Container, Row } from 'react-bootstrap'
 import './css/main.min.css'
+import '../admin/assets/js/app.min.js'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faGauge } from "@fortawesome/free-solid-svg-icons";
 import { faTable } from "@fortawesome/free-solid-svg-icons";
@@ -16,6 +17,7 @@ export default function Nav() {
     const [modalSetting, setModalSetting] = useState(false);
     const [modalImage, setModalImage] = useState(false);
     const [modalText, setModalText] = useState(false);
+    const [show, setShow] = useState(true);
     const navigate = useNavigate();
     const logOut = () => {
         localStorage.clear()
@@ -39,9 +41,6 @@ export default function Nav() {
                             <a className="nav-link sidebar-toggler js-sidebar-toggler" data-toggle="collapse"><i className="ti-menu" /></a>
                         </li>
                     </ul>
-                    {/* <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-                    <i className="ti-menu" />
-                                </button> */}
                 </div>
             </header>
             <nav className="page-sidebar" id="sidebar">
@@ -101,22 +100,6 @@ export default function Nav() {
                                 <span className="nav-label">Data Kegiatan Rutin</span></a>
                         </li>
                         <li>
-                            <a className='text-white' onClick={() => setModalShow(true)}><FontAwesomeIcon className='sidebar-item-icon' icon={faSquarePen} />
-                                <span className="nav-label">Edit Jumlah Penduduk</span></a>
-                        </li>
-                        <li>
-                            <a className='text-white' onClick={() => setModalSetting(true)}><FontAwesomeIcon className='sidebar-item-icon' icon={faSquarePen} />
-                                <span className="nav-label">Pengaturan Info</span></a>
-                        </li>
-                        <li>
-                            <a className='text-white' onClick={() => setModalImage(true)}><FontAwesomeIcon className='sidebar-item-icon' icon={faSquarePen} />
-                                <span className="nav-label">Edit Foto Beranda</span></a>
-                        </li>
-                        <li>
-                            <a className='text-white' onClick={() => setModalText(true)}><FontAwesomeIcon className='sidebar-item-icon' icon={faSquarePen} />
-                                <span className="nav-label">Edit Text Beranda</span></a>
-                        </li>
-                        {/* <li>
                             <a href=''><FontAwesomeIcon className='sidebar-item-icon' icon={faSquarePen} />
                                 <span className="nav-label">Menu</span><i className="fa fa-angle-left arrow" /></a>
                             <ul className="nav-2-level collapse">
@@ -133,29 +116,7 @@ export default function Nav() {
                                     <a className='text-white' onClick={() => setModalText(true)}>Edit Text Beranda</a>
                                 </li>
                             </ul>
-                        </li> */}
-                        <li>
-                            <a href="javascript:;"><i className="sidebar-item-icon fa fa-sitemap" />
-                                <span className="nav-label">Menu Levels</span><i className="fa fa-angle-left arrow" /></a>
-                            <ul className="nav-2-level collapse">
-                                <li>
-                                    <a href="javascript:;">Level 2</a>
-                                </li>
-                                <li>
-                                    <a href="javascript:;">
-                                        <span className="nav-label">Level 2</span><i className="fa fa-angle-left arrow" /></a>
-                                    <ul className="nav-3-level collapse">
-                                        <li>
-                                            <a href="javascript:;">Level 3</a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:;">Level 3</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
                         </li>
-
                         <li>
                             <a href="" onClick={logOut}><FontAwesomeIcon className='sidebar-item-icon' icon={faRightFromBracket} />
                                 <span className="nav-label">Log Out</span></a>
@@ -538,6 +499,20 @@ function ModalImage(props) {
     const [error, setError] = useState([]);
     const [loading, setLoading] = useState(false);
     const handleClose = () => ModalImage(false);
+    const deleteCategory = (e, image_id) => {
+        e.preventDefault();
+        const thisClicked = e.currentTarget;
+        thisClicked.innerText = "Deleting"
+        axios.delete(`/foto-beranda/delete/${image_id}`).then(res => {
+            if (res.data.status === 200) {
+                swal("Success", res.data.message, "success");
+                window.location.reload()
+            } else if (res.data.status === 500) {
+                swal("Error", res.data.message, "error");
+                thisClicked.innerText = "Deleting"
+            }
+        });
+    }
 
     const getImage = async () => {
         try {
@@ -621,6 +596,9 @@ function ModalImage(props) {
                                             <div className="single-gallery-image" >
                                             <img className='responsive' style={{ width: 200, height: 150 }}
                                             src={image.image} />
+                                            </div>
+                                            <div className=''>
+                                            <button className="genric-btn danger radius ml-3" onClick={(e) => deleteCategory(e, image.id)}>Delete</button>
                                             </div>
                                         </div>
                                     ))}    

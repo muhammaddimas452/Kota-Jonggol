@@ -75,7 +75,7 @@ const ForgotPassword = () => {
                                         </div>
                                     </form>
                                     <div className='text-center'>
-                                        <p className="pb-lg-2" style={{ color: '#393f81' }}>Punya Akun?<a href="/login" style={{ color: '#393f81' }}> Login</a></p>
+                                        <p className="pb-lg-2" style={{ color: '#393f81' }}>Punya Akun?<a href="/login-admin-desa-jonggol" style={{ color: '#393f81' }}> Login</a></p>
                                     </div>
                                 </div>
                             </div>

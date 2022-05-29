@@ -8,7 +8,7 @@ const useAuth = () => {
 
 const ProtectedLogin = () => {
   const isAuth =useAuth()
-  return isAuth ? <Outlet /> : <Navigate to="/login" />
+  return isAuth ? <Outlet /> : <Navigate to="/login-admin-desa-jonggol" />
 }
 
 export default ProtectedLogin;

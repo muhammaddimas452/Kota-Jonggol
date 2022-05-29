@@ -21,7 +21,7 @@ export default function Nav() {
     const navigate = useNavigate();
     const logOut = () => {
         localStorage.clear()
-        return navigate("/login")
+        return navigate("/login-admin-desa-jonggol")
     }
     return (
         <div>

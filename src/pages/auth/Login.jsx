@@ -8,16 +8,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
-const RegisterSchema = Yup.object().shape({
-    email: Yup.string().email().required("Wajib di isi"),
-    password: Yup.string()
-        .min(8, "Password minimal 8 Karakter")
-        .required("wajib di isi"),
-});
 
 const Login = () => {
 
-    const [errorBE, setErrorBE] = React.useState({});
     const initialState = {
         email: "",
         password: "",
@@ -111,7 +104,7 @@ const Login = () => {
                                                     <small className='text-danger'>{error.password}</small>
                                                 </div>
                                                 <div className="pt-1 mb-4">
-                                                    <button className="genric-btn primary btn-lg btn-block" type="submit">Login</button>
+                                                    <button className="genric-btn primary btn-lg btn-block" type="submit">{isLoading ? "Process ..." : "Login"}</button>
                                                 </div>
                                                 <div className='text-center'>
                                                     <p className="pb-lg-2" style={{ color: '#393f81' }}><a href="/forgotpassword" style={{ color: '#393f81' }}>Forgot Password</a></p>

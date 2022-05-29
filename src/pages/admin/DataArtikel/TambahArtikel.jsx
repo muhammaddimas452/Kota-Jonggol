@@ -15,7 +15,6 @@ export default function TambahArtikel() {
         isi_artikel: '',
     });
 
-    const [loading, setLoading] = useState(false);
     const [picture, setPicture] = useState([]);
 
     const handleImage = (e) => {
@@ -126,7 +125,7 @@ export default function TambahArtikel() {
                                         </div>
                                         <button
                                             onClick={onSubmit} className='genric-btn info radius btn-user btn-block'>
-                                            Tambah Data                                
+                                            Tambah Data                               
                                         </button>
                                     </form>
                                 </div>

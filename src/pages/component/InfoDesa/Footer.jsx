@@ -23,11 +23,11 @@ export default function Footer(props) {
     const getInfo = async () =>{
         
         try{
-            const res = await axios.get('/info/1')
-            setInfo(res.data)
+            const res = await axios.get('/info/edit/1')
+            setInfo(res.data.info)
         }
         catch (err) {
-        }
+        }      
     }
 
     useEffect(() => {

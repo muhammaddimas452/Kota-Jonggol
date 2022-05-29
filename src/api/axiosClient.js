@@ -4,7 +4,7 @@ const headers = {
   Accept: "application/json",
 };
 const axiosClient = axios.create({
-  baseURL: "http://api-projectakhir.herokuapp.com/api/",
+  baseURL: "https://api-projectakhir.herokuapp.com/api/",
   headers,
 });
 

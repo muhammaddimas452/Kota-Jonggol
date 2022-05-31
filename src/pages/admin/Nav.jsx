@@ -96,10 +96,6 @@ export default function Nav() {
                                 <span className="nav-label">Data Kegiatan</span></a>
                         </li>
                         <li>
-                            <a href="/kegiatan-rutin"><FontAwesomeIcon className='sidebar-item-icon' icon={faTable} />
-                                <span className="nav-label">Data Kegiatan Rutin</span></a>
-                        </li>
-                        <li>
                             <a href=''><FontAwesomeIcon className='sidebar-item-icon' icon={faSquarePen} />
                                 <span className="nav-label">Menu</span><i className="fa fa-angle-left arrow" /></a>
                             <ul className="nav-2-level collapse">

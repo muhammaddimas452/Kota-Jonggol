@@ -37,10 +37,6 @@ import DataKegiatan from './pages/admin/DataKegiatan/index';
 import TambahKegiatan from './pages/admin/DataKegiatan/TambahKegiatan';
 import EditKegiatan from './pages/admin/DataKegiatan/EditKegiatan';
 
-import DataKegiatanRutin from './pages/admin/DataKegiatanRutin/index';
-import TambahKegiatanRutin from './pages/admin/DataKegiatanRutin/TambahKegiatanRutin';
-import EditKegiatanRutin from './pages/admin/DataKegiatanRutin/EditKegiatanRutin';
-
 import InfoWilayah from './pages/admin/InfoWilayah/index'
 import TambahInfoWilayah from './pages/admin/InfoWilayah/TambahInfoWilayah'
 import EditInfoWilayah from './pages/admin/InfoWilayah/EditInfoWilayah'
@@ -111,10 +107,6 @@ function App() {
       <Route path='/data-kegiatan' element={<DataKegiatan />} />
       <Route path='/tambahkegiatan' element={<TambahKegiatan />} />
       <Route path='/editkegiatan/:id' element={<EditKegiatan />} />
-
-      <Route path='/kegiatan-rutin' element={<DataKegiatanRutin />} />
-      <Route path='/tambah-kegiatan-rutin' element={<TambahKegiatanRutin />} />
-      <Route path='/edit-kegiatan-rutin/:id' element={<EditKegiatanRutin />} />
 
       <Route path='/pemerintahdesa' element={<PemerintahDesa />} />
       <Route path='/tambahpemerintah' element={<TambahPemerintah />} />

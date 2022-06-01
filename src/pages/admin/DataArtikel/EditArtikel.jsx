@@ -75,7 +75,7 @@ function EditArtikel(props) {
 
         const artikel_id = id;
         const data = artikelInput;
-        const result = await axios.post(`/artikel/update/${artikel_id}/?_method=PUT`, formData)
+        const result = await axios.post(`/artikel/update/${artikel_id}`, formData)
         if (result.data.status === 200) {
             swal("Success", result.data.message, "success")
             return navigate("/artikel")
@@ -111,6 +111,7 @@ function EditArtikel(props) {
                                     </div>
                                     <div className="ibox-body">
                                         <form>
+                                        <input type="hidden" name='_method' value="PUT" />
                                             <div className="form-group">
                                                 <label>Tanggal</label>
                                                 <input className="form-control" type="date"

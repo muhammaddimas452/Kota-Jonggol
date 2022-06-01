@@ -74,7 +74,7 @@ function EditLayanan(props) {
 
         const layanan_id = id;
         const data = layananInput;
-        const result = await axios.post(`/layanan/update/${layanan_id}/?_method=PUT`, formData)
+        const result = await axios.post(`/layanan/update/${layanan_id}`, formData)
         if (result.data.status === 200) {
             swal("Success", result.data.message, "success")
             return navigate("/layanan")
@@ -111,6 +111,7 @@ function EditLayanan(props) {
                                     </div>
                                     <div className="ibox-body">
                                         <form>
+                                        <input type="hidden" name='_method' value="PUT" />
                                             <div className="form-group">
                                                 <label>Judul Layanan</label>
                                                 <input type="text" className="form-control mt-3" placeholder="Judul Layanan"

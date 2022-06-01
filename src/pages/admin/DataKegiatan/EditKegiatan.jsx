@@ -64,7 +64,7 @@ export default function EditKegiatan() {
         formData.append('status', kegiatanInput.status)
 
         const kegiatan_id = id;
-        const res = await axios.post(`/kegiatan/update/${kegiatan_id}/?_method=PUT`, formData)
+        const res = await axios.post(`/kegiatan/update/${kegiatan_id}`, formData)
         if (res.data.status === 200) {
             swal("Success", res.data.message, "success")
             return navigate("/kegiatan")
@@ -99,6 +99,7 @@ export default function EditKegiatan() {
                                     </div>
                                     <div className="ibox-body">
                                         <form>
+                                        <input type="hidden" name='_method' value="PUT" />
                                             <div className="card-body">
                                                 <div className="row">
                                                     <div className="col-lg-12 col-6">

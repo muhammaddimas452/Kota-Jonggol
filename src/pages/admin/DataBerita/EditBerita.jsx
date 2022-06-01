@@ -74,7 +74,7 @@ function EditBerita(props) {
 
         const berita_id = id;
         const data = beritaInput;
-        const result = await axios.post(`/berita/update/${berita_id}/?_method=PUT`, formData)
+        const result = await axios.post(`/berita/update/${berita_id}`, formData)
         if (result.data.status === 200) {
             swal("Success", result.data.message, "success")
             return navigate("/data-berita")
@@ -111,6 +111,7 @@ function EditBerita(props) {
                                     </div>
                                     <div className="ibox-body">
                                         <form>
+                                        <input type="hidden" name='_method' value="PUT" />
                                             <div className="form-group">
                                                 <label>Judul Berita</label>
                                                 <input type="text" className="form-control mt-3" placeholder="Judul Berita"

@@ -74,7 +74,7 @@ function EditUmkm(props) {
 
         const umkm_id = id;
         const data = umkmInput;
-        const result = await axios.post(`/data-umkm/update/${umkm_id}/?_method=PUT`, formData)
+        const result = await axios.post(`/data-umkm/update/${umkm_id}`, formData)
         if (result.data.status === 200) {
             swal("Success", result.data.message, "success")
             return navigate("/data-umkm")
@@ -111,6 +111,7 @@ function EditUmkm(props) {
                                     </div>
                                     <div className="ibox-body">
                                         <form>
+                                        <input type="hidden" name='_method' value="PUT" />
                                             <div className="form-group">
                                                 <label>Judul Usaha</label>
                                                 <input type="text" className="form-control mt-3" placeholder="Judul Usaha"

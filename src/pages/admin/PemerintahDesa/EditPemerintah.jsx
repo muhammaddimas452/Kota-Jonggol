@@ -72,7 +72,7 @@ export default function EditPemerintah(props) {
         formData.append('jabatan_id', values.jabatan_id)
 
         const pemerintah_id = id;
-        const result = await axios.post(`/pemerintahdesa/update/${pemerintah_id}/?_method=PUT`, formData)
+        const result = await axios.post(`/pemerintahdesa/update/${pemerintah_id}`, formData)
         // console.log(result)
         if (result?.data?.status === 200) {
             swal("Success", result.data.message, "success")
@@ -109,6 +109,7 @@ export default function EditPemerintah(props) {
                                 </div>
                                 <div className="ibox-body">
                                     <form>
+                                    <input type="hidden" name='_method' value="PUT" />
                                         <div className="form-group">
                                             <label>Nama</label>
                                             <input className="form-control" type="text" placeholder="Masukkan Nama"

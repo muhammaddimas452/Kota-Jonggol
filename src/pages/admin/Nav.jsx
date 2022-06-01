@@ -549,7 +549,7 @@ function ModalImage(props) {
             swal("Data Perlu di Isi", "", "error")
             thisClicked.innerText = "Proccess...."
             setError(result.data.errors);
-        } 
+        }
     }
 
     if (loading === true) {
@@ -570,34 +570,34 @@ function ModalImage(props) {
                             <Modal.Body className="show-grid">
                                 <Container>
                                     <Row>
-                                    <div className='col-lg-8'>
-                                    <div className="form-group">
-                                            <label>Tambahkan Gambar</label>
-                                            <input type="file"
-                                                className='form-control'
-                                                style={{ border: "none" }}
-                                                name="image"
-                                                onChange={handleImage}
-                                            />
-                                            <small className='text-danger'>{error.image}</small>
-                                    </div>
-                                    </div>
-                                    <div className='col-lg-4'>
-                                    <button onClick={onSubmit} className="genric-btn info radius mt-4">Tambah Gambar</button>
-                                    </div>
-                                    </Row>
-                                    <div className='row'>
-                                    {image?.map((image, index) => (
-                                        <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6" key={index}>
-                                            <div className="single-gallery-image" >
-                                            <img className='responsive' style={{ width: 200, height: 150 }}
-                                            src={image.image} />
-                                            </div>
-                                            <div className=''>
-                                            <button className="genric-btn danger radius ml-3" onClick={(e) => deleteCategory(e, image.id)}>Delete</button>
+                                        <div className='col-lg-8'>
+                                            <div className="form-group">
+                                                <label>Tambahkan Gambar</label>
+                                                <input type="file"
+                                                    className='form-control'
+                                                    style={{ border: "none" }}
+                                                    name="image"
+                                                    onChange={handleImage}
+                                                />
+                                                <small className='text-danger'>{error.image}</small>
                                             </div>
                                         </div>
-                                    ))}    
+                                        <div className='col-lg-4'>
+                                            <button onClick={onSubmit} className="genric-btn info radius mt-4">Tambah Gambar</button>
+                                        </div>
+                                    </Row>
+                                    <div className='row'>
+                                        {image?.map((image, index) => (
+                                            <div className="col-xl-4 col-lg-4 col-md-4 col-sm-6" key={index}>
+                                                <div className="single-gallery-image" >
+                                                    <img className='responsive' style={{ width: 200, height: 150 }}
+                                                        src={image.image} />
+                                                </div>
+                                                <div className=''>
+                                                    <button className="genric-btn danger radius ml-3" onClick={(e) => deleteCategory(e, image.id)}>Delete</button>
+                                                </div>
+                                            </div>
+                                        ))}
                                     </div>
                                 </Container>
                             </Modal.Body>

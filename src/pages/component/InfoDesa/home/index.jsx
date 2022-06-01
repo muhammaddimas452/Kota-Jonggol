@@ -117,20 +117,7 @@ export default function Home(props) {
         getText();
     }, [props])
 
-    if (loading === true) {
-        return (
-            <div id="preloader-active">
-                <div className="preloader d-flex align-items-center justify-content-center">
-                    <div className="preloader-inner position-relative">
-                        <div className="preloader-circle" />
-                        <div className="preloader-img pere-text">
-                            <img src={logo} alt />
-                        </div>
-                    </div>
-                </div>
-            </div>
-        )
-    } else {
+    if (loading === false) {
         return (
             <div>
                 <Header />
@@ -297,6 +284,19 @@ export default function Home(props) {
                     </div>
                 </main>
                 <Footer />
+            </div>
+        )
+    } else {
+        return (
+            <div id="preloader-active">
+                <div className="preloader d-flex align-items-center justify-content-center">
+                    <div className="preloader-inner position-relative">
+                        <div className="preloader-circle" />
+                        <div className="preloader-img pere-text">
+                            <img src={logo} alt />
+                        </div>
+                    </div>
+                </div>
             </div>
         )
     }

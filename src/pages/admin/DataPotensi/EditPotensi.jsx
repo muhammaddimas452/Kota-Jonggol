@@ -74,7 +74,7 @@ function EditPotensi(props) {
 
         const potensi_id = id;
         const data = potensiInput;
-        const result = await axios.post(`/artikel-potensi/update/${potensi_id}/?_method=PUT`, formData)
+        const result = await axios.post(`/artikel-potensi/update/${potensi_id}`, formData)
         if (result.data.status === 200) {
             swal("Success", result.data.message, "success")
             return navigate("/potensi")
@@ -111,6 +111,7 @@ function EditPotensi(props) {
                                     </div>
                                     <div className="ibox-body">
                                         <form>
+                                            <input type="hidden" name='_method' value="PUT" />
                                             <div className="form-group">
                                                 <label>Judul Potensi</label>
                                                 <input type="text" className="form-control mt-3" placeholder="Judul Potensi"

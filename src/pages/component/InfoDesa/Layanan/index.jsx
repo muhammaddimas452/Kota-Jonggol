@@ -86,7 +86,7 @@ export default function Layanan(props) {
                                                                                         <img className="card-img-top" src={layanan.image} />
                                                                                         </div>
                                                                                         <div className="card-body">
-                                                                                        <h3 className='font-weight-bold'><a href={`/layanan/${layanan.id}`}>{layanan.nama_layanan}</a></h3>
+                                                                                        <h3 className='font-weight-bold'><a href={`/detail-layanan-masyarakat/${layanan.id}`}>{layanan.nama_layanan}</a></h3>
                                                                                             <div class="text-muted card-subtitle mt-1">By admin</div>
                                                                                             <p dangerouslySetInnerHTML={{ __html: layanan.isi_layanan.substr(0, 300) }} />
                                                                                         </div>

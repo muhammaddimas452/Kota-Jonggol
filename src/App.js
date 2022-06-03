@@ -10,6 +10,7 @@ import DetailProfile from './pages/component/InfoDesa/Detail/DetailProfile'
 import DetailUmkm from './pages/component/InfoDesa/Detail/DetailUmkm'
 import DetailPotensi from './pages/component/InfoDesa/Detail/DetailPotensi'
 import DetailBerita from './pages/component/InfoDesa/Detail/DetailBerita'
+import DetailLayanan from './pages/component/InfoDesa/Detail/DetailLayanan'
 import Galeri from './pages/component/InfoDesa/galeri'
 import Umkm from './pages/component/InfoDesa/UMKM'
 import Layanan from './pages/component/InfoDesa/Layanan'
@@ -70,6 +71,7 @@ function App() {
       <Route path="/detail-umkm/:id" element={ <DetailUmkm />} />
       <Route path="/detail-potensi/:id" element={ <DetailPotensi />} />
       <Route path="/detail-berita/:id" element={ <DetailBerita />} />
+      <Route path="/detail-layanan-masyarakat/:id" element={ <DetailLayanan />} />
       <Route path="/umkm" element={ <Umkm />} />
       <Route path="/layanan-masyarakat" element={ <Layanan />} />
       <Route path="/berita" element={ <Berita />} />
